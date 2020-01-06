@@ -10,7 +10,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.boundary.KSKorisnikDao;
-import rs.ac.bg.etf.pm160695.business.korisnickisistem.boundary.KSUlogaDao;
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSUloga;
 
 @ViewScoped
@@ -18,9 +17,6 @@ import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSUloga;
 public class Razvoj implements Serializable {
 
 	private static final long serialVersionUID = 9004290161325992942L;
-
-	@Inject
-	private KSUlogaDao ksUlogaDao;
 
 	@Inject
 	private KSKorisnikDao ksKorisnikDao;
@@ -33,10 +29,6 @@ public class Razvoj implements Serializable {
 	@PostConstruct
 	private void init() {
 		ksUlogaList = new LinkedList<>();
-	}
-
-	public void ulogeAction() {
-		ksUlogaList = ksUlogaDao.findAll();
 	}
 
 	public void loginAction() {

@@ -4,10 +4,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.SingularAttribute;
 
 public abstract class BaseEntityDao<T extends BaseEntity> {
 
@@ -20,7 +20,7 @@ public abstract class BaseEntityDao<T extends BaseEntity> {
 		this.entityClass = entityClass;
 	}
 
-	public List<T> findByParameter(String key, Object value) {
+	public List<T> findByParameter(SingularAttribute<T, ?> key, Object value) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<T> query = cb.createQuery(entityClass);
 		Root<T> root = query.from(entityClass);
@@ -49,17 +49,5 @@ public abstract class BaseEntityDao<T extends BaseEntity> {
 
 	public EntityManager getEm() {
 		return em;
-	}
-
-	protected List<T> findAll() {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<T> q = cb.createQuery(entityClass);
-		q.from(entityClass);
-
-		TypedQuery<T> query = em.createQuery(q);
-
-		List<T> resList = query.getResultList();
-
-		return resList;
 	}
 }

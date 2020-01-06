@@ -7,28 +7,6 @@
 
 <h:head></h:head> 
 <body> 
-	<h:form>
-
-		<p:dataTable id="myDataTable" value="#{razvoj.ksUlogaList}" var="uloga">
-			<p:column headerText="id">
-				<h:outputText value="#{uloga.id}" />
-			</p:column>
-			
-			<p:column headerText="oznaka">
-				<h:outputText value="#{uloga.oznaka}" />
-			</p:column>
-			
-			<p:column headerText="naziv">
-				<h:outputText value="#{uloga.naziv}" />
-			</p:column>
-		</p:dataTable>
-	
-		<p:commandButton value="Click me" 
-			actionListener="#{razvoj.ulogeAction}" 
-			update="#{p:component('myDataTable')}"/>
-			
-	</h:form>
-	
 	<p:panel>
 		<h:form>
 			<p:panelGrid columns="2">
@@ -41,6 +19,5 @@
 			<p:commandButton value="Login" process="@form" action="#{razvoj.loginAction}" />
 		</h:form>
 	</p:panel>
-	
 </body> 
 </html>
