@@ -25,6 +25,10 @@ public class KSKorisnik extends StatusBaseEntity {
 
 	@NotNull
 	@NotBlank
+	private String salt;
+
+	@NotNull
+	@NotBlank
 	private String ime;
 
 	@NotNull
@@ -53,11 +57,10 @@ public class KSKorisnik extends StatusBaseEntity {
 	public KSKorisnik() {
 	}
 
-	public KSKorisnik(@NotNull @NotBlank String username, @NotNull @NotBlank String password,
-			@NotNull @NotBlank String ime, @NotNull @NotBlank String prezime, @NotNull @NotBlank String email,
-			@NotNull LocalDate datumRodjenja, @NotNull String mestoRodjenja, @NotNull String telefon) {
+	public KSKorisnik(@NotNull @NotBlank String username, @NotNull @NotBlank String ime,
+			@NotNull @NotBlank String prezime, @NotNull @NotBlank String email, @NotNull LocalDate datumRodjenja,
+			@NotNull String mestoRodjenja, @NotNull String telefon) {
 		this.username = username;
-		this.password = password;
 		this.ime = ime;
 		this.prezime = prezime;
 		this.email = email;
@@ -76,6 +79,14 @@ public class KSKorisnik extends StatusBaseEntity {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 
 	public String getIme() {
@@ -128,9 +139,9 @@ public class KSKorisnik extends StatusBaseEntity {
 
 	@Override
 	public String toString() {
-		return "KSKorisnik [id = " + getId() + ", username=" + username + ", password=" + password + ", ime=" + ime
-				+ ", prezime=" + prezime + ", email=" + email + ", datumRodjenja=" + datumRodjenja + ", mestoRodjenja="
-				+ mestoRodjenja + ", telefon=" + telefon + ", recordStatus = "
+		return "KSKorisnik [id = " + getId() + ", username=" + username + ", password=" + password + ", salt = " + salt
+				+ ", ime=" + ime + ", prezime=" + prezime + ", email=" + email + ", datumRodjenja=" + datumRodjenja
+				+ ", mestoRodjenja=" + mestoRodjenja + ", telefon=" + telefon + ", recordStatus = "
 				+ EntityRecordStatus.parse(getRecordStatus()) + "]";
 	}
 

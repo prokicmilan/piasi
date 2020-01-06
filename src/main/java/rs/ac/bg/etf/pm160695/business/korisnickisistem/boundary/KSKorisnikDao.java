@@ -4,12 +4,17 @@ import java.time.LocalDate;
 import java.util.List;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 
+import rs.ac.bg.etf.pm160695.business.korisnickisistem.control.SecurityProvider;
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSKorisnik;
 import rs.ac.bg.etf.pm160695.infrastructure.datamodel.BaseEntityDao;
 
 @Stateless
 public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
+
+	@Inject
+	private SecurityProvider securityProvider;
 
 	public KSKorisnikDao() {
 		super(KSKorisnik.class);
@@ -28,9 +33,11 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 
 	public KSKorisnik registerUser(String username, String password, String firstName, String lastName, String email,
 			LocalDate dateOfBirth, String placeOfBirth, String phoneNumber) {
-		KSKorisnik korisnik = new KSKorisnik(username, password, firstName, lastName, email, dateOfBirth, placeOfBirth,
+		KSKorisnik korisnik = new KSKorisnik(username, firstName, lastName, email, dateOfBirth, placeOfBirth,
 				phoneNumber);
 		if (validateKorisnik(korisnik)) {
+			korisnik.setSalt(securityProvider.generateSalt());
+			korisnik.setPassword(securityProvider.generateSaltedPassword(password, korisnik.getSalt()));
 			return persistOrMerge(korisnik);
 		} else {
 			return null;

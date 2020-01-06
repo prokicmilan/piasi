@@ -12,6 +12,14 @@
             <version>8.0</version>
             <scope>provided</scope>
         </dependency>
+        
+        <!-- https://mvnrepository.com/artifact/org.wildfly/wildfly-security -->
+		<dependency>
+		    <groupId>org.wildfly</groupId>
+		    <artifactId>wildfly-security</artifactId>
+		    <version>18.0.1.Final</version>
+		    <scope>provided</scope>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
 		<dependency>
