@@ -9,6 +9,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import rs.ac.bg.etf.pm160695.business.korisnickisistem.boundary.KSKorisnikDao;
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.boundary.KSUlogaDao;
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSUloga;
 
@@ -21,6 +22,12 @@ public class Razvoj implements Serializable {
 	@Inject
 	private KSUlogaDao ksUlogaDao;
 
+	@Inject
+	private KSKorisnikDao ksKorisnikDao;
+
+	private String username;
+	private String password;
+
 	private List<KSUloga> ksUlogaList;
 
 	@PostConstruct
@@ -32,8 +39,28 @@ public class Razvoj implements Serializable {
 		ksUlogaList = ksUlogaDao.findAll();
 	}
 
+	public void loginAction() {
+		System.out.println(ksKorisnikDao.validateLogin(username, password));
+	}
+
 	public List<KSUloga> getKsUlogaList() {
 		return ksUlogaList;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 }

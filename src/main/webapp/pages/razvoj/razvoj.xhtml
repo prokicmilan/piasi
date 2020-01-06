@@ -29,5 +29,18 @@
 			
 	</h:form>
 	
+	<p:panel>
+		<h:form>
+			<p:panelGrid columns="2">
+				<h:outputLabel value="Username" />
+				<p:inputText value="#{razvoj.username}" />
+				
+				<h:outputLabel value="Password" />
+				<p:password value="#{razvoj.password}" />
+			</p:panelGrid>
+			<p:commandButton value="Login" process="@form" action="#{razvoj.loginAction}" />
+		</h:form>
+	</p:panel>
+	
 </body> 
 </html>

@@ -1,5 +1,6 @@
 package rs.ac.bg.etf.pm160695.business.korisnickisistem.control;
 
+import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.Provider;
 import java.security.SecureRandom;
@@ -10,6 +11,7 @@ import org.wildfly.security.password.PasswordFactory;
 import org.wildfly.security.password.WildFlyElytronPasswordProvider;
 import org.wildfly.security.password.interfaces.SaltedSimpleDigestPassword;
 import org.wildfly.security.password.spec.EncryptablePasswordSpec;
+import org.wildfly.security.password.spec.SaltedHashPasswordSpec;
 import org.wildfly.security.password.spec.SaltedPasswordAlgorithmSpec;
 
 public class SecurityProvider {
@@ -17,7 +19,7 @@ public class SecurityProvider {
 	private static final Provider PASSWORD_PROVIDER = new WildFlyElytronPasswordProvider();
 
 	/**
-	 * Generisemo salt duzine 32 bita enkodovan u Base64 formatu
+	 * Metoda za generisanje salt-a duzine 32 bita
 	 * 
 	 * @return salt
 	 */
@@ -30,8 +32,7 @@ public class SecurityProvider {
 	}
 
 	/**
-	 * Generisemo hes lozinke koristeci sha-512 algoritam uz koriscenje salta duzine
-	 * 32 bita
+	 * Metoda za generisanje hash-a lozinke koristeci SHA-512
 	 * 
 	 * @param clearPassword
 	 * @param salt
@@ -51,14 +52,38 @@ public class SecurityProvider {
 					.generatePassword(encryptableSpec);
 
 			return Base64.getEncoder().encodeToString(password.getDigest());
-		} catch (NoSuchAlgorithmException e) {
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (InvalidKeySpecException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return null;
 		}
-		return "";
+	}
+
+	/**
+	 * Metoda za validaciju poslate lozinke na osnovu sacuvanog hasha i salta
+	 * 
+	 * @param clearPassword
+	 * @param hashedPassword
+	 * @param salt
+	 * @return
+	 */
+	public boolean validatePassword(String clearPassword, String hashedPassword, String salt) {
+		try {
+			PasswordFactory passwordFactory = PasswordFactory
+					.getInstance(SaltedSimpleDigestPassword.ALGORITHM_SALT_PASSWORD_DIGEST_SHA_512, PASSWORD_PROVIDER);
+
+			SaltedHashPasswordSpec saltedHashSpec = new SaltedHashPasswordSpec(
+					Base64.getDecoder().decode(hashedPassword), Base64.getDecoder().decode(salt));
+
+			SaltedSimpleDigestPassword restoredPassword = (SaltedSimpleDigestPassword) passwordFactory
+					.generatePassword(saltedHashSpec);
+
+			return passwordFactory.verify(restoredPassword, clearPassword.toCharArray());
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException | InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
 	}
 
 }

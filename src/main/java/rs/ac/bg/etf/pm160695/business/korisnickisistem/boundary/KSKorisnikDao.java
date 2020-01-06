@@ -23,7 +23,7 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 	public KSKorisnik findByUsername(String username) {
 		List<KSKorisnik> korisnikList = findByParameter("username", username);
 
-		if (korisnikList.size() > 0) {
+		if (korisnikList.size() > 1) {
 			// TODO: exception
 			return null;
 		}
@@ -40,6 +40,30 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 			korisnik.setPassword(securityProvider.generateSaltedPassword(password, korisnik.getSalt()));
 			return persistOrMerge(korisnik);
 		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * Metoda za validaciju poslatih login parametara
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	public KSKorisnik validateLogin(String username, String password) {
+		KSKorisnik korisnik = findByUsername(username);
+
+		if (korisnik == null) {
+			// korisnik sa datim username-om ne postoji, vracamo null
+			return null;
+		}
+		// validiramo lozinku
+		if (securityProvider.validatePassword(password, korisnik.getPassword(), korisnik.getSalt())) {
+			// lozinka je validna, vracamo korisnika
+			return korisnik;
+		} else {
+			// lozinka nije validna, vracamo null
 			return null;
 		}
 	}
