@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+
+<h:head></h:head>
+
+<body>
+	<p:messages id="msgs" />
+		<p:panel>
+			<h:form>
+				<p:panelGrid columns="2">
+					<h:outputLabel for="username" value="Korisnicko ime: " />
+					<p:inputText id="username" value="#{register.username}"/>
+					
+					<h:outputLabel for="password" value="Lozinka: " />
+					<p:password id="password" value="#{register.password}" match="password-confirm" />
+					
+					<h:outputLabel for="password-confirm" value="Ponovljena lozinka: " />
+					<p:password id="password-confirm" value="#{register.password}" />
+					
+					<h:outputLabel for="first-name" value="Ime: " />
+					<p:inputText id="first-name" value="#{register.firstName}" />
+					
+					<h:outputLabel for="last-name" value="Prezime: " />
+					<p:inputText id="last-name" value="#{register.lastName}" />
+					
+					<h:outputLabel for="email" value="Email: " />
+					<p:inputText id="email" value="#{register.email}" />
+					
+					<h:outputLabel for="date-of-birth" value="Datum rodjenja: " />
+					<p:calendar id="date-of-birth" value="#{register.dateOfBirth}" converter="localDateConverter" >
+						<p:ajax event="dateSelect" partialSubmit="true" />
+						<p:ajax event="change" partialSubmit="true" />
+					</p:calendar>
+					
+					<h:outputLabel for="place-of-birth" value="Mesto rodjenja: " />
+					<p:inputText id="place-of-birth" value="#{register.placeOfBirth}" />
+					
+					<h:outputLabel for="phone-number" value="Telefon: " />
+					<p:inputText id="phone-number" value="#{register.phoneNumber}" />
+				</p:panelGrid>
+				
+				<p:commandButton value="Register!" 
+					action="#{register.registerAction}" 
+					process="@form"
+					update="#{p:component('msgs')}"/>
+			</h:form>
+	</p:panel>
+</body>
+      
+</html>
