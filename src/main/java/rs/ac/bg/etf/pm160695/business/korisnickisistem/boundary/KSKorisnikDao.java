@@ -8,7 +8,6 @@ import javax.inject.Inject;
 
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.control.SecurityProvider;
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSKorisnik;
-import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSKorisnik_;
 import rs.ac.bg.etf.pm160695.infrastructure.datamodel.BaseEntityDao;
 
 @Stateless
@@ -22,7 +21,7 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 	}
 
 	public KSKorisnik findByUsername(String username) {
-		List<KSKorisnik> korisnikList = findByParameter(KSKorisnik_.username, username);
+		List<KSKorisnik> korisnikList = findByParameter("username", username);
 
 		if (korisnikList.size() > 1) {
 			// TODO: exception
@@ -86,7 +85,7 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 	 * @return true ako je korisnicko ime jedinstveno, false ako nije
 	 */
 	private boolean isUsernameUnique(String username) {
-		return findByParameter(KSKorisnik_.username, username).isEmpty() ? true : false;
+		return findByParameter("username", username).isEmpty() ? true : false;
 	}
 
 	/**
@@ -96,7 +95,7 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 	 * @return true ako je email jedinstven, false ako nije
 	 */
 	private boolean isEmailUnique(String email) {
-		return findByParameter(KSKorisnik_.email, email).isEmpty() ? true : false;
+		return findByParameter("email", email).isEmpty() ? true : false;
 	}
 
 }

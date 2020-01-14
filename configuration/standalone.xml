@@ -150,34 +150,18 @@
         <subsystem xmlns="urn:jboss:domain:core-management:1.0"/>
         <subsystem xmlns="urn:jboss:domain:datasources:5.0">
             <datasources>
-				<datasource jndi-name="java:jboss/datasources/piasiDS" pool-name="piasiDS" enabled="true" use-java-context="true">
-					<connection-url>jdbc:postgresql://localhost:50025/piasi</connection-url>
-					<driver>postgresql</driver>
-					<security>
-						<user-name>postgres</user-name>
-						<password>root</password>
-					</security>
-					<validation>
-                        <check-valid-connection-sql>select 1</check-valid-connection-sql>
-                        <validate-on-match>false</validate-on-match>
-                        <background-validation>true</background-validation>
-                        <background-validation-millis>10000</background-validation-millis>
-                    </validation>
-                    <timeout>
-                        <set-tx-query-timeout>false</set-tx-query-timeout>
-                        <blocking-timeout-millis>0</blocking-timeout-millis>
-                        <idle-timeout-minutes>0</idle-timeout-minutes>
-                        <query-timeout>0</query-timeout>
-                        <use-try-lock>0</use-try-lock>
-                        <allocation-retry>0</allocation-retry>
-                        <allocation-retry-wait-millis>0</allocation-retry-wait-millis>
-                    </timeout>
-				</datasource>
+                <datasource jndi-name="java:jboss/datasources/piasiDS" pool-name="piasiDS" enabled="true" use-java-context="true">
+                    <connection-url>jdbc:postgresql://localhost:5432/piasi</connection-url>
+                    <driver>postgresql</driver>
+                    <security>
+                        <user-name>postgres</user-name>
+                        <password>root</password>
+                    </security>
+                </datasource>
                 <drivers>
-					<driver name="postgresql" module="org.postgresql">
-						<xa-datasource-class>org.postgresql.xa.PGXADataSource</xa-datasource-class>
-						<driver-class>org.postgresql.Driver</driver-class>
-					</driver>
+                    <driver name="postgresql" module="org.postgresql">
+                        <driver-class>org.postgresql.Driver</driver-class>
+                    </driver>
                 </drivers>
             </datasources>
         </subsystem>
@@ -250,6 +234,9 @@
                 </thread-pool>
             </thread-pools>
             <default-security-domain value="other"/>
+            <application-security-domains>
+                <application-security-domain name="piasiApplicationSecurityDomain" security-domain="piaSiSecurityDomain"/>
+            </application-security-domains>
             <default-missing-method-permissions-deny-access value="true"/>
             <statistics enabled="${wildfly.ejb3.statistics-enabled:${wildfly.statistics-enabled:false}}"/>
             <log-system-exceptions value="true"/>
@@ -275,9 +262,22 @@
                     <realm name="ManagementRealm" role-decoder="groups-to-roles"/>
                     <realm name="local" role-mapper="super-user-mapper"/>
                 </security-domain>
+                <security-domain name="piaSiSecurityDomain" default-realm="piaSiDbRealm" permission-mapper="default-permission-mapper">
+                    <realm name="piaSiDbRealm" role-decoder="from-roles-attribute"/>
+                </security-domain>
             </security-domains>
             <security-realms>
                 <identity-realm name="local" identity="$local"/>
+                <jdbc-realm name="piaSiDbRealm">
+                    <principal-query sql="select password, salt from ks_korisnik where username = ?" data-source="piasiDS">
+                        <salted-simple-digest-mapper algorithm="salt-password-digest-sha-512" password-index="1" salt-index="2"/>
+                    </principal-query>
+                    <principal-query sql="select u.oznaka from ks_uloga u join ks_korisnik_ks_uloga ku on ku.uloga_id = u.id join ks_korisnik k on k.id = ku.korisnik_id where k.username = ?" data-source="piasiDS">
+                        <attribute-mapping>
+                            <attribute to="roles" index="1"/>
+                        </attribute-mapping>
+                    </principal-query>
+                </jdbc-realm>
                 <properties-realm name="ApplicationRealm">
                     <users-properties path="application-users.properties" relative-to="jboss.server.config.dir" digest-realm-name="ApplicationRealm"/>
                     <groups-properties path="application-roles.properties" relative-to="jboss.server.config.dir"/>
@@ -300,6 +300,7 @@
                 </simple-permission-mapper>
                 <constant-realm-mapper name="local" realm-name="local"/>
                 <simple-role-decoder name="groups-to-roles" attribute="groups"/>
+                <simple-role-decoder name="from-roles-attribute" attribute="roles"/>
                 <constant-role-mapper name="super-user-mapper">
                     <role name="SuperUser"/>
                 </constant-role-mapper>
@@ -315,6 +316,16 @@
                 </permission-set>
             </permission-sets>
             <http>
+                <http-authentication-factory name="piaSi-db-http-auth" security-domain="piaSiSecurityDomain" http-server-mechanism-factory="global">
+                    <mechanism-configuration>
+                        <mechanism mechanism-name="FORM">
+                            <mechanism-realm realm-name="piaSiUsersRolesRealm"/>
+                        </mechanism>
+                        <mechanism mechanism-name="BASIC">
+                            <mechanism-realm realm-name="piaSiUsersRolesRealm"/>
+                        </mechanism>
+                    </mechanism-configuration>
+                </http-authentication-factory>
                 <http-authentication-factory name="management-http-authentication" security-domain="ManagementDomain" http-server-mechanism-factory="global">
                     <mechanism-configuration>
                         <mechanism mechanism-name="DIGEST">
@@ -379,6 +390,17 @@
                     <file-store passivation="true" purge="false"/>
                 </local-cache>
             </cache-container>
+            <cache-container name="hibernate" module="org.infinispan.hibernate-cache">
+                <local-cache name="entity">
+                    <object-memory size="10000"/>
+                    <expiration max-idle="100000"/>
+                </local-cache>
+                <local-cache name="local-query">
+                    <object-memory size="10000"/>
+                    <expiration max-idle="100000"/>
+                </local-cache>
+                <local-cache name="timestamps"/>
+            </cache-container>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:io:3.0">
             <worker name="default"/>
@@ -411,7 +433,7 @@
             <remoting-connector/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:jpa:1.1">
-            <jpa default-datasource="" default-extended-persistence-inheritance="DEEP"/>
+            <jpa default-datasource="java:jboss/datasources/piasiDS" default-extended-persistence-inheritance="DEEP"/>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:jsf:1.1"/>
         <subsystem xmlns="urn:jboss:domain:mail:3.0">
@@ -499,6 +521,9 @@
             <handlers>
                 <file name="welcome-content" path="${jboss.home.dir}/welcome-content"/>
             </handlers>
+            <application-security-domains>
+                <application-security-domain name="piasiApplicationSecurityDomain" http-authentication-factory="piaSi-db-http-auth"/>
+            </application-security-domains>
         </subsystem>
         <subsystem xmlns="urn:jboss:domain:webservices:2.0" statistics-enabled="${wildfly.webservices.statistics-enabled:${wildfly.statistics-enabled:false}}">
             <wsdl-host>${jboss.bind.address:127.0.0.1}</wsdl-host>
@@ -520,7 +545,7 @@
             <inet-address value="${jboss.bind.address:127.0.0.1}"/>
         </interface>
     </interfaces>
-    <socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:5}">
+    <socket-binding-group name="standard-sockets" default-interface="public" port-offset="${jboss.socket.binding.port-offset:0}">
         <socket-binding name="ajp" port="${jboss.ajp.port:8009}"/>
         <socket-binding name="http" port="${jboss.http.port:8080}"/>
         <socket-binding name="https" port="${jboss.https.port:8443}"/>

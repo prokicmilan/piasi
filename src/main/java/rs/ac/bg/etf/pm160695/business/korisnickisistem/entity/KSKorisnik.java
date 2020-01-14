@@ -1,9 +1,14 @@
 package rs.ac.bg.etf.pm160695.business.korisnickisistem.entity;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -49,6 +54,16 @@ public class KSKorisnik extends StatusBaseEntity {
 
 	@NotNull
 	private String telefon;
+	
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "ks_korisnik_ks_uloga",
+			   joinColumns = @JoinColumn(
+			   			name = "korisnik_id", 
+			   			referencedColumnName = "id"),
+			   inverseJoinColumns = @JoinColumn(
+					    name = "uloga_id",
+					    referencedColumnName = "id"))
+	private List<KSUloga> ulogaList;
 
 	public String getUsername() {
 		return username;

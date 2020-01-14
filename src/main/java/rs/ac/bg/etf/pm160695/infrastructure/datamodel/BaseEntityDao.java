@@ -7,7 +7,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import javax.persistence.metamodel.SingularAttribute;
 
 public abstract class BaseEntityDao<T extends BaseEntity> {
 
@@ -20,12 +19,12 @@ public abstract class BaseEntityDao<T extends BaseEntity> {
 		this.entityClass = entityClass;
 	}
 
-	public List<T> findByParameter(SingularAttribute<T, ?> key, Object value) {
+	public List<T> findByParameter(String string, Object value) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<T> query = cb.createQuery(entityClass);
 		Root<T> root = query.from(entityClass);
 
-		query.where(cb.equal(root.get(key), value));
+		query.where(cb.equal(root.get(string), value));
 
 		return em.createQuery(query).getResultList();
 	}

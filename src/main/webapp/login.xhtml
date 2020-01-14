@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+    <h:head>
+		<h:outputStylesheet name="/css/piasi.css" />
+    </h:head>
+
+<body>
+	<h:form id="login">
+		<p:panel>
+			<p:messages id="msgs" />
+			<p:focus context="login" />
+			<p:panelGrid id="pg-login" columns="2" styleClass="ui-noborder">
+				<p:outputLabel for="inT-username" value="Korisničko ime:" />
+				<p:inputText id="inT-username" value="#{loginBacking.username}" />
+				
+				<p:outputLabel for="password" value="Lozinka:" />
+				<p:password id="password" value="#{loginBacking.password}" />
+			</p:panelGrid>
+			
+			<p:commandButton value="Prijava!" 
+				action="#{loginBacking.loginAction}" 
+				process="@form"
+				update="#{p:component('msgs')}"
+				styleClass="loginButton"/>
+		</p:panel>
+	</h:form>
+</body>
+      
+</html>

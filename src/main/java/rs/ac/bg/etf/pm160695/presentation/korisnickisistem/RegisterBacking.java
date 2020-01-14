@@ -15,7 +15,7 @@ import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSKorisnik;
 
 @ViewScoped
 @Named
-public class Register implements Serializable {
+public class RegisterBacking implements Serializable {
 
 	private static final long serialVersionUID = 1112494982140850963L;
 

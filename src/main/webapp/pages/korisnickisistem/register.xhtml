@@ -13,38 +13,38 @@
 			<h:form>
 				<p:panelGrid columns="2">
 					<h:outputLabel for="username" value="Korisnicko ime: " />
-					<p:inputText id="username" value="#{register.username}"/>
+					<p:inputText id="username" value="#{registerBacking.username}"/>
 					
 					<h:outputLabel for="password" value="Lozinka: " />
-					<p:password id="password" value="#{register.password}" match="password-confirm" />
+					<p:password id="password" value="#{registerBacking.password}" match="password-confirm" />
 					
 					<h:outputLabel for="password-confirm" value="Ponovljena lozinka: " />
-					<p:password id="password-confirm" value="#{register.password}" />
+					<p:password id="password-confirm" value="#{registerBacking.password}" />
 					
 					<h:outputLabel for="first-name" value="Ime: " />
-					<p:inputText id="first-name" value="#{register.firstName}" />
+					<p:inputText id="first-name" value="#{registerBacking.firstName}" />
 					
 					<h:outputLabel for="last-name" value="Prezime: " />
-					<p:inputText id="last-name" value="#{register.lastName}" />
+					<p:inputText id="last-name" value="#{registerBacking.lastName}" />
 					
 					<h:outputLabel for="email" value="Email: " />
-					<p:inputText id="email" value="#{register.email}" />
+					<p:inputText id="email" value="#{registerBacking.email}" />
 					
 					<h:outputLabel for="date-of-birth" value="Datum rodjenja: " />
-					<p:calendar id="date-of-birth" value="#{register.dateOfBirth}" converter="localDateConverter" >
+					<p:calendar id="date-of-birth" value="#{registerBacking.dateOfBirth}" converter="localDateConverter" >
 						<p:ajax event="dateSelect" partialSubmit="true" />
 						<p:ajax event="change" partialSubmit="true" />
 					</p:calendar>
 					
 					<h:outputLabel for="place-of-birth" value="Mesto rodjenja: " />
-					<p:inputText id="place-of-birth" value="#{register.placeOfBirth}" />
+					<p:inputText id="place-of-birth" value="#{registerBacking.placeOfBirth}" />
 					
 					<h:outputLabel for="phone-number" value="Telefon: " />
-					<p:inputText id="phone-number" value="#{register.phoneNumber}" />
+					<p:inputText id="phone-number" value="#{registerBacking.phoneNumber}" />
 				</p:panelGrid>
 				
 				<p:commandButton value="Register!" 
-					action="#{register.registerAction}" 
+					action="#{registerBacking.registerAction}" 
 					process="@form"
 					update="#{p:component('msgs')}"/>
 			</h:form>
