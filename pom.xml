@@ -47,7 +47,7 @@
     </dependencies>
     <build>
         <finalName>piasi</finalName>
-        <plugins>
+<!--         <plugins>
         	<plugin>
         		<groupId>org.apache.maven.plugins</groupId>
         		<artifactId>maven-compiler-plugin</artifactId>
@@ -58,7 +58,7 @@
                     </compilerArguments>
         		</configuration>
         	</plugin>
-        </plugins>
+        </plugins> -->
     </build>
     <properties>
     	<maven.compiler.encoding>UTF-8</maven.compiler.encoding>

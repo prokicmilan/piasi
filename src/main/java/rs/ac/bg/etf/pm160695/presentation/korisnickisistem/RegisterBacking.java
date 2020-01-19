@@ -3,6 +3,8 @@ package rs.ac.bg.etf.pm160695.presentation.korisnickisistem;
 import java.io.Serializable;
 import java.time.LocalDate;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -11,7 +13,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.boundary.KSKorisnikDao;
-import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSKorisnik;
+import rs.ac.bg.etf.pm160695.infrastructure.validation.CommonError;
+import rs.ac.bg.etf.pm160695.infrastructure.validation.CommonErrors;
 
 @ViewScoped
 @Named
@@ -51,13 +54,16 @@ public class RegisterBacking implements Serializable {
 	private String phoneNumber;
 
 	public void registerAction() {
-		KSKorisnik k = ksKorisnikDao.registerUser(username, password, firstName, lastName, email, dateOfBirth,
+		CommonErrors errors = ksKorisnikDao.registerUser(username, password, firstName, lastName, email, dateOfBirth,
 				placeOfBirth, phoneNumber);
-		if (k != null) {
-			System.out.println("persisted!!!");
-			System.out.println(k);
+		if (errors.isEmpty()) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspešno ste se registrovali.", null));
 		} else {
-			System.out.println("invalid!");
+			for (CommonError error : errors.getErrors()) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, error.getMessage(), null));
+			}
 		}
 	}
 

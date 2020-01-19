@@ -32,7 +32,7 @@ public class Razvoj implements Serializable {
 	}
 
 	public void loginAction() {
-		System.out.println(ksKorisnikDao.validateLogin(username, password));
+//		System.out.println(ksKorisnikDao.validateLogin(username, password));
 	}
 
 	public List<KSUloga> getKsUlogaList() {

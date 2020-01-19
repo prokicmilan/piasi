@@ -9,6 +9,7 @@ import javax.inject.Inject;
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.control.SecurityProvider;
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSKorisnik;
 import rs.ac.bg.etf.pm160695.infrastructure.datamodel.BaseEntityDao;
+import rs.ac.bg.etf.pm160695.infrastructure.validation.CommonErrors;
 
 @Stateless
 public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
@@ -31,71 +32,58 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 		return korisnikList.isEmpty() ? null : korisnikList.get(0);
 	}
 
-	public KSKorisnik registerUser(String username, String password, String firstName, String lastName, String email,
+	public CommonErrors registerUser(String username, String password, String firstName, String lastName, String email,
 			LocalDate dateOfBirth, String placeOfBirth, String phoneNumber) {
 		KSKorisnik korisnik = new KSKorisnik(username, firstName, lastName, email, dateOfBirth, placeOfBirth,
 				phoneNumber);
-		if (validateKorisnik(korisnik)) {
+
+		CommonErrors errors = validateSave(korisnik);
+
+		if (errors.isEmpty()) {
 			korisnik.setSalt(securityProvider.generateSalt());
 			korisnik.setPassword(securityProvider.generateSaltedPassword(password, korisnik.getSalt()));
-			return persistOrMerge(korisnik);
-		} else {
-			return null;
+			persistOrMerge(korisnik);
 		}
+
+		return errors;
 	}
 
 	/**
-	 * Metoda za validaciju poslatih login parametara
-	 * 
-	 * @param username
-	 * @param password
-	 * @return
-	 */
-	public KSKorisnik validateLogin(String username, String password) {
-		KSKorisnik korisnik = findByUsername(username);
-
-		if (korisnik == null) {
-			// korisnik sa datim username-om ne postoji, vracamo null
-			return null;
-		}
-		// validiramo lozinku
-		if (securityProvider.validatePassword(password, korisnik.getPassword(), korisnik.getSalt())) {
-			// lozinka je validna, vracamo korisnika
-			return korisnik;
-		} else {
-			// lozinka nije validna, vracamo null
-			return null;
-		}
-	}
-
-	/**
-	 * Metoda za dodatne validacije, koje se ne mogu sprovesti anotacijama
+	 * Metoda za validaciju cuvanja korisnika
 	 * 
 	 * @param korisnik
 	 * @return true ako je validan, false u suprotnom
 	 */
-	private boolean validateKorisnik(KSKorisnik korisnik) {
-		return isUsernameUnique(korisnik.getUsername()) && isEmailUnique(korisnik.getEmail());
+	private CommonErrors validateSave(KSKorisnik korisnik) {
+		CommonErrors errors = new CommonErrors();
+		if (!isUsernameUnique(korisnik.getUsername())) {
+			errors.add("Korisničko ime nije jedinstveno");
+		}
+		if (!isEmailUnique(korisnik.getEmail())) {
+			errors.add("Email nije jedinstven");
+		}
+
+		return errors;
 	}
 
 	/**
 	 * Metoda za proveru jedinstvenosti korisnickog imena
 	 * 
 	 * @param username
-	 * @return true ako je korisnicko ime jedinstveno, false ako nije
+	 * @param errors
 	 */
 	private boolean isUsernameUnique(String username) {
-		return findByParameter("username", username).isEmpty() ? true : false;
+		return findByParameter("username", username).isEmpty();
 	}
 
 	/**
 	 * Metoda za proveru jedinstvenosti emaila
 	 * 
 	 * @param email
-	 * @return true ako je email jedinstven, false ako nije
+	 * @param errors
 	 */
 	private boolean isEmailUnique(String email) {
-		return findByParameter("email", email).isEmpty() ? true : false;
+		return findByParameter("email", email).isEmpty();
 	}
 
 }
