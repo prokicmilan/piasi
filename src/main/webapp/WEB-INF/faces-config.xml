@@ -10,4 +10,40 @@
 		<component-class>rs.ac.bg.etf.pm160695.infrastructure.component.CalendarWithNavigation</component-class>
 	</component>
 	
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<navigation-case>
+			<from-outcome>register</from-outcome>
+			<to-view-id>/pages/korisnickisistem/register.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	
+	<application>
+		<locale-config>
+			<default-locale>sr</default-locale>
+		</locale-config>
+		
+		<resource-bundle>
+			<base-name>Labels</base-name>
+			<var>labels</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>LabelsButton</base-name>
+			<var>labelsButton</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>LabelsColumn</base-name>
+			<var>labelsColumn</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>LabelsMessage</base-name>
+			<var>labelsMessage</var>
+		</resource-bundle>
+		<resource-bundle>
+			<base-name>LabelsTitle</base-name>
+			<var>labelsTitle</var>
+		</resource-bundle>
+		
+	</application>
+	
 </faces-config>
