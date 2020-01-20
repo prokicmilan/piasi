@@ -17,6 +17,14 @@
     <param-name>primefaces.FONT_AWESOME</param-name>
     <param-value>true</param-value>
   </context-param>
+  <context-param>
+    <param-name>primefaces.PRIVATE_CAPTCHA_KEY</param-name>
+    <param-value>6LcrKNEUAAAAAKXS8Rh-ObBh5ST5kWjSZGMlJGua</param-value>
+  </context-param>
+  <context-param>
+    <param-name>primefaces.PUBLIC_CAPTCHA_KEY</param-name>
+    <param-value>6LcrKNEUAAAAAJSHFWzcBGrmy8UiefNwhrfJ82Wu</param-value>
+  </context-param>
   <error-page>
     <error-code>403</error-code>
     <location>/noAccess.xhtml</location>
@@ -47,6 +55,6 @@
     </form-login-config>
   </login-config>
   <welcome-file-list>
-    <welcome-file>index.xhtml</welcome-file>
+    <welcome-file>login.xhtml</welcome-file>
   </welcome-file-list>
 </web-app>

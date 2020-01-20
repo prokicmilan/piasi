@@ -9,44 +9,46 @@
 
 <body>
 	<p:messages id="msgs" />
-		<p:panel>
-			<h:form>
-				<p:panelGrid columns="2">
-					<h:outputLabel for="username" value="Korisnicko ime: " />
-					<p:inputText id="username" value="#{registerBacking.username}"/>
+		<p:panel id="register-p">
+			<h:form id="register-form">
+				<p:panelGrid id="register-pg" columns="2">
+					<h:outputLabel for="username" value="#{labels['label.input.username']}" />
+					<p:inputText id="username" value="#{registerBacking.username}" label="#{labels['label.input.username']}"/>
 					
-					<h:outputLabel for="password" value="Lozinka: " />
-					<p:password id="password" value="#{registerBacking.password}" match="password-confirm" />
+					<h:outputLabel for="password" value="#{labels['label.input.password']}" />
+					<p:password id="password" value="#{registerBacking.password}" match="password-confirm" label="#{labels['label.input.password']}" />
 					
-					<h:outputLabel for="password-confirm" value="Ponovljena lozinka: " />
-					<p:password id="password-confirm" value="#{registerBacking.password}" />
+					<h:outputLabel for="password-confirm" value="#{labels['label.input.confirmPassword']}" />
+					<p:password id="password-confirm" value="#{registerBacking.password}" label="#{labels['label.input.confirmPassword']}" />
 					
-					<h:outputLabel for="first-name" value="Ime: " />
-					<p:inputText id="first-name" value="#{registerBacking.firstName}" />
+					<h:outputLabel for="first-name" value="#{labels['label.input.firstName']}" />
+					<p:inputText id="first-name" value="#{registerBacking.firstName}" label="#{labels['label.input.firstName']}" />
 					
-					<h:outputLabel for="last-name" value="Prezime: " />
-					<p:inputText id="last-name" value="#{registerBacking.lastName}" />
+					<h:outputLabel for="last-name" value="#{labels['label.input.lastName']}" />
+					<p:inputText id="last-name" value="#{registerBacking.lastName}" label="#{labels['label.input.lastName']}" />
 					
-					<h:outputLabel for="email" value="Email: " />
-					<p:inputText id="email" value="#{registerBacking.email}" />
+					<h:outputLabel for="email" value="#{labels['label.input.email']}" />
+					<p:inputText id="email" value="#{registerBacking.email}" label="#{labels['label.input.email']}" />
 					
-					<h:outputLabel for="date-of-birth" value="Datum rodjenja: " />
-					<p:calendar id="date-of-birth" value="#{registerBacking.dateOfBirth}" converter="localDateConverter" >
+					<h:outputLabel for="date-of-birth" value="#{labels['label.input.dob']}" />
+					<p:calendar id="date-of-birth" value="#{registerBacking.dateOfBirth}" converter="localDateConverter" label="#{labels['label.input.dob']}" >
 						<p:ajax event="dateSelect" partialSubmit="true" />
 						<p:ajax event="change" partialSubmit="true" />
 					</p:calendar>
 					
-					<h:outputLabel for="place-of-birth" value="Mesto rodjenja: " />
-					<p:inputText id="place-of-birth" value="#{registerBacking.placeOfBirth}" />
+					<h:outputLabel for="place-of-birth" value="#{labels['label.input.pob']}" />
+					<p:inputText id="place-of-birth" value="#{registerBacking.placeOfBirth}" label="#{labels['label.input.pob']}" />
 					
-					<h:outputLabel for="phone-number" value="Telefon: " />
-					<p:inputText id="phone-number" value="#{registerBacking.phoneNumber}" />
+					<h:outputLabel for="phone-number" value="#{labels['label.input.phoneNumber']}" />
+					<p:inputText id="phone-number" value="#{registerBacking.phoneNumber}" label="#{labels['label.input.phoneNumber']}" />
+					
 				</p:panelGrid>
 				
+				<!-- <p:captcha label="Proka" /> -->
 				<p:commandButton value="Register!" 
 					action="#{registerBacking.registerAction}" 
 					process="@form"
-					update="msgs"/>
+					update="msgs" />
 			</h:form>
 	</p:panel>
 </body>

@@ -55,6 +55,9 @@ public class KSKorisnik extends StatusBaseEntity {
 	@NotNull
 	private String telefon;
 	
+	@NotNull
+	private Boolean aktivan;
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "ks_korisnik_ks_uloga",
 			   joinColumns = @JoinColumn(
@@ -70,6 +73,7 @@ public class KSKorisnik extends StatusBaseEntity {
 	}
 
 	public KSKorisnik() {
+		this.aktivan = false;
 	}
 
 	public KSKorisnik(@NotNull @NotBlank String username, @NotNull @NotBlank String ime,
@@ -82,6 +86,7 @@ public class KSKorisnik extends StatusBaseEntity {
 		this.datumRodjenja = datumRodjenja;
 		this.mestoRodjenja = mestoRodjenja;
 		this.telefon = telefon;
+		this.aktivan = false;
 	}
 
 	public void setUsername(String username) {
@@ -150,6 +155,14 @@ public class KSKorisnik extends StatusBaseEntity {
 
 	public void setTelefon(String telefon) {
 		this.telefon = telefon;
+	}
+
+	public Boolean getAktivan() {
+		return aktivan;
+	}
+
+	public void setAktivan(Boolean aktivan) {
+		this.aktivan = aktivan;
 	}
 
 	@Override

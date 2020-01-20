@@ -2,12 +2,15 @@ package rs.ac.bg.etf.pm160695.presentation.korisnickisistem;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -25,35 +28,44 @@ public class RegisterBacking implements Serializable {
 	// Injections
 	@Inject
 	private KSKorisnikDao ksKorisnikDao;
+	
+	@Inject
+	private Logger logger;
 
 	// Fields
-
-	@Size(min = 1, max = 50)
+	@NotBlank
+	@Size(max = 50)
 	private String username;
 
-	@Size(min = 6)
+	@NotBlank
+	@Size(min = 8, message = "mora biti dužine {min} karaktera. Poslato ${validatedValue.length()} karaktera")
 	private String password;
 
-	@Size(min = 1, max = 50)
+	@NotBlank
+	@Size(max = 50)
 	private String firstName;
 
-	@Size(min = 1, max = 50)
+	@NotBlank
+	@Size(max = 50)
 	private String lastName;
 
-	@Size(min = 1, max = 50)
+	@NotBlank
+	@Size(max = 50)
+	@Email(message = "Adresa nije validna")
 	private String email;
 
 	@NotNull
 	private LocalDate dateOfBirth;
 
-	@Size(min = 1, max = 200)
+	@NotBlank
+	@Size(max = 50)
 	private String placeOfBirth;
 
-	@Size(min = 6)
-	@Pattern(regexp = "\\+(\\d{3})(\\d{2})(\\d{3,4})(\\d{3})")
+	@Pattern(regexp = "\\+(\\d{3})(\\d{2})(\\d{3,4})(\\d{3})", message = "Nije validan broj telefona")
 	private String phoneNumber;
 
 	public void registerAction() {
+		logger.info(this.getClass().getName() + ".register_action()");
 		CommonErrors errors = ksKorisnikDao.registerUser(username, password, firstName, lastName, email, dateOfBirth,
 				placeOfBirth, phoneNumber);
 		if (errors.isEmpty()) {

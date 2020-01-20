@@ -44,6 +44,9 @@
 			<var>labelsTitle</var>
 		</resource-bundle>
 		
+		<message-bundle>ValidationMessages</message-bundle>
+		<message-bundle>ApplicationMessages</message-bundle>
+		
 	</application>
 	
 </faces-config>

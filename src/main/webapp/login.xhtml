@@ -21,12 +21,12 @@
 				<p:password id="password" value="#{loginBacking.password}" required="true" />
 			</p:panelGrid>
 			
-			<p:commandButton value="Prijava!" 
+			<p:commandButton value="#{labelsButton['button.login']}" 
 				action="#{loginBacking.loginAction}" 
 				process="@form"
 				update="#{p:component('msgs')}"
 				styleClass="loginButton"/>
-			<p:link outcome="register" value="Registracija" />
+			<p:link outcome="register" value="#{labels['label.link.register']}" />
 		</p:panel>
 	</h:form>
 </body>
