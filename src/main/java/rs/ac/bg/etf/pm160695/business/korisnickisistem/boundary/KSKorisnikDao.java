@@ -8,8 +8,10 @@ import javax.inject.Inject;
 
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.control.SecurityProvider;
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSKorisnik;
+import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSUloga;
 import rs.ac.bg.etf.pm160695.infrastructure.datamodel.BaseEntityDao;
 import rs.ac.bg.etf.pm160695.infrastructure.validation.CommonErrors;
+import rs.ac.bg.etf.pm160695.infrastructure.validation.ValidationUtils;
 
 @Stateless
 public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
@@ -33,10 +35,13 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 	}
 
 	public CommonErrors registerUser(String username, String password, String firstName, String lastName, String email,
-			LocalDate dateOfBirth, String placeOfBirth, String phoneNumber) {
+			LocalDate dateOfBirth, String placeOfBirth, String phoneNumber, KSUloga type) {
 		KSKorisnik korisnik = new KSKorisnik(username, firstName, lastName, email, dateOfBirth, placeOfBirth,
-				phoneNumber);
+				phoneNumber, type);
 
+		korisnik.setPassword("");
+		korisnik.setSalt("");
+		korisnik.setAktivan(false);
 		CommonErrors errors = validateSave(korisnik);
 
 		if (errors.isEmpty()) {
@@ -55,7 +60,7 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 	 * @return true ako je validan, false u suprotnom
 	 */
 	private CommonErrors validateSave(KSKorisnik korisnik) {
-		CommonErrors errors = new CommonErrors();
+		CommonErrors errors = ValidationUtils.validate(korisnik);
 		if (!isUsernameUnique(korisnik.getUsername())) {
 			errors.add("Korisničko ime nije jedinstveno");
 		}

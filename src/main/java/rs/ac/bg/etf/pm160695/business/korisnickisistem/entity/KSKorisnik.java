@@ -1,7 +1,9 @@
 package rs.ac.bg.etf.pm160695.business.korisnickisistem.entity;
 
 import java.time.LocalDate;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,34 +15,28 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import rs.ac.bg.etf.pm160695.infrastructure.datamodel.EntityRecordStatus;
 import rs.ac.bg.etf.pm160695.infrastructure.datamodel.StatusBaseEntity;
 
 @Entity
 @Table(name = "ks_korisnik")
 public class KSKorisnik extends StatusBaseEntity {
 
-	@NotNull
 	@NotBlank
 	private String username;
 
 	@NotNull
-	@NotBlank
 	private String password;
 
 	@NotNull
-	@NotBlank
 	private String salt;
 
 	@NotNull
 	@NotBlank
 	private String ime;
 
-	@NotNull
 	@NotBlank
 	private String prezime;
 
-	@NotNull
 	@NotBlank
 	private String email;
 
@@ -66,19 +62,19 @@ public class KSKorisnik extends StatusBaseEntity {
 			   inverseJoinColumns = @JoinColumn(
 					    name = "uloga_id",
 					    referencedColumnName = "id"))
-	private List<KSUloga> ulogaList;
+	private Set<KSUloga> uloge = new HashSet<>();
 
 	public String getUsername() {
 		return username;
 	}
 
 	public KSKorisnik() {
-		this.aktivan = false;
 	}
-
-	public KSKorisnik(@NotNull @NotBlank String username, @NotNull @NotBlank String ime,
-			@NotNull @NotBlank String prezime, @NotNull @NotBlank String email, @NotNull LocalDate datumRodjenja,
-			@NotNull String mestoRodjenja, @NotNull String telefon) {
+	
+	public KSKorisnik(@NotNull @NotBlank String username, @NotNull @NotBlank String ime, @NotNull @NotBlank String prezime,
+			@NotNull @NotBlank String email, @NotNull LocalDate datumRodjenja, @NotNull String mestoRodjenja,
+			@NotNull String telefon, @NotNull KSUloga uloga) {
+		super();
 		this.username = username;
 		this.ime = ime;
 		this.prezime = prezime;
@@ -86,9 +82,9 @@ public class KSKorisnik extends StatusBaseEntity {
 		this.datumRodjenja = datumRodjenja;
 		this.mestoRodjenja = mestoRodjenja;
 		this.telefon = telefon;
-		this.aktivan = false;
+		this.uloge.add(uloga);
 	}
-
+	
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -164,13 +160,60 @@ public class KSKorisnik extends StatusBaseEntity {
 	public void setAktivan(Boolean aktivan) {
 		this.aktivan = aktivan;
 	}
+	
+	public Set<KSUloga> getUloge() {
+		return new HashSet<>(uloge);
+	}
+	
+	public void setUloge(Set<KSUloga> uloge) {
+		this.uloge.clear();
+		if (uloge != null) {
+			this.uloge.addAll(uloge);
+		}
+	}
+	
+	public void addUloga(KSUloga uloga) {
+		uloge.add(uloga);
+	}
+	
+	public void removeUloga(KSUloga uloga) {
+		uloge.remove(uloga);
+	}
 
 	@Override
 	public String toString() {
 		return "KSKorisnik [id = " + getId() + ", username=" + username + ", password=" + password + ", salt = " + salt
 				+ ", ime=" + ime + ", prezime=" + prezime + ", email=" + email + ", datumRodjenja=" + datumRodjenja
-				+ ", mestoRodjenja=" + mestoRodjenja + ", telefon=" + telefon + ", recordStatus = "
-				+ EntityRecordStatus.parse(getRecordStatus()) + "]";
+				+ ", mestoRodjenja=" + mestoRodjenja + ", telefon=" + telefon + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(aktivan, datumRodjenja, email, ime, mestoRodjenja, password, prezime,
+				salt, telefon, uloge, username);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (!(obj instanceof KSKorisnik)) {
+			return false;
+		}
+		KSKorisnik other = (KSKorisnik) obj;
+		return Objects.equals(aktivan, other.aktivan) && Objects.equals(datumRodjenja, other.datumRodjenja)
+				&& Objects.equals(email, other.email) && Objects.equals(ime, other.ime)
+				&& Objects.equals(mestoRodjenja, other.mestoRodjenja) && Objects.equals(password, other.password)
+				&& Objects.equals(prezime, other.prezime) && Objects.equals(salt, other.salt)
+				&& Objects.equals(telefon, other.telefon) && Objects.equals(uloge, other.uloge)
+				&& Objects.equals(username, other.username);
 	}
 
 }

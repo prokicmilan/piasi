@@ -16,6 +16,14 @@
 			<from-outcome>register</from-outcome>
 			<to-view-id>/pages/korisnickisistem/register.xhtml</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>korisniciPretraga</from-outcome>
+			<to-view-id>/pages/korisnickisistem/pretraga/korisniciPretraga.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>korisnicki-profil</from-outcome>
+			<to-view-id>/pages/korisnickisistem/korisnikProfil.xhtml</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 	
 	<application>

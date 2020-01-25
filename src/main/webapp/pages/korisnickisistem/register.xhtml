@@ -3,54 +3,105 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:p="http://primefaces.org/ui"> 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"> 
 
-<h:head></h:head>
+	<h:head>
+		<h:outputStylesheet name="/css/piasi.css" />
+	</h:head>
 
-<body>
-	<p:messages id="msgs" />
-		<p:panel id="register-p">
+	<body>
+		<p:panel id="register-p" styleClass="flex-container">
+			<p:messages id="msgs" />
 			<h:form id="register-form">
-				<p:panelGrid id="register-pg" columns="2">
-					<h:outputLabel for="username" value="#{labels['label.input.username']}" />
-					<p:inputText id="username" value="#{registerBacking.username}" label="#{labels['label.input.username']}"/>
+				<p:panelGrid id="register-pg" columns="2" styleClass="ui-noborder">
+					<p:outputLabel for="username" value="#{labels['label.input.username']}" styleClass="padding" />
+					<p:inputText id="username" 
+						value="#{registerBacking.username}" 
+						label="#{labels['label.input.username']}"
+						styleClass="input-field"/>
 					
-					<h:outputLabel for="password" value="#{labels['label.input.password']}" />
-					<p:password id="password" value="#{registerBacking.password}" match="password-confirm" label="#{labels['label.input.password']}" />
+					<p:outputLabel for="password" value="#{labels['label.input.password']}" />
+					<p:password id="password" 
+						value="#{registerBacking.password}" 
+						match="password-confirm" 
+						label="#{labels['label.input.password']}"
+						styleClass="input-field" />
 					
-					<h:outputLabel for="password-confirm" value="#{labels['label.input.confirmPassword']}" />
-					<p:password id="password-confirm" value="#{registerBacking.password}" label="#{labels['label.input.confirmPassword']}" />
+					<p:outputLabel for="password-confirm" value="#{labels['label.input.confirmPassword']}" />
+					<p:password id="password-confirm" 
+						value="#{registerBacking.password}" 
+						label="#{labels['label.input.confirmPassword']}"
+						styleClass="input-field" />
 					
-					<h:outputLabel for="first-name" value="#{labels['label.input.firstName']}" />
-					<p:inputText id="first-name" value="#{registerBacking.firstName}" label="#{labels['label.input.firstName']}" />
+					<p:outputLabel for="first-name" value="#{labels['label.input.firstName']}" />
+					<p:inputText id="first-name" 
+						value="#{registerBacking.firstName}" 
+						label="#{labels['label.input.firstName']}"
+						styleClass="input-field" />
 					
-					<h:outputLabel for="last-name" value="#{labels['label.input.lastName']}" />
-					<p:inputText id="last-name" value="#{registerBacking.lastName}" label="#{labels['label.input.lastName']}" />
+					<p:outputLabel for="last-name" value="#{labels['label.input.lastName']}" />
+					<p:inputText id="last-name" 
+						value="#{registerBacking.lastName}" 
+						label="#{labels['label.input.lastName']}"
+						styleClass="input-field" />
 					
-					<h:outputLabel for="email" value="#{labels['label.input.email']}" />
-					<p:inputText id="email" value="#{registerBacking.email}" label="#{labels['label.input.email']}" />
+					<p:outputLabel for="email" value="#{labels['label.input.email']}" />
+					<p:inputText id="email" 
+						value="#{registerBacking.email}" 
+						label="#{labels['label.input.email']}"
+						styleClass="input-field" />
 					
-					<h:outputLabel for="date-of-birth" value="#{labels['label.input.dob']}" />
-					<p:calendar id="date-of-birth" value="#{registerBacking.dateOfBirth}" converter="localDateConverter" label="#{labels['label.input.dob']}" >
+					<p:outputLabel for="date-of-birth" value="#{labels['label.input.dob']}" />
+					<p:calendar id="date-of-birth" 
+						value="#{registerBacking.dateOfBirth}" 
+						converter="localDateConverter" 
+						label="#{labels['label.input.dob']}"
+						styleClass="input-field" >
 						<p:ajax event="dateSelect" partialSubmit="true" />
 						<p:ajax event="change" partialSubmit="true" />
 					</p:calendar>
 					
-					<h:outputLabel for="place-of-birth" value="#{labels['label.input.pob']}" />
-					<p:inputText id="place-of-birth" value="#{registerBacking.placeOfBirth}" label="#{labels['label.input.pob']}" />
+					<p:outputLabel for="place-of-birth" value="#{labels['label.input.pob']}" />
+					<p:inputText id="place-of-birth" 
+						value="#{registerBacking.placeOfBirth}" 
+						label="#{labels['label.input.pob']}"
+						styleClass="input-field" />
 					
-					<h:outputLabel for="phone-number" value="#{labels['label.input.phoneNumber']}" />
-					<p:inputText id="phone-number" value="#{registerBacking.phoneNumber}" label="#{labels['label.input.phoneNumber']}" />
+					<p:outputLabel for="phone-number" value="#{labels['label.input.phoneNumber']}" />
+					<p:inputText id="phone-number" 
+						value="#{registerBacking.phoneNumber}" 
+						label="#{labels['label.input.phoneNumber']}"
+						styleClass="input-field" />
 					
+					<p:outputLabel for="type" value="#{labels['label.input.type']}" />
+					<p:selectOneMenu id="type" 
+						label="#{labels['label.input.type']}" 
+						value="#{registerBacking.selectedUloga}"
+						autoWidth="false"
+						style="width: 160px"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem noSelectionOption="true"/>
+						<f:selectItems value="#{registerBacking.ulogaList}" 
+							var="uloga" 
+							itemLabel="#{uloga.naziv}" 
+							itemValue="#{uloga}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel for="captcha" value="#{labels['label.input.captcha']}" />
+					<p:captcha id="captcha" 
+						label="#{labels['label.input.captcha']}" 
+						requiredMessage="Morate se verifikovati!" />
 				</p:panelGrid>
 				
-				<!-- <p:captcha label="Proka" /> -->
 				<p:commandButton value="Register!" 
 					action="#{registerBacking.registerAction}" 
 					process="@form"
-					update="msgs" />
+					update="msgs"
+					ajax="false"
+					styleClass="centered-button" />
 			</h:form>
-	</p:panel>
-</body>
+		</p:panel>
+	</body>
       
 </html>

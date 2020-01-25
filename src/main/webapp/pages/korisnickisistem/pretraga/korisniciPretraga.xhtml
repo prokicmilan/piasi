@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<ui:composition template="/templates/masterPageTemplate.xhtml">
+		<ui:define name="page-content">
+			<p:panel styleClass="ui-noborder">
+				<p:panelGrid id="pg-pretraga-general"
+					columns="2"
+					columnClasses="ui-g-2 ui-g-10">
+					<p:panel id="panel-pretraga-filter">
+						<f:facet name="header">
+							<i class="fa fa-bars fa-fw" /> #{labelsTitle['header.kriterijumiPretrage']}
+						</f:facet>	
+						
+						<p:panelGrid id="pg-pretraga-filter" columns="1">
+							<p:outputLabel for="username" value="#{labels['label.username']}" />
+							
+							<p:inputText id="username" value="" />
+							
+							<p:outputLabel for="firstName" value="#{labels['label.firstName']}" />
+							
+							<p:inputText id="firstName" value="" />
+							
+							<p:outputLabel for="lastName" value="#{labels['label.lastName']}" />
+							
+							<p:inputText id="lastName" value="" />
+							
+							<p:outputLabel for="email" value="#{labels['label.lastName']}" />
+							
+							<p:inputText id="email" value="" />
+						</p:panelGrid>
+					</p:panel>
+					<p:panel id="panel-pretraga-results">
+						<p:dataTable></p:dataTable>
+					</p:panel>
+				</p:panelGrid>
+			</p:panel>
+		</ui:define>
+	</ui:composition>
+</html>

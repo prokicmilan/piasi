@@ -28,14 +28,6 @@
 		    <version>5.4.3.Final</version>
 		    <scope>provided</scope>
 		</dependency>
-		
-		<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-jpamodelgen -->
-		<dependency>
-		    <groupId>org.hibernate</groupId>
-		    <artifactId>hibernate-jpamodelgen</artifactId>
-		    <version>5.4.3.Final</version>
-		    <scope>provided</scope>
-		</dependency>
 		        
         <!-- https://mvnrepository.com/artifact/org.primefaces/primefaces -->
 		<dependency>
@@ -44,21 +36,16 @@
 		    <version>6.2</version>
 		</dependency>
 		
+		<!-- https://mvnrepository.com/artifact/org.omnifaces/omnifaces -->
+		<dependency>
+		    <groupId>org.omnifaces</groupId>
+		    <artifactId>omnifaces</artifactId>
+		    <version>3.4.1</version>
+		</dependency>
+			
     </dependencies>
     <build>
         <finalName>piasi</finalName>
-<!--         <plugins>
-        	<plugin>
-        		<groupId>org.apache.maven.plugins</groupId>
-        		<artifactId>maven-compiler-plugin</artifactId>
-        		<version>3.8.1</version>
-        		<configuration>
-                    <compilerArguments>
-                        <processor>org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor</processor>
-                    </compilerArguments>
-        		</configuration>
-        	</plugin>
-        </plugins> -->
     </build>
     <properties>
     	<maven.compiler.encoding>UTF-8</maven.compiler.encoding>

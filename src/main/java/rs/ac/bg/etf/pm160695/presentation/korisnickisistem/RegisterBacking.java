@@ -2,8 +2,10 @@ package rs.ac.bg.etf.pm160695.presentation.korisnickisistem;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.logging.Logger;
 
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -16,6 +18,8 @@ import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.boundary.KSKorisnikDao;
+import rs.ac.bg.etf.pm160695.business.korisnickisistem.boundary.KSUlogaDao;
+import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSUloga;
 import rs.ac.bg.etf.pm160695.infrastructure.validation.CommonError;
 import rs.ac.bg.etf.pm160695.infrastructure.validation.CommonErrors;
 
@@ -30,6 +34,9 @@ public class RegisterBacking implements Serializable {
 	private KSKorisnikDao ksKorisnikDao;
 	
 	@Inject
+	private KSUlogaDao ksUlogaDao;
+	
+	@Inject
 	private Logger logger;
 
 	// Fields
@@ -38,7 +45,7 @@ public class RegisterBacking implements Serializable {
 	private String username;
 
 	@NotBlank
-	@Size(min = 8, message = "mora biti dužine {min} karaktera. Poslato ${validatedValue.length()} karaktera")
+	@Size(min = 2, message = "mora biti dužine {min} karaktera. Uneto ${validatedValue.length()} karaktera")
 	private String password;
 
 	@NotBlank
@@ -61,13 +68,24 @@ public class RegisterBacking implements Serializable {
 	@Size(max = 50)
 	private String placeOfBirth;
 
+	@NotBlank
 	@Pattern(regexp = "\\+(\\d{3})(\\d{2})(\\d{3,4})(\\d{3})", message = "Nije validan broj telefona")
 	private String phoneNumber;
+	
+	@NotNull
+	private KSUloga selectedUloga;
+	
+	private List<KSUloga> ulogaList;
+	
+	@PostConstruct
+	protected void init() {
+		ulogaList = ksUlogaDao.findNonPrivileged();
+	}
 
 	public void registerAction() {
 		logger.info(this.getClass().getName() + ".register_action()");
 		CommonErrors errors = ksKorisnikDao.registerUser(username, password, firstName, lastName, email, dateOfBirth,
-				placeOfBirth, phoneNumber);
+				placeOfBirth, phoneNumber, selectedUloga);
 		if (errors.isEmpty()) {
 			FacesContext.getCurrentInstance().addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspešno ste se registrovali.", null));
@@ -141,6 +159,18 @@ public class RegisterBacking implements Serializable {
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
+	}
+
+	public KSUloga getSelectedUloga() {
+		return selectedUloga;
+	}
+
+	public void setSelectedUloga(KSUloga selectedUloga) {
+		this.selectedUloga = selectedUloga;
+	}
+
+	public List<KSUloga> getUlogaList() {
+		return ulogaList;
 	}
 
 }
