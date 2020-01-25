@@ -32,10 +32,10 @@ public class RegisterBacking implements Serializable {
 	// Injections
 	@Inject
 	private KSKorisnikDao ksKorisnikDao;
-	
+
 	@Inject
 	private KSUlogaDao ksUlogaDao;
-	
+
 	@Inject
 	private Logger logger;
 
@@ -71,15 +71,15 @@ public class RegisterBacking implements Serializable {
 	@NotBlank
 	@Pattern(regexp = "\\+(\\d{3})(\\d{2})(\\d{3,4})(\\d{3})", message = "Nije validan broj telefona")
 	private String phoneNumber;
-	
+
 	@NotNull
 	private KSUloga selectedUloga;
-	
+
 	private List<KSUloga> ulogaList;
-	
+
 	@PostConstruct
 	protected void init() {
-		ulogaList = ksUlogaDao.findNonPrivileged();
+		ulogaList = ksUlogaDao.findFunkcionalne();
 	}
 
 	public void registerAction() {

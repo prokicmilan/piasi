@@ -1,7 +1,6 @@
 package rs.ac.bg.etf.pm160695.business.korisnickisistem.entity;
 
-import java.util.Objects;
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -14,10 +13,11 @@ import rs.ac.bg.etf.pm160695.infrastructure.datamodel.BaseEntity;
 public class KSUloga extends BaseEntity {
 
 	private String oznaka;
-	
+
 	private String naziv;
-	
-	private Boolean privileged;
+
+	@Column(name = "uloga_tip")
+	private Integer ulogaTip;
 
 	public String getOznaka() {
 		return oznaka;
@@ -27,32 +27,8 @@ public class KSUloga extends BaseEntity {
 		return naziv;
 	}
 
-	public Boolean getPrivileged() {
-		return privileged;
+	public KSUlogaTip getUlogaTip() {
+		return KSUlogaTip.parse(ulogaTip);
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = super.hashCode();
-		result = prime * result + Objects.hash(naziv, oznaka, privileged);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (!super.equals(obj)) {
-			return false;
-		}
-		if (!(obj instanceof KSUloga)) {
-			return false;
-		}
-		KSUloga other = (KSUloga) obj;
-		return Objects.equals(naziv, other.naziv) && Objects.equals(oznaka, other.oznaka)
-				&& Objects.equals(privileged, other.privileged);
-	}
-	
 }

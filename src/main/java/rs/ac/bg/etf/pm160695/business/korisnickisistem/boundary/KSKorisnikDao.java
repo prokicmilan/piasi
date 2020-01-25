@@ -5,9 +5,11 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
 
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.control.SecurityProvider;
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSKorisnik;
+import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSKorisnik_;
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSUloga;
 import rs.ac.bg.etf.pm160695.infrastructure.datamodel.BaseEntityDao;
 import rs.ac.bg.etf.pm160695.infrastructure.validation.CommonErrors;
@@ -17,14 +19,25 @@ import rs.ac.bg.etf.pm160695.infrastructure.validation.ValidationUtils;
 public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 
 	@Inject
+	private KSUlogaDao ksUlogaDao;
+
+	@Inject
 	private SecurityProvider securityProvider;
+
+	@Inject
+	private EntityManager em;
 
 	public KSKorisnikDao() {
 		super(KSKorisnik.class);
 	}
 
+	@Override
+	protected EntityManager getEntityManager() {
+		return em;
+	}
+
 	public KSKorisnik findByUsername(String username) {
-		List<KSKorisnik> korisnikList = findByParameter("username", username);
+		List<KSKorisnik> korisnikList = findByParameter(KSKorisnik_.username, username);
 
 		if (korisnikList.size() > 1) {
 			// TODO: exception
@@ -37,7 +50,7 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 	public CommonErrors registerUser(String username, String password, String firstName, String lastName, String email,
 			LocalDate dateOfBirth, String placeOfBirth, String phoneNumber, KSUloga type) {
 		KSKorisnik korisnik = new KSKorisnik(username, firstName, lastName, email, dateOfBirth, placeOfBirth,
-				phoneNumber, type);
+				phoneNumber);
 
 		korisnik.setPassword("");
 		korisnik.setSalt("");
@@ -47,6 +60,7 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 		if (errors.isEmpty()) {
 			korisnik.setSalt(securityProvider.generateSalt());
 			korisnik.setPassword(securityProvider.generateSaltedPassword(password, korisnik.getSalt()));
+			korisnik.addUloge(ksUlogaDao.findOsnovne());
 			persistOrMerge(korisnik);
 		}
 
@@ -78,7 +92,7 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 	 * @param errors
 	 */
 	private boolean isUsernameUnique(String username) {
-		return findByParameter("username", username).isEmpty();
+		return executeCountQuery(KSKorisnik_.username, username, Boolean.TRUE) == 0;
 	}
 
 	/**
@@ -88,7 +102,7 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 	 * @param errors
 	 */
 	private boolean isEmailUnique(String email) {
-		return findByParameter("email", email).isEmpty();
+		return executeCountQuery(KSKorisnik_.email, email, Boolean.TRUE) == 0;
 	}
 
 }

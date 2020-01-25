@@ -21,6 +21,9 @@ public abstract class StatusBaseEntity extends BaseEntity {
 	@JoinColumn(name = "ks_korisnik_id")
 	private KSKorisnik ksKorisnik;
 
+	@Column(name = "record_status")
+	private Integer recordStatus;
+
 	@Column(name = "insert_timestamp")
 	private LocalDateTime insertTimestamp;
 
@@ -54,6 +57,7 @@ public abstract class StatusBaseEntity extends BaseEntity {
 	protected void prePersist() {
 		insertTimestamp = LocalDateTime.now();
 		lastUpdateTimestamp = LocalDateTime.of(insertTimestamp.toLocalDate(), insertTimestamp.toLocalTime());
+		recordStatus = EntityRecordStatus.AKTIVAN.getValue();
 	}
 
 	@PreUpdate

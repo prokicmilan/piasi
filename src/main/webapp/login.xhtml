@@ -24,8 +24,7 @@
 			<p:commandButton value="#{labelsButton['button.login']}" 
 				action="#{loginBacking.loginAction}" 
 				process="@form"
-				update="#{p:component('msgs')}"
-				styleClass="loginButton"/>
+				styleClass="loginButton" />
 			<p:link outcome="register" value="#{labels['label.link.register']}" />
 		</p:panel>
 	</h:form>

@@ -1,6 +1,7 @@
 package rs.ac.bg.etf.pm160695.business.korisnickisistem.entity;
 
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -50,18 +51,12 @@ public class KSKorisnik extends StatusBaseEntity {
 
 	@NotNull
 	private String telefon;
-	
+
 	@NotNull
 	private Boolean aktivan;
-	
+
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "ks_korisnik_ks_uloga",
-			   joinColumns = @JoinColumn(
-			   			name = "korisnik_id", 
-			   			referencedColumnName = "id"),
-			   inverseJoinColumns = @JoinColumn(
-					    name = "uloga_id",
-					    referencedColumnName = "id"))
+	@JoinTable(name = "ks_korisnik_ks_uloga", joinColumns = @JoinColumn(name = "korisnik_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "uloga_id", referencedColumnName = "id"))
 	private Set<KSUloga> uloge = new HashSet<>();
 
 	public String getUsername() {
@@ -70,10 +65,10 @@ public class KSKorisnik extends StatusBaseEntity {
 
 	public KSKorisnik() {
 	}
-	
-	public KSKorisnik(@NotNull @NotBlank String username, @NotNull @NotBlank String ime, @NotNull @NotBlank String prezime,
-			@NotNull @NotBlank String email, @NotNull LocalDate datumRodjenja, @NotNull String mestoRodjenja,
-			@NotNull String telefon, @NotNull KSUloga uloga) {
+
+	public KSKorisnik(@NotNull @NotBlank String username, @NotNull @NotBlank String ime,
+			@NotNull @NotBlank String prezime, @NotNull @NotBlank String email, @NotNull LocalDate datumRodjenja,
+			@NotNull String mestoRodjenja, @NotNull String telefon) {
 		super();
 		this.username = username;
 		this.ime = ime;
@@ -82,9 +77,11 @@ public class KSKorisnik extends StatusBaseEntity {
 		this.datumRodjenja = datumRodjenja;
 		this.mestoRodjenja = mestoRodjenja;
 		this.telefon = telefon;
-		this.uloge.add(uloga);
+		this.password = "";
+		this.salt = "";
+		this.aktivan = Boolean.FALSE;
 	}
-	
+
 	public void setUsername(String username) {
 		this.username = username;
 	}
@@ -160,22 +157,26 @@ public class KSKorisnik extends StatusBaseEntity {
 	public void setAktivan(Boolean aktivan) {
 		this.aktivan = aktivan;
 	}
-	
+
 	public Set<KSUloga> getUloge() {
 		return new HashSet<>(uloge);
 	}
-	
+
 	public void setUloge(Set<KSUloga> uloge) {
 		this.uloge.clear();
 		if (uloge != null) {
 			this.uloge.addAll(uloge);
 		}
 	}
-	
+
+	public void addUloge(Collection<KSUloga> uloge) {
+		this.uloge.addAll(uloge);
+	}
+
 	public void addUloga(KSUloga uloga) {
 		uloge.add(uloga);
 	}
-	
+
 	public void removeUloga(KSUloga uloga) {
 		uloge.remove(uloga);
 	}

@@ -2,51 +2,72 @@ package rs.ac.bg.etf.pm160695.infrastructure.datamodel;
 
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.criteria.Selection;
+import javax.persistence.metamodel.SingularAttribute;
 
 public abstract class BaseEntityDao<T extends BaseEntity> {
 
 	private Class<T> entityClass;
 
-	@Inject
-	private EntityManager em;
-
 	public BaseEntityDao(Class<T> entityClass) {
 		this.entityClass = entityClass;
 	}
 
-	public List<T> findByParameter(String string, Object value) {
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		CriteriaQuery<T> query = cb.createQuery(entityClass);
-		Root<T> root = query.from(entityClass);
+	protected abstract EntityManager getEntityManager();
 
-		query.where(cb.equal(root.get(string), value));
+	protected List<T> findByParameter(SingularAttribute<T, ?> column, Object value) {
+		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<T> criteriaQuery = cb.createQuery(entityClass);
+		Root<T> root = criteriaQuery.from(entityClass);
 
-		return em.createQuery(query).getResultList();
+		Predicate predicate = cb.equal(root.get(column), value);
+
+		criteriaQuery.select(root).where(predicate);
+
+		return getEntityManager().createQuery(criteriaQuery).getResultList();
+	}
+
+	protected Long executeCountQuery(SingularAttribute<T, ?> column, Object value, boolean distinct) {
+		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<Long> criteriaQuery = cb.createQuery(Long.class);
+		Root<T> root = criteriaQuery.from(entityClass);
+
+		Selection<Long> countSelection;
+		Path<?> columnPath = root.get(column);
+		Predicate equalsPredicate = cb.equal(columnPath, value);
+
+		if (distinct) {
+			countSelection = cb.countDistinct(columnPath);
+		} else {
+			countSelection = cb.count(columnPath);
+		}
+
+		criteriaQuery.select(countSelection).where(equalsPredicate);
+
+		return getEntityManager().createQuery(criteriaQuery).getSingleResult();
 	}
 
 	protected T persistOrMerge(T entity) {
 		if (entity.getId() == null) {
-			em.persist(entity);
+			getEntityManager().persist(entity);
 		} else {
-			em.merge(entity);
+			getEntityManager().merge(entity);
 		}
 		return entity;
 	}
 
-	public void delete(T entity) {
-		em.remove(entity);
+	protected void delete(T entity) {
+		getEntityManager().remove(entity);
 	}
 
-	public Class<T> getEntityClass() {
+	protected Class<T> getEntityClass() {
 		return entityClass;
 	}
 
-	public EntityManager getEm() {
-		return em;
-	}
 }
