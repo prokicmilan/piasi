@@ -17,6 +17,8 @@ import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSKorisnik;
 @MappedSuperclass
 public abstract class StatusBaseEntity extends BaseEntity {
 
+	private static final long serialVersionUID = -1662948700649008948L;
+
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "ks_korisnik_id")
 	private KSKorisnik ksKorisnik;
@@ -69,7 +71,7 @@ public abstract class StatusBaseEntity extends BaseEntity {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(insertTimestamp, ksKorisnik, lastUpdateTimestamp, version);
+		result = prime * result + Objects.hash(insertTimestamp, lastUpdateTimestamp, version);
 		return result;
 	}
 

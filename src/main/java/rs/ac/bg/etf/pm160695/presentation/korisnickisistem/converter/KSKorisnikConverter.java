@@ -23,7 +23,7 @@ public class KSKorisnikConverter implements Converter<KSKorisnik> {
 			return null;
 		}
 		try {
-			return ksKorisnikDao.findById(Long.parseLong(value));
+			return ksKorisnikDao.find(Long.parseLong(value));
 		} catch (NumberFormatException e) {
 			throw new ConverterException(
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, value + " nije validan id korisnika", null));

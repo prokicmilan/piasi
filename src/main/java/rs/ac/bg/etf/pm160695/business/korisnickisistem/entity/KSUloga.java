@@ -12,6 +12,8 @@ import rs.ac.bg.etf.pm160695.infrastructure.datamodel.BaseEntity;
 @NamedQuery(name = "findAll", query = "select k from KSUloga k")
 public class KSUloga extends BaseEntity {
 
+	private static final long serialVersionUID = 459203223558917867L;
+
 	private String oznaka;
 
 	private String naziv;

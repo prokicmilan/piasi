@@ -24,6 +24,10 @@ public abstract class BaseEntityDao<T extends BaseEntity> {
 
 	protected abstract EntityManager getEntityManager();
 
+	public T find(Object key) {
+		return getEntityManager().find(entityClass, key);
+	}
+
 	public List<T> filter(Map<String, String> filters) {
 		CriteriaQuery<T> criteriaQuery = prepareCriteriaQuery(filters);
 
@@ -69,6 +73,16 @@ public abstract class BaseEntityDao<T extends BaseEntity> {
 			getEntityManager().merge(entity);
 		}
 		return entity;
+	}
+
+	protected void evictEntityFromCache(T entity) {
+		getEntityManager().flush();
+		getEntityManager().getEntityManagerFactory().getCache().evict(entityClass, entity.getId());
+	}
+
+	protected void evictClassFromCache() {
+		getEntityManager().flush();
+		getEntityManager().getEntityManagerFactory().getCache().evict(entityClass);
 	}
 
 	private CriteriaQuery<T> prepareCriteriaQuery(Map<String, String> filters) {

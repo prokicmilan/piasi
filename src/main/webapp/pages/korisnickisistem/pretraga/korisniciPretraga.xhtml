@@ -44,30 +44,46 @@
 						</h:form>
 					</p:panel>
 					<p:panel id="panel-pretraga-results">
-						<p:toolbar id="tbr-akcije">
-							<f:facet name="left">
-								<p:commandButton id="btn-novi"
-										value="#{labelsButton['button.novi']}"
-										action="#{korisnikPretragaBacking.noviAction}"
-										icon="fa fa-list fa-fw" />
-								<p:button id="btn-izmeni"
-									value="#{labelsButton['button.izmeni']}"
-									icon="fa fa-list fa-fw"
-									disabled="#{korisnikPretragaBacking.selectedKorisnik eq null}"
-									outcome="korisnicki-profil" >
-									<f:param name="userId" value="#{korisnikPretragaBacking.selectedKorisnik.id}" />
-									<f:param name="edit" value="true" />
-								</p:button>
-								<p:button id="btn-detalji"
-									value="#{labelsButton['button.detalji']}"
-									icon="fa fa-list fa-fw"
-									disabled="#{korisnikPretragaBacking.selectedKorisnik eq null}"
-									outcome="korisnicki-profil" >
-									<f:param name="userId" value="#{korisnikPretragaBacking.selectedKorisnik.id}" />
-									<f:param name="edit" value="false" />
-								</p:button>
-							</f:facet>
-						</p:toolbar>
+						<h:form id="akcije-form">
+							<p:toolbar id="tbr-akcije">
+								<f:facet name="left">
+									<p:commandButton id="btn-novi"
+											value="#{labelsButton['button.novi']}"
+											action="#{korisnikPretragaBacking.noviAction}"
+											icon="fa fa-plus fa-fw" />
+									<p:button id="btn-izmeni"
+										value="#{labelsButton['button.izmeni']}"
+										icon="fa fa-edit fa-fw"
+										disabled="#{korisnikPretragaBacking.selectedKorisnik eq null}"
+										outcome="korisnicki-profil" >
+										<f:param name="userId" value="#{korisnikPretragaBacking.selectedKorisnik.id}" />
+										<f:param name="edit" value="true" />
+									</p:button>
+									<p:button id="btn-detalji"
+										value="#{labelsButton['button.detalji']}"
+										icon="fa fa-list fa-fw"
+										disabled="#{korisnikPretragaBacking.selectedKorisnik eq null}"
+										outcome="korisnicki-profil" >
+										<f:param name="userId" value="#{korisnikPretragaBacking.selectedKorisnik.id}" />
+										<f:param name="edit" value="false" />
+									</p:button>
+								</f:facet>
+								<f:facet name="right">
+									<p:commandButton id="btn-aktiviraj"
+										value="#{labelsButton['button.aktiviraj']}"
+										action="#{korisnikPretragaBacking.aktivirajAction}"
+										icon="fa fa-plus-square fa-fw"
+										disabled="#{korisnikPretragaBacking.selectedKorisnik eq null or korisnikPretragaBacking.selectedKorisnik.aktivan eq true}"
+										update="panel-pretraga-results tbr-akcije" />
+									<p:commandButton id="btn-deaktiviraj"
+										value="#{labelsButton['button.deaktiviraj']}"
+										action="#{korisnikPretragaBacking.deaktivirajAction}"
+										icon="fa fa-ban fa-fw"
+										disabled="#{korisnikPretragaBacking.selectedKorisnik eq null or korisnikPretragaBacking.selectedKorisnik.aktivan eq false}"
+										update="panel-pretraga-results tbr-akcije" />
+								</f:facet>
+							</p:toolbar>
+						</h:form>
 						<h:form id="result-form">
 							<p:dataTable id="dt-korisnikPretragaResults"
 								value="#{korisnikPretragaBacking.korisnikList}" 
@@ -89,8 +105,8 @@
 								
 								emptyMessage="#{labels['label.emptyMessage']}" >
 								
-								<p:ajax event="rowSelect" update="tbr-akcije" />
-								<p:ajax event="rowUnselect" update="tbr-akcije" />
+								<p:ajax event="rowSelect" update="akcije-form:tbr-akcije" />
+								<p:ajax event="rowUnselect" update="akcije-form:tbr-akcije" />
 								
 								<p:column headerText="#{labelsColumn['column.username']}" styleClass="column-127" >
 									<h:outputText value="#{korisnik.username}" />

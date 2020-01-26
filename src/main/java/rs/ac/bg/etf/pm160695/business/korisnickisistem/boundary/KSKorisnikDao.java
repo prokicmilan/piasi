@@ -36,10 +36,6 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 		return em;
 	}
 
-	public KSKorisnik findById(Long id) {
-		return em.find(getEntityClass(), id);
-	}
-
 	public KSKorisnik findByUsername(String username) {
 		List<KSKorisnik> korisnikList = findByParameter(KSKorisnik_.username, username);
 
@@ -87,14 +83,73 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 		}
 
 		errors = validate(korisnik);
+		KSKorisnik k = find(korisnik.getId());
 
-		if (errors.isEmpty()) {
-			if (korisnik.getId() == null) {
-				// cuvamo novog
+		if (k != null) {
+			// za postojeceg korisnika proveravamo da li je promenjena email adresa
+			if (!k.getEmail().equals(korisnik.getEmail())) {
+				// promenjena je email adresa, proveravamo da li je nova jedinstvena
+				if (!isEmailUnique(korisnik.getEmail())) {
+					errors.add("Email adresa nije jedinstvena");
+				}
 			}
 		}
 
+		if (errors.isEmpty()) {
+			if (k == null) {
+				// cuvamo novog korisnika
+				hashPassword(korisnik);
+			} else {
+				// cuvamo postojeceg korisnika
+				if (!k.getPassword().equals(korisnik.getPassword())) {
+					// promenjena je lozinka, generisemo novi salt i hash
+					hashPassword(korisnik);
+				}
+			}
+			korisnik = persistOrMerge(korisnik);
+			evictEntityFromCache(korisnik);
+		}
+
 		return errors;
+	}
+
+	public CommonErrors activateKorisnik(KSKorisnik korisnik, KSKorisnik ulogovaniKorisnik) {
+		CommonErrors errors = new CommonErrors();
+
+		if (Boolean.TRUE.equals(korisnik.getAktivan())) {
+			errors.add("Korisnik je već aktivan");
+		}
+		if (errors.isEmpty()) {
+			korisnik.setAktivan(Boolean.FALSE);
+			korisnik.setKsKorisnik(ulogovaniKorisnik);
+			korisnik = persistOrMerge(korisnik);
+			evictEntityFromCache(korisnik);
+		}
+
+		return errors;
+	}
+
+	public CommonErrors deactivateKorisnik(KSKorisnik korisnik, KSKorisnik ulogovaniKorisnik) {
+		CommonErrors errors = new CommonErrors();
+
+		if (Boolean.FALSE.equals(korisnik.getAktivan())) {
+			errors.add("Korisnik je već neaktivan");
+		}
+		if (errors.isEmpty()) {
+			korisnik.setAktivan(Boolean.TRUE);
+			korisnik.setKsKorisnik(ulogovaniKorisnik);
+			korisnik = persistOrMerge(korisnik);
+			evictEntityFromCache(korisnik);
+		}
+
+		return errors;
+	}
+
+	private void hashPassword(KSKorisnik korisnik) {
+		String salt = securityProvider.generateSalt();
+		String digest = securityProvider.generateSaltedPassword(korisnik.getPassword(), salt);
+		korisnik.setSalt(salt);
+		korisnik.setPassword(digest);
 	}
 
 	private CommonErrors validate(KSKorisnik korisnik) {
@@ -130,7 +185,7 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 	private CommonErrors validateUpdate(KSKorisnik korisnik) {
 		CommonErrors errors = ValidationUtils.validate(korisnik);
 
-		KSKorisnik k = findById(korisnik.getId());
+		KSKorisnik k = find(korisnik.getId());
 		if (!k.getEmail().equals(korisnik.getEmail()) && !isEmailUnique(korisnik.getEmail())) {
 			errors.add("Email nije jedinstven");
 		}

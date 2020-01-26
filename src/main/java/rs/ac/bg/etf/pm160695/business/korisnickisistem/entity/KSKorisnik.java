@@ -22,6 +22,8 @@ import rs.ac.bg.etf.pm160695.infrastructure.datamodel.StatusBaseEntity;
 @Table(name = "ks_korisnik")
 public class KSKorisnik extends StatusBaseEntity {
 
+	private static final long serialVersionUID = -4982973905902693922L;
+
 	@NotBlank
 	private String username;
 

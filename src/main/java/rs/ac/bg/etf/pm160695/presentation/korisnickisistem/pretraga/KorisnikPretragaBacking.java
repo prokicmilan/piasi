@@ -7,12 +7,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.boundary.KSKorisnikDao;
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSKorisnik;
+import rs.ac.bg.etf.pm160695.infrastructure.security.CurrentUserBean;
+import rs.ac.bg.etf.pm160695.infrastructure.validation.CommonError;
+import rs.ac.bg.etf.pm160695.infrastructure.validation.CommonErrors;
 
 @Named
 @ViewScoped
@@ -22,6 +27,9 @@ public class KorisnikPretragaBacking implements Serializable {
 
 	@Inject
 	private Logger logger;
+
+	@Inject
+	private CurrentUserBean currentUserBean;
 
 	@Inject
 	private KSKorisnikDao ksKorisnikDao;
@@ -41,6 +49,41 @@ public class KorisnikPretragaBacking implements Serializable {
 		korisnikList.clear();
 		filters.clear();
 		selectedKorisnik = null;
+	}
+
+	public void aktivirajAction() {
+		logger.info(this.getClass().getName() + ".aktivirajAction() --> selectedKorisnik = "
+				+ selectedKorisnik.getUsername());
+		CommonErrors errors = ksKorisnikDao.activateKorisnik(selectedKorisnik, currentUserBean.getUlogovaniKorisnik());
+		if (errors.isEmpty()) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspešno ste aktivirali korisnika", null));
+			// osvezavamo podatke jer smo izvrsili promenu
+			pretragaAction();
+		} else {
+			for (CommonError error : errors.getErrors()) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, error.getMessage(), null));
+			}
+		}
+	}
+
+	public void deaktivirajAction() {
+		logger.info(this.getClass().getName() + ".deaktivirajAction() --> selectedKorisnik = "
+				+ selectedKorisnik.getUsername());
+		CommonErrors errors = ksKorisnikDao.deactivateKorisnik(selectedKorisnik,
+				currentUserBean.getUlogovaniKorisnik());
+		if (errors.isEmpty()) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspešno ste aktivirali korisnika", null));
+			// osvezavamo podatke jer smo izvrsili promenu
+			pretragaAction();
+		} else {
+			for (CommonError error : errors.getErrors()) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_ERROR, error.getMessage(), null));
+			}
+		}
 	}
 
 	public String noviAction() {
