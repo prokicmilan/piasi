@@ -36,6 +36,10 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 		return em;
 	}
 
+	public KSKorisnik findById(Long id) {
+		return em.find(getEntityClass(), id);
+	}
+
 	public KSKorisnik findByUsername(String username) {
 		List<KSKorisnik> korisnikList = findByParameter(KSKorisnik_.username, username);
 
@@ -68,6 +72,44 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 	}
 
 	/**
+	 * Metoda za cuvanje korisnika, bilo da je u pitanju izmena ili kreiranje novog
+	 * od strane administratora
+	 * 
+	 * @param korisnik
+	 * @param ulogovaniKorisnik
+	 * @return
+	 */
+	public CommonErrors saveUser(KSKorisnik korisnik, KSKorisnik ulogovaniKorisnik) {
+		CommonErrors errors;
+		korisnik.setKsKorisnik(ulogovaniKorisnik);
+		if (korisnik.getAktivan() == null) {
+			korisnik.setAktivan(Boolean.TRUE);
+		}
+
+		errors = validate(korisnik);
+
+		if (errors.isEmpty()) {
+			if (korisnik.getId() == null) {
+				// cuvamo novog
+			}
+		}
+
+		return errors;
+	}
+
+	private CommonErrors validate(KSKorisnik korisnik) {
+		CommonErrors errors;
+
+		if (korisnik.getId() == null) {
+			errors = validateSave(korisnik);
+		} else {
+			errors = validateUpdate(korisnik);
+		}
+
+		return errors;
+	}
+
+	/**
 	 * Metoda za validaciju cuvanja korisnika
 	 * 
 	 * @param korisnik
@@ -79,6 +121,17 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 			errors.add("Korisničko ime nije jedinstveno");
 		}
 		if (!isEmailUnique(korisnik.getEmail())) {
+			errors.add("Email nije jedinstven");
+		}
+
+		return errors;
+	}
+
+	private CommonErrors validateUpdate(KSKorisnik korisnik) {
+		CommonErrors errors = ValidationUtils.validate(korisnik);
+
+		KSKorisnik k = findById(korisnik.getId());
+		if (!k.getEmail().equals(korisnik.getEmail()) && !isEmailUnique(korisnik.getEmail())) {
 			errors.add("Email nije jedinstven");
 		}
 

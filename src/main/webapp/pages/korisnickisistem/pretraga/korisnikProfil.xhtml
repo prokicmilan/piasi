@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
+	<f:metadata>
+		<f:viewParam name="userId" 
+			value="#{korisnikProfilBacking.korisnik}"
+			converter="ksKorisnikConverter"
+			converterMessage="Converter message"
+			required="#{!facesContext.postback}"
+			requiredMessage="userId required" />
+		<f:viewParam name="edit"
+			value="#{korisnikProfilBacking.edit}"
+			required="#{!facesContext.postback}"
+			requiredMessage="Edit required" />
+	</f:metadata>
+	<ui:composition template="/templates/masterPageTemplate.xhtml">
+		<ui:define name="page-content">
+			<p:panel id="panel-korisnik-profil" styleClass="p-korisnikProfil" >
+				<h:form id="form-korisnik-profil">
+					<p:panelGrid id="pg-korisnik-profil"
+						columns="6"
+						columnClasses="ui-g-2"
+						styleClass="ui-noborder pg-korisnikProfil">
+						<p:outputLabel for="username" value="#{labels['label.input.username']}" styleClass="input" />
+						<p:inputText id="username" 
+							value="#{korisnikProfilBacking.korisnik.username}" 
+							label="#{labels['label.input.username']}"
+							disabled="true"
+							styleClass="input-field"/>
+						
+						<p:outputLabel for="password" value="#{labels['label.input.password']}" />
+						<p:password id="password" 
+							value="#{korisnikProfilBacking.korisnik.password}" 
+							match="password-confirm" 
+							redisplay="true"
+							label="#{labels['label.input.password']}"
+							disabled="#{!korisnikProfilBacking.edit}"
+							styleClass="input-field" />
+						
+						<p:outputLabel for="password-confirm" value="#{labels['label.input.confirmPassword']}" />
+						<p:password id="password-confirm" 
+							value="#{korisnikProfilBacking.korisnik.password}" 
+							redisplay="true"
+							label="#{labels['label.input.confirmPassword']}"
+							disabled="#{!korisnikProfilBacking.edit}"
+							styleClass="input-field" />
+						
+						<p:outputLabel for="first-name" value="#{labels['label.input.firstName']}" />
+						<p:inputText id="first-name" 
+							value="#{korisnikProfilBacking.korisnik.ime}" 
+							label="#{labels['label.input.firstName']}"
+							disabled="#{!korisnikProfilBacking.edit}"
+							styleClass="input-field" />
+						
+						<p:outputLabel for="last-name" value="#{labels['label.input.lastName']}" />
+						<p:inputText id="last-name" 
+							value="#{korisnikProfilBacking.korisnik.prezime}" 
+							label="#{labels['label.input.lastName']}"
+							disabled="#{!korisnikProfilBacking.edit}"
+							styleClass="input-field" />
+						
+						<p:outputLabel for="email" value="#{labels['label.input.email']}" />
+						<p:inputText id="email" 
+							value="#{korisnikProfilBacking.korisnik.email}" 
+							label="#{labels['label.input.email']}"
+							disabled="#{!korisnikProfilBacking.edit}"
+							styleClass="input-field" />
+						
+						<p:outputLabel for="date-of-birth" value="#{labels['label.input.dob']}" />
+						<p:calendar id="date-of-birth" 
+							value="#{korisnikProfilBacking.korisnik.datumRodjenja}" 
+							converter="localDateConverter" 
+							label="#{labels['label.input.dob']}"
+							disabled="#{!korisnikProfilBacking.edit}"
+							styleClass="input-field" >
+							<p:ajax event="dateSelect" partialSubmit="true" />
+							<p:ajax event="change" partialSubmit="true" />
+						</p:calendar>
+						
+						<p:outputLabel for="place-of-birth" value="#{labels['label.input.pob']}" />
+						<p:inputText id="place-of-birth" 
+							value="#{korisnikProfilBacking.korisnik.mestoRodjenja}" 
+							label="#{labels['label.input.pob']}"
+							disabled="#{!korisnikProfilBacking.edit}"
+							styleClass="input-field" />
+						
+						<p:outputLabel for="phone-number" value="#{labels['label.input.phoneNumber']}" />
+						<p:inputText id="phone-number" 
+							value="#{korisnikProfilBacking.korisnik.telefon}" 
+							label="#{labels['label.input.phoneNumber']}"
+							disabled="#{!korisnikProfilBacking.edit}"
+							styleClass="input-field" />
+					</p:panelGrid>
+					<p:toolbar id="tbr-korisnik-profil" rendered="#{korisnikProfilBacking.edit}" >
+						<f:facet name="left">
+							<p:commandButton action="#{korisnikProfilBacking.sacuvajAction}"
+								value="#{labelsButton['button.sacuvaj']}"
+								rendered="#{korisnikProfilBacking.edit}"
+								ajax="false" />
+						</f:facet>
+					</p:toolbar>
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:composition>
+</html>

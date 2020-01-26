@@ -9,6 +9,7 @@ body {
 	max-width: 1280px;
 	float: none;
 	margin: 0 auto;
+	font-size: 0.9em;
 }
 
 .break {
@@ -42,27 +43,68 @@ body {
 
 .pretragaFilter {
 	width: 10%;
-	border: 2px solid red !important;
 	padding: 0px !important;
 }
 
 .pretragaResults {
 	width: 90%;
-	border: 2px solid blue !important;
+	padding: 0px !important;
 }
 
 .button-filter {
 	width: 100%;
 }
 
-.panel-pretraga-results.ui-panel {
+.loginButton {
+	width: 100%;
+}
+
+.input {
+	width: 100%;
+}
+
+.p-korisnikProfil {
+	padding: 0 !important;
+}
+
+.pg-korisnikProfil .ui-panelgrid-cell.ui-g-2 {
+	width: 100%;
+}
+
+/* KOLONE - START */
+
+.column-127 {
+	width: 127px;
+}
+
+.column-196 {
+	width: 196px;
+}
+
+/* KOLONE - END */
+
+#panel-pretraga-filteri {
+	border: none;
 	padding: 0px;
-	min-height: 652px;
-	overflow: hidden;
 }
 
 #panel-pretraga-filteri_content {
 	padding: 0px 6px;
+	min-height: 655px;
+}
+
+#panel-pretraga-results {
+	padding: 0px;
+	border: none;
+}
+
+#panel-pretraga-results_content {
+	padding: 0px;
+	min-height: 700px;
+}
+
+#panel-korisnik-profil_content {
+	padding: 0px;
 }
 
 #login {
@@ -74,8 +116,4 @@ body {
 	align-items: center;
 	justify-content: center;
 	border: none;
-}
-
-.loginButton {
-	width: 100%;
 }

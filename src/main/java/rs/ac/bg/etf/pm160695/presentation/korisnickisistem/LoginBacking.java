@@ -2,8 +2,6 @@ package rs.ac.bg.etf.pm160695.presentation.korisnickisistem;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
@@ -62,8 +60,6 @@ public class LoginBacking implements Serializable {
 	public void loginAction() {
 		HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext()
 				.getRequest();
-		logger.info("redirecting to: " + FORWARD_REQUEST_URI);
-		logger.info("alternatively, to: " + request.getContextPath());
 
 		if (request.getUserPrincipal() != null) {
 			// na sesiji postoji korisnik
@@ -90,16 +86,6 @@ public class LoginBacking implements Serializable {
 		try {
 			// pokusavamo login
 			request.login(username, password);
-			String[] roles = { "user", "admin", "autor", "ispitanik" };
-			List<String> userRoles = new LinkedList<>();
-			for (String role : roles) {
-				logger.info("checking role: " + role);
-				if (request.isUserInRole(role)) {
-					logger.info("user is in role " + role);
-					userRoles.add(role);
-				}
-			}
-			logger.info("user roles: " + userRoles);
 			userLoginEvent.fire(new CurrentUserChangedEvent(username));
 
 			FacesContext.getCurrentInstance().getExternalContext()

@@ -32,8 +32,14 @@
 								
 								<p:inputText id="email" value="#{korisnikPretragaBacking.filters['like.email']}" />
 								
-								<p:commandButton action="#{korisnikPretragaBacking.pretragaAction}" value="#{labelsButton['button.pretraga']}" styleClass="button-filter" />
-								<p:commandButton action="#{korisnikPretragaBacking.ponistiAction}" value="#{labelsButton['button.ponisti']}" styleClass="button-filter" />
+								<p:commandButton action="#{korisnikPretragaBacking.pretragaAction}" 
+									value="#{labelsButton['button.pretraga']}" 
+									update="panel-pretraga-results"
+									styleClass="button-filter" />
+								<p:commandButton action="#{korisnikPretragaBacking.ponistiAction}" 
+									value="#{labelsButton['button.ponisti']}" 
+									update="panel-pretraga-results pg-pretraga-filter"
+									styleClass="button-filter" />
 							</p:panelGrid>
 						</h:form>
 					</p:panel>
@@ -42,44 +48,82 @@
 							<f:facet name="left">
 								<p:commandButton id="btn-novi"
 										value="#{labelsButton['button.novi']}"
+										action="#{korisnikPretragaBacking.noviAction}"
 										icon="fa fa-list fa-fw" />
-								<p:commandButton id="btn-izmeni"
+								<p:button id="btn-izmeni"
 									value="#{labelsButton['button.izmeni']}"
-									icon="fa fa-list fa-fw" />
-								<p:commandButton id="btn-detalji"
+									icon="fa fa-list fa-fw"
+									disabled="#{korisnikPretragaBacking.selectedKorisnik eq null}"
+									outcome="korisnicki-profil" >
+									<f:param name="userId" value="#{korisnikPretragaBacking.selectedKorisnik.id}" />
+									<f:param name="edit" value="true" />
+								</p:button>
+								<p:button id="btn-detalji"
 									value="#{labelsButton['button.detalji']}"
-									icon="fa fa-list fa-fw" />
+									icon="fa fa-list fa-fw"
+									disabled="#{korisnikPretragaBacking.selectedKorisnik eq null}"
+									outcome="korisnicki-profil" >
+									<f:param name="userId" value="#{korisnikPretragaBacking.selectedKorisnik.id}" />
+									<f:param name="edit" value="false" />
+								</p:button>
 							</f:facet>
 						</p:toolbar>
-						<p:dataTable value="#{korisnikPretragaBacking.korisnikList}" var="korisnik">
-							<p:column headerText="#{labelsColumn['column.username']}">
-								<h:outputText value="#{korisnik.username}" />
-							</p:column>
-							
-							<p:column headerText="#{labelsColumn['column.firstName']}">
-								<h:outputText value="#{korisnik.ime}" />
-							</p:column>
-							
-							<p:column headerText="#{labelsColumn['column.lastName']}">
-								<h:outputText value="#{korisnik.prezime}" />
-							</p:column>
-							
-							<p:column headerText="#{labelsColumn['column.email']}">
-								<h:outputText value="#{korisnik.email}" />
-							</p:column>
-							
-							<p:column headerText="#{labelsColumn['column.dateOfBirth']}">
-								<h:outputText value="#{korisnik.datumRodjenja}" />
-							</p:column>
-							
-							<p:column headerText="#{labelsColumn['column.placeOfBirth']}">
-								<h:outputText value="#{korisnik.mestoRodjenja}" />
-							</p:column>
-							
-							<p:column headerText="#{labelsColumn['column.phoneNumber']}">
-								<h:outputText value="#{korisnik.telefon}" />
-							</p:column>
-						</p:dataTable>
+						<h:form id="result-form">
+							<p:dataTable id="dt-korisnikPretragaResults"
+								value="#{korisnikPretragaBacking.korisnikList}" 
+								var="korisnik"
+								rowKey="#{korisnik.hashCode()}"
+								selectionMode="single"
+								selection="#{korisnikPretragaBacking.selectedKorisnik}"
+								
+								rows="20"
+								paginator="true"
+								paginatorPosition="bottom"
+								currentPageReportTemplate="{currentPage} #{labels['label.od']} {totalPages}"
+								
+								paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+								paginatorAlwaysVisible="false"
+								
+								sortBy="#{korisnik.username}"
+								sortOrder="descending"
+								
+								emptyMessage="#{labels['label.emptyMessage']}" >
+								
+								<p:ajax event="rowSelect" update="tbr-akcije" />
+								<p:ajax event="rowUnselect" update="tbr-akcije" />
+								
+								<p:column headerText="#{labelsColumn['column.username']}" styleClass="column-127" >
+									<h:outputText value="#{korisnik.username}" />
+								</p:column>
+								
+								<p:column headerText="#{labelsColumn['column.firstName']}">
+									<h:outputText value="#{korisnik.ime}" />
+								</p:column>
+								
+								<p:column headerText="#{labelsColumn['column.lastName']}">
+									<h:outputText value="#{korisnik.prezime}" />
+								</p:column>
+								
+								<p:column headerText="#{labelsColumn['column.email']}" styleClass="column-196" >
+									<h:outputText value="#{korisnik.email}" />
+								</p:column>
+								
+								<p:column headerText="#{labelsColumn['column.dateOfBirth']}">
+									<h:outputText value="#{korisnik.datumRodjenja}" >
+										<f:converter converterId="localDateConverter" />
+									</h:outputText>
+								</p:column>
+								
+								<p:column headerText="#{labelsColumn['column.placeOfBirth']}">
+									<h:outputText value="#{korisnik.mestoRodjenja}" />
+								</p:column>
+								
+								<p:column headerText="#{labelsColumn['column.phoneNumber']}">
+									<h:outputText value="#{korisnik.telefon}" />
+								</p:column>
+							</p:dataTable>
+						
+						</h:form>
 					</p:panel>
 			</p:panelGrid>
 		</ui:define>

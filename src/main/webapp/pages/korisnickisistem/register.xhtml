@@ -12,7 +12,9 @@
 
 	<body>
 		<p:panel id="register-p" styleClass="flex-container">
-			<p:messages id="msgs" />
+			<p:messages id="msgs" >
+				<p:autoUpdate />
+			</p:messages>
 			<h:form id="register-form">
 				<p:panelGrid id="register-pg" columns="2" styleClass="ui-noborder">
 					<p:outputLabel for="username" value="#{labels['label.input.username']}" styleClass="padding" />
@@ -97,7 +99,6 @@
 				<p:commandButton value="Register!" 
 					action="#{registerBacking.registerAction}" 
 					process="@form"
-					update="msgs"
 					ajax="false"
 					styleClass="centered-button" />
 			</h:form>

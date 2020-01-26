@@ -1,6 +1,9 @@
 package rs.ac.bg.etf.pm160695.infrastructure.datamodel;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -20,6 +23,12 @@ public abstract class BaseEntityDao<T extends BaseEntity> {
 	}
 
 	protected abstract EntityManager getEntityManager();
+
+	public List<T> filter(Map<String, String> filters) {
+		CriteriaQuery<T> criteriaQuery = prepareCriteriaQuery(filters);
+
+		return getEntityManager().createQuery(criteriaQuery).getResultList();
+	}
 
 	protected List<T> findByParameter(SingularAttribute<T, ?> column, Object value) {
 		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
@@ -60,6 +69,55 @@ public abstract class BaseEntityDao<T extends BaseEntity> {
 			getEntityManager().merge(entity);
 		}
 		return entity;
+	}
+
+	private CriteriaQuery<T> prepareCriteriaQuery(Map<String, String> filters) {
+		CriteriaBuilder cb = getEntityManager().getCriteriaBuilder();
+		CriteriaQuery<T> criteriaQuery = cb.createQuery(entityClass);
+		Root<T> root = criteriaQuery.from(entityClass);
+
+		Predicate[] predicates = getPredicates(cb, root, filters);
+
+		criteriaQuery.where(predicates);
+
+		return criteriaQuery;
+	}
+
+	private Predicate[] getPredicates(CriteriaBuilder cb, Root<T> root, Map<String, String> filters) {
+		List<Predicate> predicates = new LinkedList<>();
+
+		for (Entry<String, String> entry : filters.entrySet()) {
+			if (entry.getValue() != null && !entry.getValue().isBlank()) {
+				String[] filter = entry.getKey().split("\\.", 2);
+				String operator = filter[0];
+				String attribute = filter[1];
+				String value = entry.getValue().trim();
+
+				switch (operator) {
+					case "eq":
+						predicates.add(cb.equal(getPath(root, attribute), value));
+						break;
+					case "like":
+						predicates.add(cb.like(getPath(root, attribute), value + "%"));
+						break;
+					default:
+						break;
+				}
+			}
+		}
+
+		return predicates.toArray(new Predicate[] {});
+	}
+
+	@SuppressWarnings("unchecked")
+	private <E, R> Path<R> getPath(Path<E> root, String path) {
+		String[] pathElements = path.split("\\.");
+		Path<?> retVal = root;
+		for (String pathEl : pathElements) {
+			retVal = retVal.get(pathEl);
+		}
+
+		return (Path<R>) retVal;
 	}
 
 	protected void delete(T entity) {

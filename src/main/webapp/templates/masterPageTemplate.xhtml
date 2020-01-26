@@ -13,7 +13,7 @@
 	</h:head>
 	
 	<h:body>
-		<nav>
+		<nav id="navbar">
 			<h:form id="nav-form">
 				<p:menubar autoDisplay="false">
 					<p:menuitem id="mi-korisniciPretraga"
@@ -36,7 +36,9 @@
 				</p:menubar>
 			</h:form>
 		</nav>
-		
+		<p:messages id="msgs" >
+			<p:autoUpdate />
+		</p:messages>
 		<ui:insert id="content" name="page-content">Content</ui:insert>
 	</h:body>
 </html>

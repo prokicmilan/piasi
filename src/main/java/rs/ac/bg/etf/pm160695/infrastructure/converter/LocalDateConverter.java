@@ -3,11 +3,9 @@ package rs.ac.bg.etf.pm160695.infrastructure.converter;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
-import javax.faces.convert.ConverterException;
 import javax.faces.convert.FacesConverter;
 
 import rs.ac.bg.etf.pm160695.infrastructure.util.Formatting;
@@ -33,11 +31,7 @@ public class LocalDateConverter implements Converter<LocalDate> {
 		if (value == null) {
 			return "";
 		}
-		if (value instanceof LocalDate) {
-			return Formatting.DATUM_FORMATTER.format(value);
-		} else {
-			throw new ConverterException(new FacesMessage(value + " is not a valid LocalDate"));
-		}
+		return Formatting.DATUM_FORMATTER.format(value);
 	}
 
 }
