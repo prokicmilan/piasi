@@ -7,38 +7,81 @@
 
 	<ui:composition template="/templates/masterPageTemplate.xhtml">
 		<ui:define name="page-content">
-			<p:panel styleClass="ui-noborder">
-				<p:panelGrid id="pg-pretraga-general"
-					columns="2"
-					columnClasses="ui-g-2 ui-g-10">
-					<p:panel id="panel-pretraga-filter">
+			<p:panelGrid id="pg-pretraga-general"
+				columns="2"
+				columnClasses="pretragaFilter, pretragaResults" >
+					<p:panel id="panel-pretraga-filteri">
 						<f:facet name="header">
 							<i class="fa fa-bars fa-fw" /> #{labelsTitle['header.kriterijumiPretrage']}
-						</f:facet>	
-						
-						<p:panelGrid id="pg-pretraga-filter" columns="1">
-							<p:outputLabel for="username" value="#{labels['label.username']}" />
-							
-							<p:inputText id="username" value="" />
-							
-							<p:outputLabel for="firstName" value="#{labels['label.firstName']}" />
-							
-							<p:inputText id="firstName" value="" />
-							
-							<p:outputLabel for="lastName" value="#{labels['label.lastName']}" />
-							
-							<p:inputText id="lastName" value="" />
-							
-							<p:outputLabel for="email" value="#{labels['label.lastName']}" />
-							
-							<p:inputText id="email" value="" />
-						</p:panelGrid>
+						</f:facet>
+						<h:form id="pretraga-form">
+							<p:panelGrid id="pg-pretraga-filter" columns="1" layout="grid" styleClass="ui-noborder" >
+								<p:outputLabel for="username" value="#{labels['label.input.username']}" />
+								
+								<p:inputText id="username" value="#{korisnikPretragaBacking.filters['like.username']}" />
+								
+								<p:outputLabel for="firstName" value="#{labels['label.input.firstName']}" />
+								
+								<p:inputText id="firstName" value="#{korisnikPretragaBacking.filters['like.firstName']}" />
+								
+								<p:outputLabel for="lastName" value="#{labels['label.input.lastName']}" />
+								
+								<p:inputText id="lastName" value="#{korisnikPretragaBacking.filters['like.lastName']}" />
+								
+								<p:outputLabel for="email" value="#{labels['label.input.email']}" />
+								
+								<p:inputText id="email" value="#{korisnikPretragaBacking.filters['like.email']}" />
+								
+								<p:commandButton action="#{korisnikPretragaBacking.pretragaAction}" value="#{labelsButton['button.pretraga']}" styleClass="button-filter" />
+								<p:commandButton action="#{korisnikPretragaBacking.ponistiAction}" value="#{labelsButton['button.ponisti']}" styleClass="button-filter" />
+							</p:panelGrid>
+						</h:form>
 					</p:panel>
 					<p:panel id="panel-pretraga-results">
-						<p:dataTable></p:dataTable>
+						<p:toolbar id="tbr-akcije">
+							<f:facet name="left">
+								<p:commandButton id="btn-novi"
+										value="#{labelsButton['button.novi']}"
+										icon="fa fa-list fa-fw" />
+								<p:commandButton id="btn-izmeni"
+									value="#{labelsButton['button.izmeni']}"
+									icon="fa fa-list fa-fw" />
+								<p:commandButton id="btn-detalji"
+									value="#{labelsButton['button.detalji']}"
+									icon="fa fa-list fa-fw" />
+							</f:facet>
+						</p:toolbar>
+						<p:dataTable value="#{korisnikPretragaBacking.korisnikList}" var="korisnik">
+							<p:column headerText="#{labelsColumn['column.username']}">
+								<h:outputText value="#{korisnik.username}" />
+							</p:column>
+							
+							<p:column headerText="#{labelsColumn['column.firstName']}">
+								<h:outputText value="#{korisnik.ime}" />
+							</p:column>
+							
+							<p:column headerText="#{labelsColumn['column.lastName']}">
+								<h:outputText value="#{korisnik.prezime}" />
+							</p:column>
+							
+							<p:column headerText="#{labelsColumn['column.email']}">
+								<h:outputText value="#{korisnik.email}" />
+							</p:column>
+							
+							<p:column headerText="#{labelsColumn['column.dateOfBirth']}">
+								<h:outputText value="#{korisnik.datumRodjenja}" />
+							</p:column>
+							
+							<p:column headerText="#{labelsColumn['column.placeOfBirth']}">
+								<h:outputText value="#{korisnik.mestoRodjenja}" />
+							</p:column>
+							
+							<p:column headerText="#{labelsColumn['column.phoneNumber']}">
+								<h:outputText value="#{korisnik.telefon}" />
+							</p:column>
+						</p:dataTable>
 					</p:panel>
-				</p:panelGrid>
-			</p:panel>
+			</p:panelGrid>
 		</ui:define>
 	</ui:composition>
 </html>

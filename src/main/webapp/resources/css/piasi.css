@@ -40,6 +40,31 @@ body {
 	float: right !important;
 }
 
+.pretragaFilter {
+	width: 10%;
+	border: 2px solid red !important;
+	padding: 0px !important;
+}
+
+.pretragaResults {
+	width: 90%;
+	border: 2px solid blue !important;
+}
+
+.button-filter {
+	width: 100%;
+}
+
+.panel-pretraga-results.ui-panel {
+	padding: 0px;
+	min-height: 652px;
+	overflow: hidden;
+}
+
+#panel-pretraga-filteri_content {
+	padding: 0px 6px;
+}
+
 #login {
 	height: 100%;
 	display: flex;
