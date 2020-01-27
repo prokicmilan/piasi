@@ -70,7 +70,7 @@ public abstract class BaseEntityDao<T extends BaseEntity> {
 		if (entity.getId() == null) {
 			getEntityManager().persist(entity);
 		} else {
-			getEntityManager().merge(entity);
+			entity = getEntityManager().merge(entity);
 		}
 		return entity;
 	}

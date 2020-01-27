@@ -120,7 +120,7 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 			errors.add("Korisnik je već aktivan");
 		}
 		if (errors.isEmpty()) {
-			korisnik.setAktivan(Boolean.FALSE);
+			korisnik.setAktivan(Boolean.TRUE);
 			korisnik.setKsKorisnik(ulogovaniKorisnik);
 			korisnik = persistOrMerge(korisnik);
 			evictEntityFromCache(korisnik);
@@ -136,7 +136,7 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 			errors.add("Korisnik je već neaktivan");
 		}
 		if (errors.isEmpty()) {
-			korisnik.setAktivan(Boolean.TRUE);
+			korisnik.setAktivan(Boolean.FALSE);
 			korisnik.setKsKorisnik(ulogovaniKorisnik);
 			korisnik = persistOrMerge(korisnik);
 			evictEntityFromCache(korisnik);
