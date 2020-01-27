@@ -1,35 +1,25 @@
 package rs.ac.bg.etf.pm160695.presentation.korisnickisistem.pretraga;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Logger;
 
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.boundary.KSKorisnikDao;
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSKorisnik;
-import rs.ac.bg.etf.pm160695.infrastructure.security.CurrentUserBean;
+import rs.ac.bg.etf.pm160695.infrastructure.presentation.BaseBackingBean;
 import rs.ac.bg.etf.pm160695.infrastructure.validation.CommonError;
 import rs.ac.bg.etf.pm160695.infrastructure.validation.CommonErrors;
 
 @Named
 @ViewScoped
-public class KorisnikPretragaBacking implements Serializable {
+public class KorisnikPretragaBacking extends BaseBackingBean {
 
 	private static final long serialVersionUID = 5013100468521474860L;
-
-	@Inject
-	private Logger logger;
-
-	@Inject
-	private CurrentUserBean currentUserBean;
 
 	@Inject
 	private KSKorisnikDao ksKorisnikDao;
@@ -42,6 +32,7 @@ public class KorisnikPretragaBacking implements Serializable {
 
 	public void pretragaAction() {
 		korisnikList = ksKorisnikDao.filter(filters);
+		korisnikList.remove(currentUserBean.getUlogovaniKorisnik());
 		selectedKorisnik = null;
 	}
 
@@ -56,14 +47,12 @@ public class KorisnikPretragaBacking implements Serializable {
 				+ selectedKorisnik.getUsername());
 		CommonErrors errors = ksKorisnikDao.activateKorisnik(selectedKorisnik, currentUserBean.getUlogovaniKorisnik());
 		if (errors.isEmpty()) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspešno ste aktivirali korisnika", null));
+			messageDispatcher.info("info.korisnik.aktiviran", selectedKorisnik.getUsername());
 			// osvezavamo podatke jer smo izvrsili promenu
 			pretragaAction();
 		} else {
 			for (CommonError error : errors.getErrors()) {
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, error.getMessage(), null));
+				messageDispatcher.error(error.getMessage());
 			}
 		}
 	}
@@ -74,14 +63,12 @@ public class KorisnikPretragaBacking implements Serializable {
 		CommonErrors errors = ksKorisnikDao.deactivateKorisnik(selectedKorisnik,
 				currentUserBean.getUlogovaniKorisnik());
 		if (errors.isEmpty()) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspešno ste aktivirali korisnika", null));
+			messageDispatcher.info("info.korisnik.deaktiviran", selectedKorisnik.getUsername());
 			// osvezavamo podatke jer smo izvrsili promenu
 			pretragaAction();
 		} else {
 			for (CommonError error : errors.getErrors()) {
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, error.getMessage(), null));
+				messageDispatcher.error(error.getMessage());
 			}
 		}
 	}

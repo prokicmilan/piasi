@@ -1,9 +1,7 @@
 package rs.ac.bg.etf.pm160695.presentation.korisnickisistem;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
@@ -20,12 +18,13 @@ import javax.validation.constraints.Size;
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.boundary.KSKorisnikDao;
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.boundary.KSUlogaDao;
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSUloga;
+import rs.ac.bg.etf.pm160695.infrastructure.presentation.BaseBackingBean;
 import rs.ac.bg.etf.pm160695.infrastructure.validation.CommonError;
 import rs.ac.bg.etf.pm160695.infrastructure.validation.CommonErrors;
 
 @ViewScoped
 @Named
-public class RegisterBacking implements Serializable {
+public class RegisterBacking extends BaseBackingBean {
 
 	private static final long serialVersionUID = 1112494982140850963L;
 
@@ -36,16 +35,13 @@ public class RegisterBacking implements Serializable {
 	@Inject
 	private KSUlogaDao ksUlogaDao;
 
-	@Inject
-	private Logger logger;
-
 	// Fields
 	@NotBlank
 	@Size(max = 50)
 	private String username;
 
 	@NotBlank
-	@Size(min = 2, message = "mora biti duûine {min} karaktera. Uneto ${validatedValue.length()} karaktera")
+	@Size(min = 2, message = "mora biti du≈æine {min} karaktera. Uneto ${validatedValue.length()} karaktera")
 	private String password;
 
 	@NotBlank
@@ -87,12 +83,10 @@ public class RegisterBacking implements Serializable {
 		CommonErrors errors = ksKorisnikDao.registerUser(username, password, firstName, lastName, email, dateOfBirth,
 				placeOfBirth, phoneNumber, selectedUloga);
 		if (errors.isEmpty()) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Uspeöno ste se registrovali.", null));
+			messageDispatcher.info("info.registracija.uspesna");
 		} else {
 			for (CommonError error : errors.getErrors()) {
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, error.getMessage(), null));
+				messageDispatcher.error(error.getMessage());
 			}
 		}
 	}

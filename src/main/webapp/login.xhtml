@@ -11,7 +11,9 @@
 <body>
 	<h:form id="login" styleClass="flex-container">
 		<p:panel>
-			<p:messages id="msgs" />
+			<p:messages id="msgs" >
+				<p:autoUpdate />
+			</p:messages>
 			<p:focus context="login" />
 			<p:panelGrid id="pg-login" columns="2" styleClass="ui-noborder">
 				<p:outputLabel for="inT-username" value="#{labels['label.input.username']}" />

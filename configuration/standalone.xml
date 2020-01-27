@@ -272,7 +272,7 @@
                     <principal-query sql="select password, salt from ks_korisnik where username = ? and aktivan = true" data-source="piasiDS">
                         <salted-simple-digest-mapper algorithm="salt-password-digest-sha-512" password-index="1" salt-index="2"/>
                     </principal-query>
-                    <principal-query sql="select u.oznaka from ks_uloga u join ks_korisnik_ks_uloga ku on ku.uloga_id = u.id join ks_korisnik k on k.id = ku.korisnik_id where k.username = ?" data-source="piasiDS">
+                    <principal-query sql="select u.oznaka from ks_uloga u join ks_korisnik_ks_uloga ku on ku.uloga_id = u.id join ks_korisnik k on k.id = ku.korisnik_id where k.username = ? and k.aktivan = true" data-source="piasiDS">
                         <attribute-mapping>
                             <attribute to="roles" index="1"/>
                         </attribute-mapping>

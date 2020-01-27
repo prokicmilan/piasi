@@ -12,6 +12,7 @@ import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSKorisnik;
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSKorisnik_;
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSUloga;
 import rs.ac.bg.etf.pm160695.infrastructure.datamodel.BaseEntityDao;
+import rs.ac.bg.etf.pm160695.infrastructure.messaging.Messages;
 import rs.ac.bg.etf.pm160695.infrastructure.validation.CommonErrors;
 import rs.ac.bg.etf.pm160695.infrastructure.validation.ValidationUtils;
 
@@ -90,7 +91,7 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 			if (!k.getEmail().equals(korisnik.getEmail())) {
 				// promenjena je email adresa, proveravamo da li je nova jedinstvena
 				if (!isEmailUnique(korisnik.getEmail())) {
-					errors.add("Email adresa nije jedinstvena");
+					errors.add(Messages.getMessageFromPoslovnaPravilaValidation("korisnik.email.vecPostoji", korisnik.getEmail()));
 				}
 			}
 		}
@@ -117,7 +118,7 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 		CommonErrors errors = new CommonErrors();
 
 		if (Boolean.TRUE.equals(korisnik.getAktivan())) {
-			errors.add("Korisnik je već aktivan");
+			errors.add(Messages.getMessageFromPoslovnaPravilaValidation("korisnik.vecAktivan", korisnik.getUsername()));
 		}
 		if (errors.isEmpty()) {
 			korisnik.setAktivan(Boolean.TRUE);
@@ -133,7 +134,7 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 		CommonErrors errors = new CommonErrors();
 
 		if (Boolean.FALSE.equals(korisnik.getAktivan())) {
-			errors.add("Korisnik je već neaktivan");
+			errors.add(Messages.getMessageFromPoslovnaPravilaValidation("korisnik.vecNeaktivan", korisnik.getUsername()));
 		}
 		if (errors.isEmpty()) {
 			korisnik.setAktivan(Boolean.FALSE);
@@ -173,10 +174,10 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 	private CommonErrors validateSave(KSKorisnik korisnik) {
 		CommonErrors errors = ValidationUtils.validate(korisnik);
 		if (!isUsernameUnique(korisnik.getUsername())) {
-			errors.add("Korisničko ime nije jedinstveno");
+			errors.add(Messages.getMessageFromPoslovnaPravilaValidation("korisnik.username.vecPostoji", korisnik.getUsername()));
 		}
 		if (!isEmailUnique(korisnik.getEmail())) {
-			errors.add("Email nije jedinstven");
+			errors.add(Messages.getMessageFromPoslovnaPravilaValidation("korisnik.email.vecPostoji", korisnik.getEmail()));
 		}
 
 		return errors;
@@ -187,7 +188,7 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 
 		KSKorisnik k = find(korisnik.getId());
 		if (!k.getEmail().equals(korisnik.getEmail()) && !isEmailUnique(korisnik.getEmail())) {
-			errors.add("Email nije jedinstven");
+			errors.add(Messages.getMessageFromPoslovnaPravilaValidation("korisnik.email.vecPostoji", korisnik.getEmail()));
 		}
 
 		return errors;

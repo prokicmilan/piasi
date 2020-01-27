@@ -87,8 +87,7 @@ public abstract class StatusBaseEntity extends BaseEntity {
 			return false;
 		}
 		StatusBaseEntity other = (StatusBaseEntity) obj;
-		return Objects.equals(insertTimestamp, other.insertTimestamp) && Objects.equals(ksKorisnik, other.ksKorisnik)
-				&& Objects.equals(lastUpdateTimestamp, other.lastUpdateTimestamp)
+		return Objects.equals(insertTimestamp, other.insertTimestamp) && Objects.equals(lastUpdateTimestamp, other.lastUpdateTimestamp)
 				&& Objects.equals(version, other.version);
 	}
 

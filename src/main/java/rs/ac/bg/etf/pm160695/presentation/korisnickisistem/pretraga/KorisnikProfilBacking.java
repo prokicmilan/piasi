@@ -1,22 +1,17 @@
 package rs.ac.bg.etf.pm160695.presentation.korisnickisistem.pretraga;
 
-import java.io.Serializable;
-import java.util.logging.Logger;
 
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSKorisnik;
+import rs.ac.bg.etf.pm160695.infrastructure.presentation.BaseBackingBean;
 
 @Named
 @ViewScoped
-public class KorisnikProfilBacking implements Serializable {
+public class KorisnikProfilBacking extends BaseBackingBean {
 
 	private static final long serialVersionUID = 6425992813106275719L;
-
-	@Inject
-	private Logger logger;
 
 	private Long userId;
 

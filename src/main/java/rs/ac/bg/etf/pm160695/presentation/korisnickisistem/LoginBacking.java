@@ -1,12 +1,9 @@
 package rs.ac.bg.etf.pm160695.presentation.korisnickisistem;
 
 import java.io.IOException;
-import java.io.Serializable;
-import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.event.Event;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -16,13 +13,14 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 
+import rs.ac.bg.etf.pm160695.infrastructure.presentation.BaseBackingBean;
 import rs.ac.bg.etf.pm160695.infrastructure.security.CurrentUserChangedEvent;
 import rs.ac.bg.etf.pm160695.infrastructure.security.CurrentUserLogin;
 import rs.ac.bg.etf.pm160695.infrastructure.security.CurrentUserLogout;
 
 @Named
 @ViewScoped
-public class LoginBacking implements Serializable {
+public class LoginBacking extends BaseBackingBean {
 
 	private static final long serialVersionUID = 4603656371326301973L;
 
@@ -37,9 +35,6 @@ public class LoginBacking implements Serializable {
 	@Inject
 	@CurrentUserLogout
 	private Event<CurrentUserChangedEvent> userLogoutEvent;
-
-	@Inject
-	private Logger logger;
 
 	// Fields
 
@@ -93,7 +88,6 @@ public class LoginBacking implements Serializable {
 		} catch (ServletException e) {
 			// login exception
 			String message = e.getMessage();
-
 			if (message.startsWith("UT010031: Login failed")) {
 				// neispravan username ili lozinka
 				message = "Neispravno korisničko ime ili lozinka";
@@ -101,8 +95,7 @@ public class LoginBacking implements Serializable {
 				logger.severe("Neocekivana greska pri loginu: " + message);
 			}
 
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, message, null));
+			messageDispatcher.error(message);
 		} catch (IOException e) {
 			logger.severe("Neuspesno redirektovanje korisnika pri loginu.");
 		}

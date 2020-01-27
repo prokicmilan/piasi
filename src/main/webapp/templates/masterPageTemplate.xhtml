@@ -27,7 +27,10 @@
 						<p:menuitem id="mi-korisnikProfil"
 							value="#{labelsButton['menuitem.korisnikProfil']}"
 							icon="fa fa-user fa-fw"
-							outcome="korisnicki-profil" />
+							outcome="korisnicki-profil" >
+							<f:param name="userId" value="#{ulogovaniKorisnik.id}" />
+							<f:param name="edit" value="true" />
+						</p:menuitem>
 						<p:menuitem id="mi-odjava"
 							value="#{labelsButton['menuitem.odjava']}"
 							icon="fa fa-sign-out fa-fw"
