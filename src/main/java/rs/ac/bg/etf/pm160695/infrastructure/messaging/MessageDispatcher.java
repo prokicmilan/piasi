@@ -1,9 +1,13 @@
 package rs.ac.bg.etf.pm160695.infrastructure.messaging;
 
+import java.io.Serializable;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
-public class MessageDispatcher {
+public class MessageDispatcher implements Serializable {
+
+	private static final long serialVersionUID = -6365570614961625474L;
 
 	public void info(String msg, Object... params) {
 		String message = getMessage(msg, params);

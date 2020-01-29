@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:composition template="/templates/masterPageTemplate.xhtml">
+		<ui:define name="page-content">
+			<h:panelGroup id="dynaFormGroup">
+				<h:form id="form-dyna">
+					<pe:dynaForm id="dynaForm" value="#{testCreationBacking.testFormModel}" var="data">
+						<pe:dynaFormControl type="input" for="txt">
+							<p:inputText id="txt" value="#{data.value}" required="true" >
+								<p:ajax event="valueChange" partialSubmit="true"/>
+							</p:inputText>
+						</pe:dynaFormControl>
+						<pe:dynaFormControl type="select-one" for="som">
+							<p:selectOneMenu id="som" value="#{data.inputType}" required="true">
+								<f:selectItem />
+								<f:selectItems value="#{data.inputTypeList}" 
+									var="it" 
+									itemValue="#{it}" 
+									itemLabel="#{it.label}" />
+								
+								<p:ajax event="change" partialSubmit="true" />
+							</p:selectOneMenu>
+						</pe:dynaFormControl>
+						
+						<f:facet name="buttonBar">
+				            <p:commandButton value="Submit" action="#{testCreationBacking.submitForm}"
+				                             process="dynaForm" />
+				            <p:commandButton type="reset" value="Reset" style="margin-left: 5px;"/>
+				        </f:facet>
+					</pe:dynaForm>
+				</h:form>
+			</h:panelGroup>
+			<h:form>
+				<p:commandButton id="addQuestion"
+					value="#{labelsButton['button.dodajPitanje']}"
+					action="#{testCreationBacking.addQuestion}"
+					update="dynaFormGroup" />
+			</h:form>
+		</ui:define>
+	</ui:composition>
+      
+</html>

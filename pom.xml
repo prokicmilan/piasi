@@ -42,7 +42,14 @@
 		    <artifactId>omnifaces</artifactId>
 		    <version>3.4.1</version>
 		</dependency>
-			
+		
+		<!-- https://mvnrepository.com/artifact/org.primefaces.extensions/primefaces-extensions -->
+		<dependency>
+		    <groupId>org.primefaces.extensions</groupId>
+		    <artifactId>primefaces-extensions</artifactId>
+		    <version>6.2.11</version>
+		</dependency>
+		
     </dependencies>
     <build>
         <finalName>piasi</finalName>

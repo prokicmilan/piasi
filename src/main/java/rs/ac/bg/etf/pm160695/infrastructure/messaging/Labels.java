@@ -4,6 +4,7 @@ import java.text.MessageFormat;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
+import java.util.logging.Logger;
 
 import javax.faces.component.UIViewRoot;
 import javax.faces.context.FacesContext;
@@ -15,15 +16,13 @@ public class Labels {
 	private static final String UI_BUNDLE_LABELS_MESSAGES = "LabelsMessage";
 	private static final String UI_BUNDLE_LABELS_COLUMNS = "LabelsColumn";
 
-	private Labels() {
-	}
-
 	public static String getLabel(String key, Object... params) {
 		ResourceBundle resourceBundle = null;
 
 		try {
-			resourceBundle = ResourceBundle.getBundle(UI_BUNDLE_LABELS);
+			resourceBundle = ResourceBundle.getBundle(UI_BUNDLE_LABELS, getLocale());
 		} catch (MissingResourceException e) {
+			Logger.getLogger("rs.ac.bg.etf.pm160695.infrastructure.messaging.Labels").severe("Labels: " + e.getMessage());
 			return "Ne postoji datoteka " + UI_BUNDLE_LABELS + "_" + getLocale() + ".properties";
 		}
 
@@ -34,7 +33,7 @@ public class Labels {
 		ResourceBundle resourceBundle = null;
 
 		try {
-			resourceBundle = ResourceBundle.getBundle(UI_BUNDLE_LABELS_TITLES);
+			resourceBundle = ResourceBundle.getBundle(UI_BUNDLE_LABELS_TITLES, getLocale());
 		} catch (MissingResourceException e) {
 			return "Ne postoji datoteka " + UI_BUNDLE_LABELS_TITLES + "_" + getLocale() + ".properties";
 		}
@@ -46,7 +45,7 @@ public class Labels {
 		ResourceBundle resourceBundle = null;
 
 		try {
-			resourceBundle = ResourceBundle.getBundle(UI_BUNDLE_LABELS_MESSAGES);
+			resourceBundle = ResourceBundle.getBundle(UI_BUNDLE_LABELS_MESSAGES, getLocale());
 		} catch (MissingResourceException e) {
 			return "Ne postoji datoteka " + UI_BUNDLE_LABELS_MESSAGES + "_" + getLocale() + ".properties";
 		}
@@ -78,4 +77,6 @@ public class Labels {
 		UIViewRoot viewRoot = context != null ? context.getViewRoot() : null;
 		return viewRoot != null ? viewRoot.getLocale() : Locale.getDefault();
 	}
+
+	private Labels() {}
 }
