@@ -8,12 +8,25 @@ public class TestQuestionFormField extends FormField {
 	
 	private InputType inputType;
 	
+	private String correctAnswer;
+	
+	private String answers;
+	
+	private int index;
+	
 	public TestQuestionFormField(String name) {
 		super(name);
 	}
-
-	public TestQuestionFormField(String name, String value) {
+	
+	public TestQuestionFormField(String name, int index) {
+		super(name);
+		this.index = index;
+	}
+	
+	public TestQuestionFormField(String name, String value, InputType inputType, String correctAnswer, String answers) {
 		super(name, value);
+		this.inputType = inputType;
+		this.answers = answers;
 	}
 
 	public InputType getInputType() {
@@ -24,13 +37,32 @@ public class TestQuestionFormField extends FormField {
 		this.inputType = inputType;
 	}
 
-	public List<InputType> getInputTypeList() {
-		return inputTypeList;
+	public String getCorrectAnswer() {
+		return correctAnswer;
 	}
 
-	@Override
-	public String toString() {
-		return "name = " + getName() + " value = " + getValue() + " inputType = " + inputType;
+	public void setCorrectAnswer(String correctAnswer) {
+		this.correctAnswer = correctAnswer;
+	}
+
+	public String getAnswers() {
+		return answers;
+	}
+
+	public void setAnswers(String answers) {
+		this.answers = answers;
+	}
+	
+	public int getIndex() {
+		return index;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
+	public List<InputType> getInputTypeList() {
+		return inputTypeList;
 	}
 
 }
