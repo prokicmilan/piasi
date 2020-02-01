@@ -9,89 +9,115 @@
 	<ui:composition template="/templates/masterPageTemplate.xhtml">
 		<ui:define name="page-content">
 			<h:panelGroup id="dynaFormGroup">
-				<h:form id="form-dyna">
-					<pe:dynaForm id="dynaForm" value="#{testCreationBacking.testFormModel}" var="data">
+				<h:form id="test-form">
+					<p:panelGrid columns="5" styleClass="ui-noborder">
+						<p:outputLabel for="int-nazivTesta" value="#{labels['label.test.naziv']}" />
+						<p:outputLabel for="ta-opisTesta" value="#{labels['label.test.opis']}" />
+						<p:outputLabel for="cal-testOd" value="#{labels['label.test.od']}" />
+						<p:outputLabel for="cal-testDo" value="#{labels['label.test.do']}" />
+						<p:outputLabel for="int-trajanjeTesta" value="#{labels['label.test.trajanje']}" />
+						
+						<p:inputText id="int-nazivTesta"
+							value="#{testCreationBacking.naziv}"
+							required="true" />
+							
+						<p:inputTextarea id="ta-opisTesta"
+							value="#{testCreationBacking.opis}"
+							rows="1"
+							cols="30"
+							required="true" />
+							
+						<p:calendar id="cal-testOd"
+							value="#{testCreationBacking.pocetak}"
+							converter="localDateConverter"
+							required="true"
+							binding="#{pocetak}" >
+						
+							<p:ajax event="dateSelect" partialSubmit="true" />
+							<p:ajax event="change" partialSubmit="true" />
+						</p:calendar>
+						
+						<p:calendar id="cal-testDo"
+							value="#{testCreationBacking.kraj}"
+							converter="localDateConverter"
+							required="true"
+							binding="#{kraj}" >
+						
+							<p:ajax event="dateSelect" partialSubmit="true" />
+							<p:ajax event="change" partialSubmit="true" />
+						</p:calendar>
+							
+						<p:inputText id="int-trajanjeTesta"
+							value="#{testCreationBacking.trajanje}"
+							required="true">
+							<p:keyFilter mask="num" />
+						</p:inputText>
+					</p:panelGrid>
+					<pe:dynaForm id="dynaForm" value="#{testCreationBacking.testFormModel}" 
+						var="data">
 					
 						<pe:dynaFormControl type="question">
-							<h:outputLabel for="ta-tekstPitanja" value="#{labels['label.test.tekstPitanja']}" />
+							<p:outputLabel for="ta-tekstPitanja" value="#{labels['label.test.tekstPitanja']}" />
 							<p:inputTextarea id="ta-tekstPitanja" 
 								value="#{data.value}" 
-								required="true">
+								required="true"
+								rows="1"
+								cols="20"
+								styleClass="tq-input">
 								<p:ajax event="valueChange" partialSubmit="true" />
 							</p:inputTextarea>
 							
-							<h:outputLabel for="som-inputType" value="#{labels['label.test.tipPitanja']}" />
-							<p:selectOneMenu id="som-inputType" value="#{data.inputType}" >
+							<p:outputLabel for="som-inputType" value="#{labels['label.test.tipPitanja']}" />
+							<p:selectOneMenu id="som-inputType" 
+								styleClass="som-inputTypeCl tq-input"  
+								value="#{data.inputType}" >
 								<f:selectItem />
 								<f:selectItems value="#{data.inputTypeList}" 
 									var="it" 
 									itemValue="#{it}" 
-									itemLabel="#{it.label}" />
+									itemLabel="#{labels[it.displayKey]}" />
 								
 								<p:ajax event="change" partialSubmit="true" />
 							</p:selectOneMenu>
 							
-							<h:outputLabel for="int-correctAnswer" value="#{labels['label.test.tacanOdgovor']}" />
-							<p:inputText id="int-correctAnswer" value="#{data.correctAnswer}" >
-								<p:ajax event="valueChange" partialSubmit="true" />
-							</p:inputText>
-							
-							<h:outputLabel for="ta-answers" value="#{labels['label.test.ponudjeniOdgovori']}" />
-							
-							<p:inputTextarea id="ta-answers" value="#{data.answers}" >
+							<p:outputLabel for="ta-correctAnswer" value="#{labels['label.test.tacanOdgovor']}" />
+							<p:inputTextarea 
+								id="ta-correctAnswer" 
+								value="#{data.correctAnswer}"
+								required="true" 
+								rows="1"
+								cols="20"
+								styleClass="tq-input" >
 								<p:ajax event="valueChange" partialSubmit="true" />
 							</p:inputTextarea>
 							
-							<p:commandButton value="Dodaj" 
-								process="@this"
+							<p:outputLabel for="ta-answers" value="#{labels['label.test.ponudjeniOdgovori']}" />
+							
+							<p:inputTextarea id="ta-answers" 
+								value="#{data.answers}" 
+								required="true" 
+								rows="1"
+								cols="20"
+								styleClass="tq-input" >
+								<p:ajax event="valueChange" partialSubmit="true" />
+							</p:inputTextarea>
+							
+							<p:commandLink process="@this"
 								action="#{testCreationBacking.addQuestion}"
 								update="dynaForm"
-								global="false" />
-							<p:commandButton value="Ukloni" 
-								process="@this"
+								styleClass="addRemoveLink"
+								rendered="#{data.index eq (testCreationBacking.numberOfQuestions - 1)}" >
+								<i class="fa fa-plus fa-fw" />
+							</p:commandLink>
+							<p:commandLink process="@this"
 								update="dynaForm"
-								action="#{testCreationBacking.removeQuestion(data.index)}"
-								global="false" />
+								action="#{testCreationBacking.removeQuestion(data)}"
+								styleClass="addRemoveLink"
+								immediate="true"
+								rendered="#{data.index ne (testCreationBacking.numberOfQuestions - 1)}" >
+								<i class="fa fa-minus fa-fw" />
+							</p:commandLink>
 						</pe:dynaFormControl>
-						<!-- <pe:dynaFormControl type="input" for="txt">
-							<p:inputText id="txt" value="#{data.value}" required="true" >
-								<p:ajax event="valueChange" partialSubmit="true"/>
-							</p:inputText>
-						</pe:dynaFormControl>
-						<pe:dynaFormControl type="select-one" for="som">
-							<p:selectOneMenu id="som" value="#{data.inputType}" required="true">
-								<f:selectItem />
-								<f:selectItems value="#{data.inputTypeList}" 
-									var="it" 
-									itemValue="#{it}" 
-									itemLabel="#{it.label}" />
-								
-								<p:ajax event="change" 
-									partialSubmit="true" 
-									listener="#{testCreationBacking.onInputTypeChange(data)}" 
-									update="dynaFormGroup" />
-							</p:selectOneMenu>
-						</pe:dynaFormControl>
-						<pe:dynaFormControl type="text-area" for="textArea">
-							<p:inputTextarea id="textArea" value="#{data.correctAnswer}" />
-						</pe:dynaFormControl>
-						
-						<pe:dynaFormControl type="text-area-answers" for="textAreaAnswers">
-							<p:inputTextarea id="textAreaAnswers" value="#{data.answers}" rendered="" />
-						</pe:dynaFormControl>
-						
-						<pe:dynaFormControl type="addRemove">
-							<p:commandButton value="Dodaj" 
-								process="@this"
-								action="#{testCreationBacking.addQuestion}"
-								global="false" />
-							<p:commandButton value="Ukloni" 
-								process="@this"
-								update="dynaForm"
-								action="#{testCreationBacking.removeQuestion()}"
-								global="false" />
-						</pe:dynaFormControl>
-						 -->
 					</pe:dynaForm>
 				</h:form>
 				<h:form id="submit-form">
@@ -99,7 +125,7 @@
 		            	value="Submit" 
 		           		action="#{testCreationBacking.submitForm}"
 		           		process="dynaFormGroup" />
-		            <p:commandButton id="btn-reset" type="reset" value="Reset" update="form-dyna:dynaForm" style="margin-left: 5px;"/>
+		            <p:commandButton id="btn-reset" type="reset" value="Reset" update="test-form:dynaForm" style="margin-left: 5px;"/>
 				</h:form>
 			</h:panelGroup>
 		</ui:define>

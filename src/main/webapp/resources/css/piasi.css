@@ -71,6 +71,19 @@ body {
 	width: 100%;
 }
 
+.tq-input {
+	margin: 0px 5px !important;
+}
+
+.addRemoveLink {
+	text-decoration: none;
+	color: #4f4f4f;
+	border: 1px solid #a8a8a8;
+	border-radius: 25px;
+	margin-left: 5px;
+	padding-right: 4px;
+}
+
 /* KOLONE - START */
 
 .column-127 {
@@ -106,6 +119,7 @@ body {
 #panel-korisnik-profil_content {
 	padding: 0px;
 }
+
 
 #login {
 	height: 100%;

@@ -1,5 +1,6 @@
 package rs.ac.bg.etf.pm160695.presentation.qt.test;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,7 +17,7 @@ import org.primefaces.extensions.model.dynaform.DynaFormControl;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
 
-import rs.ac.bg.etf.pm160695.business.quizquestionaire.entity.InputType;
+import rs.ac.bg.etf.pm160695.business.quizquestionaire.entity.FormField;
 import rs.ac.bg.etf.pm160695.business.quizquestionaire.entity.TestQuestionFormField;
 import rs.ac.bg.etf.pm160695.infrastructure.presentation.BaseBackingBean;
 
@@ -25,62 +26,33 @@ import rs.ac.bg.etf.pm160695.infrastructure.presentation.BaseBackingBean;
 public class TestCreationBacking extends BaseBackingBean {
 
 	private static final long serialVersionUID = -1922383613850915029L;
-	
+
 	private DynaFormModel testFormModel;
-	
-	int numberOfQuestions;
-	
+	private List<FormField> formFieldList = new LinkedList<>();
+
+	int numberOfQuestions = 0;
+
+	private String naziv;
+	private String opis;
+	private LocalDate pocetak;
+	private LocalDate kraj;
+	private Integer trajanje;
+
 	@PostConstruct
 	public void init() {
 		testFormModel = new DynaFormModel();
 		addNewQuestionRow();
 	}
-	
+
 	public void submitForm() {
 		logger.info("submitForm");
-		List<TestQuestionFormField> questions = new LinkedList<>(); 
-		
-		questions = testFormModel.getControls()
-								 .stream()
-								 .map(DynaFormControl::getData)
-								 .map(d -> (TestQuestionFormField) d)
-								 .collect(Collectors.toList());
-		
-//		questions = testFormModel.getControls()
-//							     .stream()
-//							     .map(DynaFormControl::getData) 												// dohvatam data sa kontrole
-//							     .map(d -> (TestQuestionFormField) d) 											// castujem u TestQuestionFormField
-//							     .collect(Collectors.groupingBy(TestQuestionFormField::getName))				// mapiram po imenima
-//							     .entrySet()																	
-//							     .stream()
-//							     .map(e -> {																	// za svaki entry u mapi
-//							    	 TestQuestionFormField formField = new TestQuestionFormField(e.getKey());  
-//							    	 String value = e.getValue().stream()										// dohvatam njegov value (ako nije null)
-//							    			 					.filter(f -> f.getValue() != null &&
-//							    			 								 !f.getValue().isBlank())
-//							    			 					.collect(Collectors.toList())
-//							    			 					.get(0)
-//							    			 					.getValue();
-//							    	 formField.setValue(value);
-//							    	 InputType inputType = e.getValue().stream()								// dohvatam njegov inputType (ako nije null)
-//							    			 						   .filter(f -> f.getInputType() != null)
-//							    			 						   .collect(Collectors.toList())
-//							    			 						   .get(0)
-//							    			 						   .getInputType();
-//							    	 formField.setInputType(inputType);
-//							    	 String answers = e.getValue().stream()
-//							    			 					  .filter(f -> f.getAnswers() != null &&
-//							    			 							  	   !f.getAnswers().isBlank())
-//							    			 					  .collect(Collectors.toList())
-//							    			 					  .get(0)
-//							    			 					  .getAnswers();
-//							    	 formField.setAnswers(answers);
-//							    	 
-//							    	 return formField;															// mapiram entry u jedan objekat
-//							     })
-//							     .collect(Collectors.toList());													// skupljam sve u listu
+		List<TestQuestionFormField> questions = new LinkedList<>();
+
+		questions = testFormModel.getControls().stream().map(DynaFormControl::getData)
+				.map(d -> (TestQuestionFormField) d).collect(Collectors.toList());
+
 		questions.forEach(q -> logger.info(q.getName() + ":" + q.getValue() + ":" + q.getInputType()));
-		
+
 		/* CUT HERE - OVO IDE U BIZNIS */
 		// pretvaram sve u json
 		JsonArrayBuilder jsonArrayBuilder = Json.createArrayBuilder();
@@ -94,49 +66,84 @@ public class TestCreationBacking extends BaseBackingBean {
 		JsonArray jsonArray = jsonArrayBuilder.build();
 		logger.info("generisan niz: " + jsonArray.toString());
 	}
-	
+
 	public void addQuestion() {
 		addNewQuestionRow();
 	}
-	
-	public void removeQuestion(int index) {
-		removeLastQuestionRow(index);
+
+	public void removeQuestion(TestQuestionFormField formField) {
+		removeQuestionRow(formField);
 	}
-	
+
 	public void onInputTypeChange(TestQuestionFormField formField) {
 		if (formField != null && formField.getInputType() != null) {
 			logger.info("selected: " + formField.getInputType().getLabel());
 		}
 	}
-	
+
 	private void addNewQuestionRow() {
-		logger.info("adding new row");
 		DynaFormRow row = testFormModel.createRegularRow();
-		
-		row.addControl(new TestQuestionFormField("pitanje " + numberOfQuestions, numberOfQuestions), "question");
-		
-//		DynaFormLabel label = row.addLabel(Labels.getLabel("label.test.tekstPitanja"));
-//		DynaFormControl control = row.addControl(new TestQuestionFormField("pitanje " + numberOfQuestions, numberOfQuestions), "input");
-//		label.setForControl(control);
-//		
-//		label = row.addLabel(Labels.getLabel("label.test.tipPitanja"));
-//		control = row.addControl(new TestQuestionFormField("pitanje " + numberOfQuestions, numberOfQuestions), "select-one");
-//		label.setForControl(control);
-//		
-//		label = row.addLabel(Labels.getLabel("label.test.tacanOdgovor"));
-//		control = row.addControl(new TestQuestionFormField("pitanje " + numberOfQuestions, numberOfQuestions), "text-area");
-//		label.setForControl(control);
-//		
-//		label = row.addLabel(Labels.getLabel("label.test.ponudjeniOdgovori"));
-//		control = row.addControl(new TestQuestionFormField("pitanje " + numberOfQuestions, numberOfQuestions), "text-area-answers");
-//		label.setForControl(control);
-		
+
+		logger.info("adding row " + numberOfQuestions);
+
+		FormField formField = new TestQuestionFormField("pitanje " + numberOfQuestions, numberOfQuestions);
 		numberOfQuestions++;
+		formFieldList.add(formField);
+
+		row.addControl(formField, "question");
 	}
-	
-	private void removeLastQuestionRow(int index) {
-		testFormModel.removeRegularRow(index);
+
+	private void removeQuestionRow(TestQuestionFormField formField) {
+		logger.info("removing row " + formField.getIndex() + " out of " + numberOfQuestions);
 		numberOfQuestions--;
+		testFormModel.removeRegularRow(formField.getIndex());
+		formFieldList.remove(formField);
+
+		int index = 0;
+		for (FormField ff : formFieldList) {
+			TestQuestionFormField testQuestionFormField = (TestQuestionFormField) ff;
+			testQuestionFormField.setIndex(index++);
+		}
+	}
+
+	public String getNaziv() {
+		return naziv;
+	}
+
+	public void setNaziv(String naziv) {
+		this.naziv = naziv;
+	}
+
+	public String getOpis() {
+		return opis;
+	}
+
+	public void setOpis(String opis) {
+		this.opis = opis;
+	}
+
+	public LocalDate getPocetak() {
+		return pocetak;
+	}
+
+	public void setPocetak(LocalDate pocetak) {
+		this.pocetak = pocetak;
+	}
+
+	public LocalDate getKraj() {
+		return kraj;
+	}
+
+	public void setKraj(LocalDate kraj) {
+		this.kraj = kraj;
+	}
+
+	public Integer getTrajanje() {
+		return trajanje;
+	}
+
+	public void setTrajanje(Integer trajanje) {
+		this.trajanje = trajanje;
 	}
 
 	public int getNumberOfQuestions() {
@@ -146,5 +153,5 @@ public class TestCreationBacking extends BaseBackingBean {
 	public DynaFormModel getTestFormModel() {
 		return testFormModel;
 	}
-	
+
 }
