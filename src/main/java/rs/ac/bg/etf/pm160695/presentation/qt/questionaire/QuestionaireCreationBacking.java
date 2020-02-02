@@ -25,7 +25,7 @@ public class QuestionaireCreationBacking extends TQCreationBacking {
 	@Inject
 	private QuestionaireDao questionaireDao;
 
-	private Boolean anonymous;
+	private Boolean anonymous = Boolean.FALSE;
 
 	@PostConstruct
 	protected void init() {

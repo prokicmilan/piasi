@@ -12,6 +12,7 @@ import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.InputType;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.TQFormField;
 import rs.ac.bg.etf.pm160695.infrastructure.messaging.Messages;
 import rs.ac.bg.etf.pm160695.infrastructure.presentation.BaseBackingBean;
+import rs.ac.bg.etf.pm160695.presentation.qt.questionaire.QuestionaireCreationBacking;
 import rs.ac.bg.etf.pm160695.presentation.qt.test.TestCreationBacking;
 
 public abstract class TQCreationBacking extends BaseBackingBean {
@@ -88,14 +89,11 @@ public abstract class TQCreationBacking extends BaseBackingBean {
 	}
 	
 	public boolean isRenderedTrajanje() {
-		if (this instanceof TestCreationBacking) {
-			logger.info("testCreationbacking");
-			return true;
-		}
-		else {
-			logger.info("questionaireCreationBacking");
-			return false;
-		}
+		return (this instanceof TestCreationBacking);
+	}
+	
+	public boolean isRenderedAnonimno() {
+		return (this instanceof QuestionaireCreationBacking);
 	}
 
 	public int getNumberOfQuestions() {
@@ -111,7 +109,6 @@ public abstract class TQCreationBacking extends BaseBackingBean {
 	}
 
 	public void setNaziv(String naziv) {
-		logger.info("setnaziv " + naziv);
 		this.naziv = naziv;
 	}
 

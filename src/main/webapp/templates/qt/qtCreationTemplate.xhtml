@@ -11,7 +11,7 @@
 		
 			<h:panelGroup id="dynaFormGroup">
 				<h:form id="tq-form">
-					<p:panelGrid columns="#{tqBacking.renderedTrajanje ? 5 : 4}" 
+					<p:panelGrid columns="5" 
 						styleClass="ui-noborder" >
 						<p:outputLabel for="int-naziv" value="#{labels['label.qt.naziv']}" />
 						<p:outputLabel for="ta-opis" value="#{labels['label.qt.opis']}" />
@@ -20,12 +20,15 @@
 						<p:outputLabel for="int-trajanje" 
 							value="#{labels['label.qt.trajanje']}" 
 							rendered="#{tqBacking.renderedTrajanje}" />
+						<p:outputLabel for="cb-anonimno"
+							value="#{labels['label.qt.anonimno']}"
+							rendered="#{tqBacking.renderedAnonimno}" />
 						
 						<p:inputText id="int-naziv"
 							value="#{tqBacking.naziv}"
 							required="true" >
 							
-							<p:ajax event="valueChange" partialSubmit="true" />
+							<p:ajax event="valueChange" />
 						</p:inputText>
 							
 						<p:inputTextarea id="ta-opis"
@@ -42,6 +45,7 @@
 							maxdate="#{tqBacking.kraj}" >
 						
 							<p:ajax event="dateSelect" />
+							<p:ajax event="valueChange" />
 						</p:calendar>
 						
 						<p:calendar id="cal-datumDo"
@@ -50,6 +54,7 @@
 							mindate="#{tqBacking.pocetak}" >
 						
 							<p:ajax event="dateSelect" />
+							<p:ajax event="valueChange" />
 						</p:calendar>
 							
 						<p:inputText id="int-trajanje"
@@ -62,6 +67,10 @@
 							
 							<p:ajax event="valueChange" />
 						</p:inputText>
+						
+						<p:selectBooleanCheckbox id="cb-anonimno" value="#{tqBacking.anonymous}">
+							<p:ajax />
+						</p:selectBooleanCheckbox>
 					</p:panelGrid>
 					<ui:insert id="dyna-form-content" name="dynaFormContent">Content</ui:insert>
 		            <p:commandButton id="btn-submit" 

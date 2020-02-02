@@ -75,8 +75,4 @@ public class TestCreationBacking extends TQCreationBacking {
 		this.trajanje = trajanje;
 	}
 
-	public String getBla() {
-		return "test bla";
-	}
-
 }
