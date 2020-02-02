@@ -7,12 +7,12 @@
       xmlns:pe="http://primefaces.org/ui/extensions">
 
 	<ui:composition template="/templates/qt/qtCreationTemplate.xhtml">
+		<ui:param name="tqBacking" value="#{testCreationBacking}" />
 		<ui:define name="dynaFormContent">
-			<ui:param name="tqBacking" value="#{testCreationBacking}" />
 			<pe:dynaForm id="dynaForm" value="#{tqBacking.formModel}" 
 				var="data">
 				<pe:dynaFormControl type="question">
-					<p:outputLabel for="ta-tekstPitanja" value="#{labels['label.test.tekstPitanja']}" />
+					<p:outputLabel for="ta-tekstPitanja" value="#{labels['label.qt.tekstPitanja']}" />
 					<p:inputTextarea id="ta-tekstPitanja" 
 						value="#{data.value}" 
 						required="true"
@@ -22,7 +22,7 @@
 						<p:ajax event="valueChange" />
 					</p:inputTextarea>
 					
-					<p:outputLabel for="som-inputType" value="#{labels['label.test.tipPitanja']}" />
+					<p:outputLabel for="som-inputType" value="#{labels['label.qt.tipPitanja']}" />
 					<p:selectOneMenu id="som-inputType" 
 						styleClass="som-inputTypeCl tq-input" 
 						value="#{data.inputType}"
@@ -36,7 +36,7 @@
 						<p:ajax event="change" update="tq-form" />
 					</p:selectOneMenu>
 					
-					<p:outputLabel for="ta-correctAnswer" value="#{labels['label.test.tacanOdgovor']}" />
+					<p:outputLabel for="ta-correctAnswer" value="#{labels['label.qt.tacanOdgovor']}" />
 					<p:inputTextarea 
 						id="ta-correctAnswer" 
 						value="#{data.correctAnswer}"
@@ -48,7 +48,7 @@
 					</p:inputTextarea>
 					
 					<p:outputLabel for="ta-answers" 
-						value="#{labels['label.test.ponudjeniOdgovori']}"
+						value="#{labels['label.qt.ponudjeniOdgovori']}"
 						rendered="#{tqBacking.isRenderedPonudjeniOdgovori(data)}" />
 					
 					<p:inputTextarea id="ta-answers" 
@@ -60,7 +60,6 @@
 						rendered="#{tqBacking.isRenderedPonudjeniOdgovori(data)}" >
 						<p:ajax event="valueChange" />
 					</p:inputTextarea>
-					
 					<p:commandLink process="@this"
 						action="#{tqBacking.addQuestion}"
 						update="dynaForm"
@@ -72,7 +71,6 @@
 						update="dynaForm"
 						action="#{tqBacking.removeQuestion(data)}"
 						styleClass="addRemoveLink"
-						immediate="true"
 						rendered="#{data.index ne (tqBacking.numberOfQuestions - 1)}" >
 						<i class="fa fa-minus fa-fw" />
 					</p:commandLink>

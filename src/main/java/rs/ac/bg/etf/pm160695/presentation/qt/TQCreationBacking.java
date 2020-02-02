@@ -12,6 +12,7 @@ import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.InputType;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.TQFormField;
 import rs.ac.bg.etf.pm160695.infrastructure.messaging.Messages;
 import rs.ac.bg.etf.pm160695.infrastructure.presentation.BaseBackingBean;
+import rs.ac.bg.etf.pm160695.presentation.qt.test.TestCreationBacking;
 
 public abstract class TQCreationBacking extends BaseBackingBean {
 
@@ -47,7 +48,6 @@ public abstract class TQCreationBacking extends BaseBackingBean {
 		FormField formField = createFormField();
 		DynaFormRow row = formModel.createRegularRow();
 
-		numberOfQuestions++;
 		formFieldList.add(formField);
 
 		row.addControl(formField, "question");
@@ -56,6 +56,7 @@ public abstract class TQCreationBacking extends BaseBackingBean {
 	protected void removeQuestionRow(FormField formField) {
 		numberOfQuestions--;
 		formModel.removeRegularRow(formField.getIndex());
+		formFieldList.remove(formField);
 
 		int index = 0;
 		for (FormField ff : formFieldList) {
@@ -85,6 +86,17 @@ public abstract class TQCreationBacking extends BaseBackingBean {
 	public boolean isRenderedPonudjeniOdgovori(TQFormField formField) {
 		return InputType.CHECKBOX.equals(formField.getInputType()) || InputType.RADIO.equals(formField.getInputType());
 	}
+	
+	public boolean isRenderedTrajanje() {
+		if (this instanceof TestCreationBacking) {
+			logger.info("testCreationbacking");
+			return true;
+		}
+		else {
+			logger.info("questionaireCreationBacking");
+			return false;
+		}
+	}
 
 	public int getNumberOfQuestions() {
 		return numberOfQuestions;
@@ -99,6 +111,7 @@ public abstract class TQCreationBacking extends BaseBackingBean {
 	}
 
 	public void setNaziv(String naziv) {
+		logger.info("setnaziv " + naziv);
 		this.naziv = naziv;
 	}
 

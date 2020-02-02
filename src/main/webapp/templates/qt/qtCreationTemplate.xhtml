@@ -8,24 +8,27 @@
 
 	<ui:composition template="/templates/masterPageTemplate.xhtml">
 		<ui:define name="page-content">
+		
 			<h:panelGroup id="dynaFormGroup">
 				<h:form id="tq-form">
-					<p:panelGrid columns="5" 
+					<p:panelGrid columns="#{tqBacking.renderedTrajanje ? 5 : 4}" 
 						styleClass="ui-noborder" >
-						<p:outputLabel for="int-nazivTesta" value="#{labels['label.test.naziv']}" />
-						<p:outputLabel for="ta-opisTesta" value="#{labels['label.test.opis']}" />
-						<p:outputLabel for="cal-testOd" value="#{labels['label.test.od']}" />
-						<p:outputLabel for="cal-testDo" value="#{labels['label.test.do']}" />
-						<p:outputLabel for="int-trajanjeTesta" value="#{labels['label.test.trajanje']}" />
+						<p:outputLabel for="int-naziv" value="#{labels['label.qt.naziv']}" />
+						<p:outputLabel for="ta-opis" value="#{labels['label.qt.opis']}" />
+						<p:outputLabel for="cal-datumOd" value="#{labels['label.qt.od']}" />
+						<p:outputLabel for="cal-datumDo" value="#{labels['label.qt.do']}" />
+						<p:outputLabel for="int-trajanje" 
+							value="#{labels['label.qt.trajanje']}" 
+							rendered="#{tqBacking.renderedTrajanje}" />
 						
-						<p:inputText id="int-nazivTesta"
+						<p:inputText id="int-naziv"
 							value="#{tqBacking.naziv}"
 							required="true" >
 							
-							<p:ajax event="valueChange" />
+							<p:ajax event="valueChange" partialSubmit="true" />
 						</p:inputText>
 							
-						<p:inputTextarea id="ta-opisTesta"
+						<p:inputTextarea id="ta-opis"
 							value="#{tqBacking.opis}"
 							rows="1"
 							cols="30"
@@ -33,7 +36,7 @@
 							<p:ajax event="valueChange" />
 						</p:inputTextarea>
 							
-						<p:calendar id="cal-testOd"
+						<p:calendar id="cal-datumOd"
 							value="#{tqBacking.pocetak}"
 							converter="localDateConverter"
 							maxdate="#{tqBacking.kraj}" >
@@ -41,7 +44,7 @@
 							<p:ajax event="dateSelect" />
 						</p:calendar>
 						
-						<p:calendar id="cal-testDo"
+						<p:calendar id="cal-datumDo"
 							value="#{tqBacking.kraj}"
 							converter="localDateConverter"
 							mindate="#{tqBacking.pocetak}" >
@@ -49,9 +52,10 @@
 							<p:ajax event="dateSelect" />
 						</p:calendar>
 							
-						<p:inputText id="int-trajanjeTesta"
+						<p:inputText id="int-trajanje"
 							value="#{tqBacking.trajanje}"
-							required="true">
+							required="true"
+							rendered="#{tqBacking.renderedTrajanje}">
 							
 							<p:keyFilter mask="num" />
 							<f:validateLongRange minimum="1" maximum="180" />

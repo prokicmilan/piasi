@@ -50,7 +50,7 @@ public class QuestionaireCreationBacking extends TQCreationBacking {
 
 	@Override
 	protected FormField createFormField() {
-		return new QuestionaireQuestionFormField(numberOfQuestions);
+		return new QuestionaireQuestionFormField(numberOfQuestions++);
 	}
 
 	public Boolean getAnonymous() {

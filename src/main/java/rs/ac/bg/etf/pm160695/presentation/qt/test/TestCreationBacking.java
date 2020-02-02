@@ -64,7 +64,7 @@ public class TestCreationBacking extends TQCreationBacking {
 
 	@Override
 	protected FormField createFormField() {
-		return new TestQuestionFormField(numberOfQuestions);
+		return new TestQuestionFormField(numberOfQuestions++);
 	}
 
 	public Integer getTrajanje() {

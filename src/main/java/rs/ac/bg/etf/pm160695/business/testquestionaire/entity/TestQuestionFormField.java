@@ -1,5 +1,7 @@
 package rs.ac.bg.etf.pm160695.business.testquestionaire.entity;
 
+import java.util.Objects;
+
 public class TestQuestionFormField extends TQFormField {
 
 	private String correctAnswer;
@@ -20,6 +22,29 @@ public class TestQuestionFormField extends TQFormField {
 
 	public void setCorrectAnswer(String correctAnswer) {
 		this.correctAnswer = correctAnswer;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(correctAnswer);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (!(obj instanceof TestQuestionFormField)) {
+			return false;
+		}
+		TestQuestionFormField other = (TestQuestionFormField) obj;
+		return Objects.equals(correctAnswer, other.correctAnswer);
 	}
 
 }

@@ -1,6 +1,7 @@
 package rs.ac.bg.etf.pm160695.business.testquestionaire.entity;
 
 import java.util.List;
+import java.util.Objects;
 
 public class TQFormField extends FormField {
 
@@ -42,5 +43,29 @@ public class TQFormField extends FormField {
 
 	public List<InputType> getInputTypeList() {
 		return inputTypeList;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = super.hashCode();
+		result = prime * result + Objects.hash(answers, inputType, inputTypeList);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (!super.equals(obj)) {
+			return false;
+		}
+		if (!(obj instanceof TQFormField)) {
+			return false;
+		}
+		TQFormField other = (TQFormField) obj;
+		return Objects.equals(answers, other.answers) && inputType == other.inputType
+				&& Objects.equals(inputTypeList, other.inputTypeList);
 	}
 }
