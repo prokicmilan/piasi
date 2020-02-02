@@ -6,138 +6,78 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:pe="http://primefaces.org/ui/extensions">
 
-	<ui:composition template="/templates/masterPageTemplate.xhtml">
-		<ui:define name="page-content">
-			<h:panelGroup id="dynaFormGroup">
-				<h:form id="test-form">
-					<p:panelGrid columns="5" 
-						styleClass="ui-noborder" >
-						<p:outputLabel for="int-nazivTesta" value="#{labels['label.test.naziv']}" />
-						<p:outputLabel for="ta-opisTesta" value="#{labels['label.test.opis']}" />
-						<p:outputLabel for="cal-testOd" value="#{labels['label.test.od']}" />
-						<p:outputLabel for="cal-testDo" value="#{labels['label.test.do']}" />
-						<p:outputLabel for="int-trajanjeTesta" value="#{labels['label.test.trajanje']}" />
-						
-						<p:inputText id="int-nazivTesta"
-							value="#{testCreationBacking.naziv}"
-							required="true" >
-							
-							<p:ajax event="valueChange" />
-						</p:inputText>
-							
-						<p:inputTextarea id="ta-opisTesta"
-							value="#{testCreationBacking.opis}"
-							rows="1"
-							cols="30"
-							required="true" >
-							<p:ajax event="valueChange" />
-						</p:inputTextarea>
-							
-						<p:calendar id="cal-testOd"
-							value="#{testCreationBacking.pocetak}"
-							converter="localDateConverter"
-							maxdate="#{testCreationBacking.kraj}" >
-						
-							<p:ajax event="dateSelect" />
-						</p:calendar>
-						
-						<p:calendar id="cal-testDo"
-							value="#{testCreationBacking.kraj}"
-							converter="localDateConverter"
-							mindate="#{testCreationBacking.pocetak}" >
-						
-							<p:ajax event="dateSelect" />
-						</p:calendar>
-							
-						<p:inputText id="int-trajanjeTesta"
-							value="#{testCreationBacking.trajanje}"
-							required="true">
-							
-							<p:keyFilter mask="num" />
-							<f:validateLongRange minimum="1" maximum="180" />
-							
-							<p:ajax event="valueChange" />
-						</p:inputText>
-					</p:panelGrid>
+	<ui:composition template="/templates/qt/qtCreationTemplate.xhtml">
+		<ui:define name="dynaFormContent">
+			<ui:param name="tqBacking" value="#{testCreationBacking}" />
+			<pe:dynaForm id="dynaForm" value="#{tqBacking.formModel}" 
+				var="data">
+				<pe:dynaFormControl type="question">
+					<p:outputLabel for="ta-tekstPitanja" value="#{labels['label.test.tekstPitanja']}" />
+					<p:inputTextarea id="ta-tekstPitanja" 
+						value="#{data.value}" 
+						required="true"
+						rows="1"
+						cols="20"
+						styleClass="tq-input">
+						<p:ajax event="valueChange" />
+					</p:inputTextarea>
 					
-					<pe:dynaForm id="dynaForm" value="#{testCreationBacking.testFormModel}" 
-						var="data">
+					<p:outputLabel for="som-inputType" value="#{labels['label.test.tipPitanja']}" />
+					<p:selectOneMenu id="som-inputType" 
+						styleClass="som-inputTypeCl tq-input" 
+						value="#{data.inputType}"
+						required="true" >
+						<f:selectItem />
+						<f:selectItems value="#{data.inputTypeList}" 
+							var="it" 
+							itemValue="#{it}" 
+							itemLabel="#{labels[it.displayKey]}" />
+						
+						<p:ajax event="change" update="tq-form" />
+					</p:selectOneMenu>
 					
-						<pe:dynaFormControl type="question">
-							<p:outputLabel for="ta-tekstPitanja" value="#{labels['label.test.tekstPitanja']}" />
-							<p:inputTextarea id="ta-tekstPitanja" 
-								value="#{data.value}" 
-								required="true"
-								rows="1"
-								cols="20"
-								styleClass="tq-input">
-								<p:ajax event="valueChange" />
-							</p:inputTextarea>
-							
-							<p:outputLabel for="som-inputType" value="#{labels['label.test.tipPitanja']}" />
-							<p:selectOneMenu id="som-inputType" 
-								styleClass="som-inputTypeCl tq-input" 
-								value="#{data.inputType}"
-								required="true" >
-								<f:selectItem />
-								<f:selectItems value="#{data.inputTypeList}" 
-									var="it" 
-									itemValue="#{it}" 
-									itemLabel="#{labels[it.displayKey]}" />
-								
-								<p:ajax event="change" update="test-form" />
-							</p:selectOneMenu>
-							
-							<p:outputLabel for="ta-correctAnswer" value="#{labels['label.test.tacanOdgovor']}" />
-							<p:inputTextarea 
-								id="ta-correctAnswer" 
-								value="#{data.correctAnswer}"
-								required="true" 
-								rows="1"
-								cols="20"
-								styleClass="tq-input" >
-								<p:ajax event="valueChange" />
-							</p:inputTextarea>
-							
-							<p:outputLabel for="ta-answers" 
-								value="#{labels['label.test.ponudjeniOdgovori']}"
-								rendered="#{testCreationBacking.isRenderedPonudjeniOdgovori(data)}" />
-							
-							<p:inputTextarea id="ta-answers" 
-								value="#{data.answers}" 
-								required="true" 
-								rows="1"
-								cols="20"
-								styleClass="tq-input"
-								rendered="#{testCreationBacking.isRenderedPonudjeniOdgovori(data)}" >
-								<p:ajax event="valueChange" />
-							</p:inputTextarea>
-							
-							<p:commandLink process="@this"
-								action="#{testCreationBacking.addQuestion}"
-								update="dynaForm"
-								styleClass="addRemoveLink"
-								rendered="#{data.index eq (testCreationBacking.numberOfQuestions - 1)}" >
-								<i class="fa fa-plus fa-fw" />
-							</p:commandLink>
-							<p:commandLink process="@this"
-								update="dynaForm"
-								action="#{testCreationBacking.removeQuestion(data)}"
-								styleClass="addRemoveLink"
-								immediate="true"
-								rendered="#{data.index ne (testCreationBacking.numberOfQuestions - 1)}" >
-								<i class="fa fa-minus fa-fw" />
-							</p:commandLink>
-						</pe:dynaFormControl>
-					</pe:dynaForm>
-		            <p:commandButton id="btn-submit" 
-		            	value="Submit" 
-		           		action="#{testCreationBacking.submitForm}"
-		           		binding="#{submitButton}" />
-		            <p:commandButton id="btn-reset" type="reset" value="Reset" process="test-form" update="test-form" style="margin-left: 5px;"/>
-				</h:form>
-			</h:panelGroup>
+					<p:outputLabel for="ta-correctAnswer" value="#{labels['label.test.tacanOdgovor']}" />
+					<p:inputTextarea 
+						id="ta-correctAnswer" 
+						value="#{data.correctAnswer}"
+						required="true" 
+						rows="1"
+						cols="20"
+						styleClass="tq-input" >
+						<p:ajax event="valueChange" />
+					</p:inputTextarea>
+					
+					<p:outputLabel for="ta-answers" 
+						value="#{labels['label.test.ponudjeniOdgovori']}"
+						rendered="#{tqBacking.isRenderedPonudjeniOdgovori(data)}" />
+					
+					<p:inputTextarea id="ta-answers" 
+						value="#{data.answers}" 
+						required="true" 
+						rows="1"
+						cols="20"
+						styleClass="tq-input"
+						rendered="#{tqBacking.isRenderedPonudjeniOdgovori(data)}" >
+						<p:ajax event="valueChange" />
+					</p:inputTextarea>
+					
+					<p:commandLink process="@this"
+						action="#{tqBacking.addQuestion}"
+						update="dynaForm"
+						styleClass="addRemoveLink"
+						rendered="#{data.index eq (tqBacking.numberOfQuestions - 1)}" >
+						<i class="fa fa-plus fa-fw" />
+					</p:commandLink>
+					<p:commandLink process="@this"
+						update="dynaForm"
+						action="#{tqBacking.removeQuestion(data)}"
+						styleClass="addRemoveLink"
+						immediate="true"
+						rendered="#{data.index ne (tqBacking.numberOfQuestions - 1)}" >
+						<i class="fa fa-minus fa-fw" />
+					</p:commandLink>
+				</pe:dynaFormControl>
+			</pe:dynaForm>
 		</ui:define>
 	</ui:composition>
-      
 </html>

@@ -52,24 +52,14 @@ public class KSKorisnik extends StatusBaseEntity {
 	private String mestoRodjenja;
 
 	@NotNull
-	@Column(name = "telefon")
 	private String telefon;
 
 	@NotNull
-	@Column(name = "aktivan")
 	private Boolean aktivan;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(
-		name = "ks_korisnik_ks_uloga", 
-		joinColumns = @JoinColumn(name = "korisnik_id", referencedColumnName = "id"), 
-		inverseJoinColumns = @JoinColumn(name = "uloga_id", referencedColumnName = "id")
-	)
+	@JoinTable(name = "ks_korisnik_ks_uloga", joinColumns = @JoinColumn(name = "korisnik_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "uloga_id", referencedColumnName = "id"))
 	private Set<KSUloga> uloge = new HashSet<>();
-
-	public String getUsername() {
-		return username;
-	}
 
 	public KSKorisnik() {
 	}
@@ -88,6 +78,10 @@ public class KSKorisnik extends StatusBaseEntity {
 		this.password = "";
 		this.salt = "";
 		this.aktivan = Boolean.FALSE;
+	}
+
+	public String getUsername() {
+		return username;
 	}
 
 	public void setUsername(String username) {

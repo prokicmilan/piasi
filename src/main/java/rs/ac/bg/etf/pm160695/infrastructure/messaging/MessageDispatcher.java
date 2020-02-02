@@ -11,25 +11,28 @@ public class MessageDispatcher implements Serializable {
 
 	public void info(String msg, Object... params) {
 		String message = getMessage(msg, params);
-		FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO, Messages.getMessageFromMessageDispatcher("sistem.obavestenje"), message);
-		
+		FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO,
+				Messages.getMessageFromMessageDispatcher("sistem.obavestenje"), message);
+
 		FacesContext.getCurrentInstance().addMessage("msgs", facesMessage);
 	}
-	
+
 	public void warn(String msg, Object... params) {
 		String message = getMessage(msg, params);
-		FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_WARN, Messages.getMessageFromMessageDispatcher("sistem.upozorenje"), message);
-		
+		FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_WARN,
+				Messages.getMessageFromMessageDispatcher("sistem.upozorenje"), message);
+
 		FacesContext.getCurrentInstance().addMessage("msgs", facesMessage);
 	}
-	
+
 	public void error(String msg, Object... params) {
 		String message = getMessage(msg, params);
-		FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR, Messages.getMessageFromMessageDispatcher("sistem.greska"), message);
-		
+		FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_ERROR,
+				Messages.getMessageFromMessageDispatcher("sistem.greska"), message);
+
 		FacesContext.getCurrentInstance().addMessage("msgs", facesMessage);
 	}
-	
+
 	private String getMessage(String msg, Object... params) {
 		String retVal = Messages.getMessageFromMessageDispatcher(msg, params);
 		return retVal.isBlank() ? msg : retVal;

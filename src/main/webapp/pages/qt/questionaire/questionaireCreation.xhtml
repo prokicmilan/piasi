@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:composition template="/templates/qt/qtCreationTemplate.xhtml">
+		<ui:define name="dynaFormContent">
+			<ui:param name="tqBacking" value="#{questionaireCreationBacking}" />
+				<pe:dynaForm id="dynaForm" value="#{tqBacking.formModel}" 
+					var="data">
+				
+					<pe:dynaFormControl type="question">
+						<p:outputLabel for="ta-tekstPitanja" value="#{labels['label.test.tekstPitanja']}" />
+						<p:inputTextarea id="ta-tekstPitanja" 
+							value="#{data.value}" 
+							required="true"
+							rows="1"
+							cols="20"
+							styleClass="tq-input">
+							<p:ajax event="valueChange" />
+						</p:inputTextarea>
+						
+						<p:outputLabel for="som-inputType" value="#{labels['label.test.tipPitanja']}" />
+						<p:selectOneMenu id="som-inputType" 
+							styleClass="som-inputTypeCl tq-input" 
+							value="#{data.inputType}"
+							required="true" >
+							<f:selectItem />
+							<f:selectItems value="#{data.inputTypeList}" 
+								var="it" 
+								itemValue="#{it}" 
+								itemLabel="#{labels[it.displayKey]}" />
+							
+							<p:ajax event="change" update="tq-form" />
+						</p:selectOneMenu>
+						
+						<p:outputLabel for="ta-answers" 
+							value="#{labels['label.test.ponudjeniOdgovori']}"
+							rendered="#{tqBacking.isRenderedPonudjeniOdgovori(data)}" />
+						
+						<p:inputTextarea id="ta-answers" 
+							value="#{data.answers}" 
+							required="true" 
+							rows="1"
+							cols="20"
+							styleClass="tq-input"
+							rendered="#{tqBacking.isRenderedPonudjeniOdgovori(data)}" >
+							<p:ajax event="valueChange" />
+						</p:inputTextarea>
+						
+						<p:commandLink process="@this"
+							action="#{tqBacking.addQuestion}"
+							update="dynaForm"
+							styleClass="addRemoveLink"
+							rendered="#{data.index eq (tqBacking.numberOfQuestions - 1)}" >
+							<i class="fa fa-plus fa-fw" />
+						</p:commandLink>
+						<p:commandLink process="@this"
+							update="dynaForm"
+							action="#{tqBacking.removeQuestion(data)}"
+							styleClass="addRemoveLink"
+							immediate="true"
+							rendered="#{data.index ne (tqBacking.numberOfQuestions - 1)}" >
+							<i class="fa fa-minus fa-fw" />
+						</p:commandLink>
+					</pe:dynaFormControl>
+				</pe:dynaForm>
+		</ui:define>
+	</ui:composition>
+      
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:composition template="/templates/masterPageTemplate.xhtml">
+		<ui:define name="page-content">
+			<h:panelGroup id="dynaFormGroup">
+				<h:form id="tq-form">
+					<p:panelGrid columns="5" 
+						styleClass="ui-noborder" >
+						<p:outputLabel for="int-nazivTesta" value="#{labels['label.test.naziv']}" />
+						<p:outputLabel for="ta-opisTesta" value="#{labels['label.test.opis']}" />
+						<p:outputLabel for="cal-testOd" value="#{labels['label.test.od']}" />
+						<p:outputLabel for="cal-testDo" value="#{labels['label.test.do']}" />
+						<p:outputLabel for="int-trajanjeTesta" value="#{labels['label.test.trajanje']}" />
+						
+						<p:inputText id="int-nazivTesta"
+							value="#{tqBacking.naziv}"
+							required="true" >
+							
+							<p:ajax event="valueChange" />
+						</p:inputText>
+							
+						<p:inputTextarea id="ta-opisTesta"
+							value="#{tqBacking.opis}"
+							rows="1"
+							cols="30"
+							required="true" >
+							<p:ajax event="valueChange" />
+						</p:inputTextarea>
+							
+						<p:calendar id="cal-testOd"
+							value="#{tqBacking.pocetak}"
+							converter="localDateConverter"
+							maxdate="#{tqBacking.kraj}" >
+						
+							<p:ajax event="dateSelect" />
+						</p:calendar>
+						
+						<p:calendar id="cal-testDo"
+							value="#{tqBacking.kraj}"
+							converter="localDateConverter"
+							mindate="#{tqBacking.pocetak}" >
+						
+							<p:ajax event="dateSelect" />
+						</p:calendar>
+							
+						<p:inputText id="int-trajanjeTesta"
+							value="#{tqBacking.trajanje}"
+							required="true">
+							
+							<p:keyFilter mask="num" />
+							<f:validateLongRange minimum="1" maximum="180" />
+							
+							<p:ajax event="valueChange" />
+						</p:inputText>
+					</p:panelGrid>
+					<ui:insert id="dyna-form-content" name="dynaFormContent">Content</ui:insert>
+		            <p:commandButton id="btn-submit" 
+		            	value="Submit" 
+		           		action="#{tqBacking.submitForm}" />
+		            <p:commandButton id="btn-reset" 
+		            	type="reset" 
+		            	value="Reset" 
+		            	process="tq-form" 
+		            	update="tq-form" 
+		            	style="margin-left: 5px;"/>
+				</h:form>
+			</h:panelGroup>		
+		</ui:define>
+			
+	</ui:composition>
+</html>

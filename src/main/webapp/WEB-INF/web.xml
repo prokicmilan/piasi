@@ -64,6 +64,7 @@
   		<web-resource-name>Javni resursi</web-resource-name>
   		<url-pattern>/javax.faces.resource/*</url-pattern>
   		<url-pattern>/login.xhtml</url-pattern>
+  		<url-pattern>/pages/korisnickisistem/register.xhtml</url-pattern>
   	</web-resource-collection>
   </security-constraint>
   <security-constraint>

@@ -1,4 +1,4 @@
-package rs.ac.bg.etf.pm160695.business.quizquestionaire.entity;
+package rs.ac.bg.etf.pm160695.business.testquestionaire.entity;
 
 public enum InputType {
 
