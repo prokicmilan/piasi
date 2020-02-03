@@ -28,12 +28,17 @@ public abstract class TQCreationBacking extends BaseBackingBean {
 	protected LocalDate pocetak;
 	protected LocalDate kraj;
 
+	public abstract void submitForm();
+	
+	public abstract boolean isRenderedAnonimno();
+	
+	public abstract boolean isRenderedTrajanje();
+	
 	protected void init() {
 		formModel = new DynaFormModel();
 	}
 
-	public abstract void submitForm();
-
+	
 	public void addQuestion() {
 		addNewQuestionRow();
 	}
@@ -41,6 +46,7 @@ public abstract class TQCreationBacking extends BaseBackingBean {
 	public void removeQuestion(FormField formField) {
 		removeQuestionRow(formField);
 	}
+	
 
 	protected abstract FormField createFormField();
 
@@ -87,11 +93,6 @@ public abstract class TQCreationBacking extends BaseBackingBean {
 		return InputType.CHECKBOX.equals(formField.getInputType()) || InputType.RADIO.equals(formField.getInputType());
 	}
 	
-	public abstract boolean isRenderedTrajanje();
-	
-	public boolean isRenderedAnonimno() {
-		return (this instanceof QuestionaireCreationBacking);
-	}
 
 	public int getNumberOfQuestions() {
 		return numberOfQuestions;

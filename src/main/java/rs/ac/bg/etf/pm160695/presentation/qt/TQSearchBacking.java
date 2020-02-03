@@ -25,6 +25,12 @@ public abstract class TQSearchBacking extends BaseBackingBean {
 	
 	public abstract void searchAction();
 	
+	public abstract boolean isRenderedTrajanje();
+	
+	public abstract String getNoviOutcome();
+
+	public abstract String getDetaljiOutcome();
+	
 	public void onRowSelect() {
 		logger.info("onRowSelect() --> selected = " + selected.getNaziv());
 	}
@@ -37,8 +43,6 @@ public abstract class TQSearchBacking extends BaseBackingBean {
 		datumOd = null;
 		datumDo = null;
 	}
-	
-	public abstract boolean isRenderedTrajanje();
 	
 	public String getNaziv() {
 		return naziv;

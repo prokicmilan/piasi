@@ -37,6 +37,16 @@ public class QuestionaireSearchBacking extends TQSearchBacking {
 		return false;
 	}
 	
+	@Override
+	public String getNoviOutcome() {
+		return "questionaireNovi";
+	}
+	
+	@Override
+	public String getDetaljiOutcome() {
+		return "questionaireDetalji";
+	}
+	
 	public Boolean getAnonymous() {
 		return anonymous;
 	}

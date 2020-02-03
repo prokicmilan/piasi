@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+      
+      <f:metadata>
+      	<f:viewParam name="tqId" value="#{testDetailsBacking.test}" converter="testConverter" />
+      	<f:viewParam name="edit" value="#{testDetailsBacking.edit}" />
+      </f:metadata>
+      
+     <ui:composition template="/templates/masterPageTemplate.xhtml">
+		<ui:define name="page-content">
+			<h:outputText value="#{testDetailsBacking.test.naziv}" /><br/>
+			<h:outputText value="#{testDetailsBacking.test.opis}" /><br/>
+			<h:outputText value="#{testDetailsBacking.test.datumOd}" /><br/>
+			<h:outputText value="#{testDetailsBacking.test.datumDo}" /><br/>
+		</ui:define>
+     </ui:composition>
+      
+</html>

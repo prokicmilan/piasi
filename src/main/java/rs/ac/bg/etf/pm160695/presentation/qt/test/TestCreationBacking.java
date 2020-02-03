@@ -66,6 +66,11 @@ public class TestCreationBacking extends TQCreationBacking {
 	public boolean isRenderedTrajanje() {
 		return true;
 	}
+	
+	@Override
+	public boolean isRenderedAnonimno() {
+		return false;
+	}
 
 	@Override
 	protected FormField createFormField() {

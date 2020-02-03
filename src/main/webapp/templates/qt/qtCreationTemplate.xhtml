@@ -68,7 +68,9 @@
 							<p:ajax event="valueChange" />
 						</p:inputText>
 						
-						<p:selectBooleanCheckbox id="cb-anonimno" value="#{tqBacking.anonymous}">
+						<p:selectBooleanCheckbox id="cb-anonimno" 
+							value="#{tqBacking.anonymous}"
+							rendered="#{tqBacking.renderedAnonimno}">
 							<p:ajax />
 						</p:selectBooleanCheckbox>
 					</p:panelGrid>

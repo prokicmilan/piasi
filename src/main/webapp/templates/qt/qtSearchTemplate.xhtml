@@ -59,19 +59,14 @@
 								<f:facet name="left">
 									<p:button id="btn-novi"
 										value="#{labelsButton['button.novi']}"
-										outcome=""
+										outcome="#{tqBacking.noviOutcome}"
 										rendered="#{request.isUserInRole('autor') or request.isUserInRole('admin')}"
 										icon="fa fa-plus fa-fw" />
-									<p:commandButton id="btn-novi"
-											value="#{labelsButton['button.novi']}"
-											action="#{tqBacking.noviAction}"
-											rendered="#{request.isUserInRole('autor') or request.isUserInRole('admin')}"
-											icon="fa fa-plus fa-fw" />
 									<p:button id="btn-izmeni"
 										value="#{labelsButton['button.izmeni']}"
 										icon="fa fa-edit fa-fw"
 										disabled="#{tqBacking.selected eq null}"
-										outcome="tq-pregled" >
+										outcome="#{tqBacking.detaljiOutcome}" >
 										<f:param name="tqId" value="#{tqBacking.selected.id}" />
 										<f:param name="edit" value="true" />
 									</p:button>
@@ -79,7 +74,7 @@
 										value="#{labelsButton['button.detalji']}"
 										icon="fa fa-list fa-fw"
 										disabled="#{tqBacking.selected eq null}"
-										outcome="tq-pregled" >
+										outcome="#{tqBacking.detaljiOutcome}" >
 										<f:param name="tqId" value="#{tqBacking.selected.id}" />
 										<f:param name="edit" value="false" />
 									</p:button>

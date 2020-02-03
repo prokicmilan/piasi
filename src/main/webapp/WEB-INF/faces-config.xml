@@ -37,6 +37,24 @@
 			<from-outcome>tq-pregled</from-outcome>
 			<to-view-id>/pages/qt/test/testSearch</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>testNovi</from-outcome>
+			<to-view-id>/pages/qt/test/testCreation.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>questionaireNovi</from-outcome>
+			<to-view-id>/pages/qt/questionaire/questionaireCreation.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>testDetalji</from-outcome>
+			<to-view-id>/pages/qt/test/testDetails.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>questionaireDetalji</from-outcome>
+			<to-view-id>/pages/qt/questionaire/questionaireDetails.xhtml</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 	
 	<application>

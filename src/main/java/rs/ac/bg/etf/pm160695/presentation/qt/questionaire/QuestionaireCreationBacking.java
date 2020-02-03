@@ -52,6 +52,11 @@ public class QuestionaireCreationBacking extends TQCreationBacking {
 	public boolean isRenderedTrajanje() {
 		return false;
 	}
+	
+	@Override
+	public boolean isRenderedAnonimno() {
+		return true;
+	}
 
 	@Override
 	protected FormField createFormField() {
