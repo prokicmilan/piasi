@@ -61,12 +61,17 @@ public class TestCreationBacking extends TQCreationBacking {
 
 		return formValid;
 	}
+	
+	@Override
+	public boolean isRenderedTrajanje() {
+		return true;
+	}
 
 	@Override
 	protected FormField createFormField() {
 		return new TestQuestionFormField(numberOfQuestions++);
 	}
-
+	
 	public Integer getTrajanje() {
 		return trajanje;
 	}
@@ -74,5 +79,6 @@ public class TestCreationBacking extends TQCreationBacking {
 	public void setTrajanje(Integer trajanje) {
 		this.trajanje = trajanje;
 	}
+
 
 }

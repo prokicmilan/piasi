@@ -13,7 +13,6 @@ import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.TQFormField;
 import rs.ac.bg.etf.pm160695.infrastructure.messaging.Messages;
 import rs.ac.bg.etf.pm160695.infrastructure.presentation.BaseBackingBean;
 import rs.ac.bg.etf.pm160695.presentation.qt.questionaire.QuestionaireCreationBacking;
-import rs.ac.bg.etf.pm160695.presentation.qt.test.TestCreationBacking;
 
 public abstract class TQCreationBacking extends BaseBackingBean {
 
@@ -88,9 +87,7 @@ public abstract class TQCreationBacking extends BaseBackingBean {
 		return InputType.CHECKBOX.equals(formField.getInputType()) || InputType.RADIO.equals(formField.getInputType());
 	}
 	
-	public boolean isRenderedTrajanje() {
-		return (this instanceof TestCreationBacking);
-	}
+	public abstract boolean isRenderedTrajanje();
 	
 	public boolean isRenderedAnonimno() {
 		return (this instanceof QuestionaireCreationBacking);

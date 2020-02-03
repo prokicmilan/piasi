@@ -47,6 +47,11 @@ public class QuestionaireCreationBacking extends TQCreationBacking {
 					currentUserBean.getUlogovaniKorisnik());
 		}
 	}
+	
+	@Override
+	public boolean isRenderedTrajanje() {
+		return false;
+	}
 
 	@Override
 	protected FormField createFormField() {

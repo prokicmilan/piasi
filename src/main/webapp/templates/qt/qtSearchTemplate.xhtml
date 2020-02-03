@@ -1,0 +1,143 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+	<ui:composition template="/templates/masterPageTemplate.xhtml">
+		<ui:define name="page-content">
+			<p:panelGrid id="pg-pretraga-general"
+				columns="2"
+				columnClasses="pretragaFilter, pretragaResults" >
+					<p:panel id="panel-pretraga-filteri">
+						<f:facet name="header">
+							<i class="fa fa-bars fa-fw" /> #{labelsTitle['header.kriterijumiPretrage']}
+						</f:facet>
+						<h:form id="pretraga-form">
+							<p:panelGrid id="pg-pretraga-filter" columns="1" layout="grid" styleClass="ui-noborder" >
+								<p:outputLabel for="naziv" value="#{labels['label.input.naziv']}" />
+								
+								<p:inputText id="naziv" value="#{tqBacking.naziv}" >
+									<p:ajax event="valueChange" partialSubmit="true"/>
+								</p:inputText>
+								
+								<p:outputLabel for="opis" value="#{labels['label.input.opis']}" />
+								
+								<p:inputText id="opis" value="#{tqBacking.opis}" >
+									<p:ajax event="valueChange" partialSubmit="true" />
+								</p:inputText>
+								
+								<p:outputLabel for="datumOd" value="#{labels['label.input.datumOd']}" />
+								
+								<p:calendar id="datumOd" value="#{tqBacking.datumOd}" converter="localDateConverter" >
+									<p:ajax event="dateSelect" />
+								</p:calendar>
+								
+								<p:outputLabel for="datumDo" value="#{labels['label.input.datumDo']}" />
+								
+								<p:calendar id="datumDo" value="#{tqBacking.datumDo}" converter="localDateConverter" >
+									<p:ajax event="dateSelect" />
+								</p:calendar>
+								
+								<p:commandButton value="#{labelsButton['button.pretraga']}" 
+									action="#{tqBacking.searchAction}"
+									update="panel-pretraga-results"
+									styleClass="button-filter" />
+								
+								<p:commandButton value="#{labelsButton['button.ponisti']}" 
+									action="#{tqBacking.cancelAction}" 
+									update="panel-pretraga-results pg-pretraga-filter"
+									styleClass="button-filter" />
+							</p:panelGrid>
+						</h:form>
+					</p:panel>
+					<p:panel id="panel-pretraga-results">
+						<h:form id="akcije-form">
+							<p:toolbar id="tbr-akcije">
+								<f:facet name="left">
+									<p:button id="btn-novi"
+										value="#{labelsButton['button.novi']}"
+										outcome=""
+										rendered="#{request.isUserInRole('autor') or request.isUserInRole('admin')}"
+										icon="fa fa-plus fa-fw" />
+									<p:commandButton id="btn-novi"
+											value="#{labelsButton['button.novi']}"
+											action="#{tqBacking.noviAction}"
+											rendered="#{request.isUserInRole('autor') or request.isUserInRole('admin')}"
+											icon="fa fa-plus fa-fw" />
+									<p:button id="btn-izmeni"
+										value="#{labelsButton['button.izmeni']}"
+										icon="fa fa-edit fa-fw"
+										disabled="#{tqBacking.selected eq null}"
+										outcome="tq-pregled" >
+										<f:param name="tqId" value="#{tqBacking.selected.id}" />
+										<f:param name="edit" value="true" />
+									</p:button>
+									<p:button id="btn-detalji"
+										value="#{labelsButton['button.detalji']}"
+										icon="fa fa-list fa-fw"
+										disabled="#{tqBacking.selected eq null}"
+										outcome="tq-pregled" >
+										<f:param name="tqId" value="#{tqBacking.selected.id}" />
+										<f:param name="edit" value="false" />
+									</p:button>
+								</f:facet>
+							</p:toolbar>
+						</h:form>
+						<h:form id="result-form">
+							<p:dataTable id="dt-testSearchResults"
+								value="#{tqBacking.tqList}" 
+								var="tq"
+								rowKey="#{tq.hashCode()}"
+								selectionMode="single"
+								selection="#{tqBacking.selected}"
+								
+								rows="20"
+								paginator="true"
+								paginatorPosition="bottom"
+								currentPageReportTemplate="{currentPage} #{labels['label.od']} {totalPages}"
+								
+								paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+								paginatorAlwaysVisible="false"
+								
+								sortBy="#{tq.datumOd}"
+								sortOrder="descending"
+								
+								emptyMessage="#{labels['label.emptyMessage']}" >
+								
+								<p:ajax event="rowSelect" update=":akcije-form:tbr-akcije" />
+								<p:ajax event="rowUnselect" update=":akcije-form:tbr-akcije" />
+								
+								<p:column headerText="#{labelsColumn['column.naziv']}" styleClass="column-127" >
+									<h:outputText value="#{tq.naziv}" />
+								</p:column>
+								
+								<p:column headerText="#{labelsColumn['column.opis']}">
+									<h:outputText value="#{tq.opis}" />
+								</p:column>
+								
+								<p:column headerText="#{labelsColumn['column.datumOd']}">
+									<h:outputText value="#{tq.datumOd}" >
+										<f:converter converterId="localDateConverter" />
+									</h:outputText>
+								</p:column>
+								
+								<p:column headerText="#{labelsColumn['column.datumDo']}" styleClass="column-196" >
+									<h:outputText value="#{tq.datumDo}" >
+										<f:converter converterId="localDateConverter" />
+									</h:outputText>
+								</p:column>
+								
+								<p:column headerText="#{labelsColumn['column.trajanje']}" rendered="#{tqBacking.renderedTrajanje}">
+									<h:outputText value="#{tq.trajanje}" />
+								</p:column>
+							</p:dataTable>
+						
+						</h:form>
+					</p:panel>
+			</p:panelGrid>
+		</ui:define>
+	</ui:composition>
+</html>

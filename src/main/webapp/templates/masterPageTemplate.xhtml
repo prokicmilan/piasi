@@ -18,7 +18,14 @@
 				<p:menubar autoDisplay="false">
 					<p:menuitem id="mi-korisniciPretraga"
 						value="#{labelsButton['menuitem.korisniciPretraga']}"
-						outcome="korisniciPretraga" />
+						outcome="korisniciPretraga"
+						rendered="#{request.isUserInRole('admin')}" />
+					<p:menuitem id="mi-testoviPretraga"
+						value="#{labelsButton['menuitem.testoviPretraga']}"
+						outcome="testPretraga" />
+					<p:menuitem id="mi-anketePretraga"
+						value="#{labelsButton['menuitem.anketePretraga']}"
+						outcome="anketaPretraga" />
 						
 					<p:submenu id="sm-ulogovaniKorisnik"
 						label="#{ulogovaniKorisnik.ime} #{ulogovaniKorisnik.prezime}"
