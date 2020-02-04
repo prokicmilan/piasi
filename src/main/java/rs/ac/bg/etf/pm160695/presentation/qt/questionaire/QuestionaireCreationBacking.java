@@ -1,6 +1,5 @@
 package rs.ac.bg.etf.pm160695.presentation.qt.questionaire;
 
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 

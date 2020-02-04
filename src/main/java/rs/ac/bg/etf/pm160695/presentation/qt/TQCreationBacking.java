@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.FormField;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.InputType;
-import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.QuestionaireQuestionFormField;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.TQFormField;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.TestQuestionaire;
 import rs.ac.bg.etf.pm160695.infrastructure.messaging.Messages;
