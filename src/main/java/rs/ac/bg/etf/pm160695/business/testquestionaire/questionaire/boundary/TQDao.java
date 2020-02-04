@@ -18,6 +18,10 @@ public abstract class TQDao<T extends TestQuestionaire> extends BaseEntityDao<T>
 		super(entityClass);
 	}
 	
+	public T save(T entity) {
+		return persistOrMerge(entity);
+	}
+	
 	protected <X extends TestQuestionaire> List<Predicate> getPredicates(CriteriaBuilder cb, Root<X> root, String naziv, String opis, LocalDate datumOd, LocalDate datumDo) {
 		List<Predicate> predicateList = new LinkedList<>();
 		

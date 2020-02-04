@@ -5,20 +5,16 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.json.JsonValue;
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSKorisnik;
-import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.TestQuestionFormField;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.boundary.TQDao;
-import rs.ac.bg.etf.pm160695.business.testquestionaire.service.TestQuestionaireService;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.test.entity.Test;
 import rs.ac.bg.etf.pm160695.infrastructure.validation.CommonErrors;
 
@@ -27,9 +23,6 @@ public class TestDao extends TQDao<Test> {
 
 	@Inject
 	private EntityManager em;
-
-	@Inject
-	private TestQuestionaireService tqService;
 
 	public TestDao() {
 		super(Test.class);
@@ -50,9 +43,9 @@ public class TestDao extends TQDao<Test> {
 	}
 
 	public CommonErrors saveTest(@NotBlank String naziv, @NotBlank String opis, @NotNull LocalDate datumOd,
-			@NotNull LocalDate datumDo, @NotNull Integer trajanje, @NotEmpty List<TestQuestionFormField> questions,
+			@NotNull LocalDate datumDo, @NotNull Integer trajanje, @NotBlank String questionsData,
 			@NotNull KSKorisnik ulogovaniKorisnik) {
-		JsonValue questionsJsonData = tqService.generateQuestionJsonData(questions);
+//		JsonValue questionsJsonData = tqService.generateQuestionJsonData(questions);
 
 		Test test = new Test();
 		test.setNaziv(naziv);
@@ -60,7 +53,7 @@ public class TestDao extends TQDao<Test> {
 		test.setDatumOd(datumOd);
 		test.setDatumDo(datumDo);
 		test.setTrajanje(trajanje);
-		test.setQuestionsData(questionsJsonData.toString());
+		test.setQuestionsData(questionsData);
 		test.setKsKorisnik(ulogovaniKorisnik);
 
 		persistOrMerge(test);

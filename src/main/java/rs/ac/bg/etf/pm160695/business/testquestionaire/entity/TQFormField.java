@@ -3,13 +3,18 @@ package rs.ac.bg.etf.pm160695.business.testquestionaire.entity;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class TQFormField extends FormField {
 
+	@JsonIgnore
 	private final List<InputType> inputTypeList = List.of(InputType.values());
 
 	private InputType inputType;
 
 	private String answers;
+	
+	public TQFormField() {}
 
 	public TQFormField(Integer index) {
 		super(index);
@@ -28,9 +33,13 @@ public class TQFormField extends FormField {
 	public InputType getInputType() {
 		return inputType;
 	}
-
+	
 	public void setInputType(InputType inputType) {
 		this.inputType = inputType;
+	}
+
+	public void setInputType(int inputType) {
+		this.inputType = InputType.parse(inputType);
 	}
 
 	public String getAnswers() {

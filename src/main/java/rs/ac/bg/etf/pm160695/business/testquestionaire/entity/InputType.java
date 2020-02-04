@@ -1,5 +1,7 @@
 package rs.ac.bg.etf.pm160695.business.testquestionaire.entity;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum InputType {
 
 	NUMBER(1, "number", "label.inputType.number"), TEXT(2, "text", "label.inputType.text"),
@@ -16,6 +18,7 @@ public enum InputType {
 		this.displayKey = displayKey;
 	}
 
+	@JsonValue
 	public Integer getValue() {
 		return value;
 	}

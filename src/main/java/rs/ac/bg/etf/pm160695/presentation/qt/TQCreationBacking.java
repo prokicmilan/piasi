@@ -7,12 +7,16 @@ import java.util.List;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.FormField;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.InputType;
+import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.QuestionaireQuestionFormField;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.TQFormField;
+import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.TestQuestionaire;
 import rs.ac.bg.etf.pm160695.infrastructure.messaging.Messages;
 import rs.ac.bg.etf.pm160695.infrastructure.presentation.BaseBackingBean;
-import rs.ac.bg.etf.pm160695.presentation.qt.questionaire.QuestionaireCreationBacking;
 
 public abstract class TQCreationBacking extends BaseBackingBean {
 
@@ -27,18 +31,80 @@ public abstract class TQCreationBacking extends BaseBackingBean {
 	protected String opis;
 	protected LocalDate pocetak;
 	protected LocalDate kraj;
+	protected String questionsJsonData;
+	
+	protected TestQuestionaire tq;
+	protected Boolean edit;
 
-	public abstract void submitForm();
+	
+	public abstract void saveAction();
 	
 	public abstract boolean isRenderedAnonimno();
 	
 	public abstract boolean isRenderedTrajanje();
 	
+	protected abstract void save();
+	
+	protected abstract FormField createFormField();
+	
+	protected abstract List<? extends TQFormField> getQuestions();
+	
+	protected abstract List<? extends FormField> readQuestionData(ObjectMapper objectMapper) throws JsonProcessingException;
+	
 	protected void init() {
 		formModel = new DynaFormModel();
 	}
-
 	
+	public void initialize() {
+		if (edit != null) {
+			naziv = tq.getNaziv();
+			opis = tq.getOpis();
+			pocetak = tq.getDatumOd();
+			kraj = tq.getDatumDo();
+			
+			ObjectMapper objectMapper = new ObjectMapper();
+			try {
+				List<FormField> ffList = new LinkedList<>(formFieldList);
+				
+				for (FormField formField : ffList) {
+					removeQuestion(formField);
+				}
+				
+				formFieldList.addAll(readQuestionData(objectMapper));
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+			populateModel();
+		}
+	}
+	
+	public void submitAction() {
+		if (isValidFormData()) {
+			List<? extends TQFormField> questions = getQuestions();
+			ObjectMapper objectMapper = new ObjectMapper();
+			try {
+				questionsJsonData = objectMapper.writeValueAsString(questions);
+			} catch (JsonProcessingException e) {
+				e.printStackTrace();
+			}
+			
+			save();
+		}
+	}
+	
+	public void resetAction() {
+		List<FormField> ffList = new LinkedList<>(formFieldList);
+		for (FormField formField : ffList) {
+			removeQuestion(formField);
+		}
+		addNewQuestionRow();
+		
+		naziv = null;
+		opis = null;
+		pocetak = null;
+		kraj = null;
+	}
+
 	public void addQuestion() {
 		addNewQuestionRow();
 	}
@@ -46,16 +112,13 @@ public abstract class TQCreationBacking extends BaseBackingBean {
 	public void removeQuestion(FormField formField) {
 		removeQuestionRow(formField);
 	}
-	
-
-	protected abstract FormField createFormField();
 
 	protected void addNewQuestionRow() {
 		FormField formField = createFormField();
-		DynaFormRow row = formModel.createRegularRow();
 
 		formFieldList.add(formField);
 
+		DynaFormRow row = formModel.createRegularRow();
 		row.addControl(formField, "question");
 	}
 
@@ -64,10 +127,7 @@ public abstract class TQCreationBacking extends BaseBackingBean {
 		formModel.removeRegularRow(formField.getIndex());
 		formFieldList.remove(formField);
 
-		int index = 0;
-		for (FormField ff : formFieldList) {
-			ff.setIndex(index++);
-		}
+		reindexList();
 	}
 
 	protected boolean isValidFormData() {
@@ -88,11 +148,37 @@ public abstract class TQCreationBacking extends BaseBackingBean {
 
 		return formValid;
 	}
+	
+	private void reindexList() {
+		int index = 0;
+		for (FormField ff : formFieldList) {
+			ff.setIndex(index++);
+		}
+	}
+	
+	protected void populateModel() {
+		for (FormField formField : formFieldList) {
+			numberOfQuestions++;
+			DynaFormRow row = formModel.createRegularRow();
+			row.addControl(formField, "question");
+		}
+	}
 
 	public boolean isRenderedPonudjeniOdgovori(TQFormField formField) {
 		return InputType.CHECKBOX.equals(formField.getInputType()) || InputType.RADIO.equals(formField.getInputType());
 	}
 	
+	public boolean isRenderedSave() {
+		return Boolean.TRUE.equals(edit);
+	}
+	
+	public boolean isRenderedSubmitReset() {
+		return edit == null;
+	}
+	
+	public boolean isDisabledFields() {
+		return Boolean.FALSE.equals(edit);
+	}
 
 	public int getNumberOfQuestions() {
 		return numberOfQuestions;
@@ -132,6 +218,22 @@ public abstract class TQCreationBacking extends BaseBackingBean {
 
 	public void setKraj(LocalDate kraj) {
 		this.kraj = kraj;
+	}
+
+	public TestQuestionaire getTq() {
+		return tq;
+	}
+
+	public void setTq(TestQuestionaire tq) {
+		this.tq = tq;
+	}
+
+	public Boolean getEdit() {
+		return edit;
+	}
+
+	public void setEdit(Boolean edit) {
+		this.edit = edit;
 	}
 
 	public DynaFormModel getFormModel() {

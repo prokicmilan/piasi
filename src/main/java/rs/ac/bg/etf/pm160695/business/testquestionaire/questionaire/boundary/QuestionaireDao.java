@@ -19,7 +19,6 @@ import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSKorisnik;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.TQFormField;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.entity.Questionaire;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.entity.Questionaire_;
-import rs.ac.bg.etf.pm160695.business.testquestionaire.service.TestQuestionaireService;
 import rs.ac.bg.etf.pm160695.infrastructure.validation.CommonErrors;
 
 @Stateless
@@ -27,9 +26,6 @@ public class QuestionaireDao extends TQDao<Questionaire> {
 
 	@Inject
 	private EntityManager em;
-
-	@Inject
-	private TestQuestionaireService tqService;
 
 	public QuestionaireDao() {
 		super(Questionaire.class);
@@ -50,10 +46,8 @@ public class QuestionaireDao extends TQDao<Questionaire> {
 	}
 
 	public CommonErrors saveQuestionaire(@NotBlank String naziv, @NotBlank String opis, @NotNull LocalDate datumOd,
-			@NotNull LocalDate datumDo, @NotNull Boolean anonymous, @NotEmpty List<? extends TQFormField> questions,
+			@NotNull LocalDate datumDo, @NotNull Boolean anonymous, @NotBlank String questionsData,
 			@NotNull KSKorisnik ulogovaniKorisnik) {
-
-		JsonValue questionsJsonData = tqService.generateQuestionJsonData(questions);
 
 		Questionaire questionaire = new Questionaire();
 		questionaire.setNaziv(naziv);
@@ -61,7 +55,7 @@ public class QuestionaireDao extends TQDao<Questionaire> {
 		questionaire.setDatumOd(datumOd);
 		questionaire.setDatumDo(datumDo);
 		questionaire.setAnonymous(anonymous);
-		questionaire.setQuestionsData(questionsJsonData.toString());
+		questionaire.setQuestionsData(questionsData);
 		questionaire.setKsKorisnik(ulogovaniKorisnik);
 
 		persistOrMerge(questionaire);

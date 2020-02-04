@@ -6,6 +6,12 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:pe="http://primefaces.org/ui/extensions">
 
+    <f:metadata>
+     	<f:viewParam name="tqId" value="#{testCreationBacking.tq}" converter="testConverter" />
+     	<f:viewParam name="edit" value="#{testCreationBacking.edit}" />
+     	<f:viewAction action="#{testCreationBacking.initialize}" />
+    </f:metadata>
+
 	<ui:composition template="/templates/qt/qtCreationTemplate.xhtml">
 		<ui:param name="tqBacking" value="#{testCreationBacking}" />
 		<ui:define name="dynaFormContent">
@@ -14,10 +20,11 @@
 				<pe:dynaFormControl type="question">
 					<p:outputLabel for="ta-tekstPitanja" value="#{labels['label.qt.tekstPitanja']}" />
 					<p:inputTextarea id="ta-tekstPitanja" 
-						value="#{data.value}" 
+						value="#{data.question}" 
 						required="true"
 						rows="1"
 						cols="20"
+						disabled="#{tqBacking.disabledFields}"
 						styleClass="tq-input">
 						<p:ajax event="valueChange" />
 					</p:inputTextarea>
@@ -26,6 +33,7 @@
 					<p:selectOneMenu id="som-inputType" 
 						styleClass="som-inputTypeCl tq-input" 
 						value="#{data.inputType}"
+						disabled="#{tqBacking.disabledFields}"
 						required="true" >
 						<f:selectItem />
 						<f:selectItems value="#{data.inputTypeList}" 
@@ -43,6 +51,7 @@
 						required="true" 
 						rows="1"
 						cols="20"
+						disabled="#{tqBacking.disabledFields}"
 						styleClass="tq-input" >
 						<p:ajax event="valueChange" />
 					</p:inputTextarea>
@@ -57,6 +66,7 @@
 						rows="1"
 						cols="20"
 						styleClass="tq-input"
+						disabled="#{tqBacking.disabledFields}"
 						rendered="#{tqBacking.isRenderedPonudjeniOdgovori(data)}" >
 						<p:ajax event="valueChange" />
 					</p:inputTextarea>
@@ -64,6 +74,7 @@
 						action="#{tqBacking.addQuestion}"
 						update="dynaForm"
 						styleClass="addRemoveLink"
+						disabled="#{tqBacking.disabledFields}"
 						rendered="#{data.index eq (tqBacking.numberOfQuestions - 1)}" >
 						<i class="fa fa-plus fa-fw" />
 					</p:commandLink>
@@ -71,6 +82,7 @@
 						update="dynaForm"
 						action="#{tqBacking.removeQuestion(data)}"
 						styleClass="addRemoveLink"
+						disabled="#{tqBacking.disabledFields}"
 						rendered="#{data.index ne (tqBacking.numberOfQuestions - 1)}" >
 						<i class="fa fa-minus fa-fw" />
 					</p:commandLink>

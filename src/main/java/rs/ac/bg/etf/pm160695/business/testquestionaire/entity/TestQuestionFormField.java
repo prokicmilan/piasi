@@ -5,6 +5,8 @@ import java.util.Objects;
 public class TestQuestionFormField extends TQFormField {
 
 	private String correctAnswer;
+	
+	public TestQuestionFormField() {}
 
 	public TestQuestionFormField(Integer index) {
 		super(index);

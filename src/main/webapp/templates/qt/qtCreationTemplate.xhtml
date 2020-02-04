@@ -4,90 +4,104 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pe="http://primefaces.org/ui/extensions">
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:o="http://omnifaces.org/ui">
 
 	<ui:composition template="/templates/masterPageTemplate.xhtml">
 		<ui:define name="page-content">
-		
-			<h:panelGroup id="dynaFormGroup">
-				<h:form id="tq-form">
-					<p:panelGrid columns="5" 
-						styleClass="ui-noborder" >
-						<p:outputLabel for="int-naziv" value="#{labels['label.qt.naziv']}" />
-						<p:outputLabel for="ta-opis" value="#{labels['label.qt.opis']}" />
-						<p:outputLabel for="cal-datumOd" value="#{labels['label.qt.od']}" />
-						<p:outputLabel for="cal-datumDo" value="#{labels['label.qt.do']}" />
-						<p:outputLabel for="int-trajanje" 
-							value="#{labels['label.qt.trajanje']}" 
-							rendered="#{tqBacking.renderedTrajanje}" />
-						<p:outputLabel for="cb-anonimno"
-							value="#{labels['label.qt.anonimno']}"
-							rendered="#{tqBacking.renderedAnonimno}" />
+			<p:panel>
+				<h:panelGroup id="dynaFormGroup">
+					<o:form id="tq-form" includeViewParams="true">
+						<p:panelGrid columns="5" 
+							styleClass="ui-noborder" >
+							<p:outputLabel for="int-naziv" value="#{labels['label.qt.naziv']}" />
+							<p:outputLabel for="ta-opis" value="#{labels['label.qt.opis']}" />
+							<p:outputLabel for="cal-datumOd" value="#{labels['label.qt.od']}" />
+							<p:outputLabel for="cal-datumDo" value="#{labels['label.qt.do']}" />
+							<p:outputLabel for="int-trajanje" 
+								value="#{labels['label.qt.trajanje']}" 
+								rendered="#{tqBacking.renderedTrajanje}" />
+							<p:outputLabel for="cb-anonimno"
+								value="#{labels['label.qt.anonimno']}"
+								rendered="#{tqBacking.renderedAnonimno}" />
+							
+							<p:inputText id="int-naziv"
+								value="#{tqBacking.naziv}"
+								disabled="#{tqBacking.disabledFields}"
+								required="true" >
+								
+								<p:ajax event="valueChange" />
+							</p:inputText>
+								
+							<p:inputTextarea id="ta-opis"
+								value="#{tqBacking.opis}"
+								rows="1"
+								cols="30"
+								disabled="#{tqBacking.disabledFields}"
+								required="true" >
+								<p:ajax event="valueChange" />
+							</p:inputTextarea>
+								
+							<p:calendar id="cal-datumOd"
+								value="#{tqBacking.pocetak}"
+								converter="localDateConverter"
+								disabled="#{tqBacking.disabledFields}"
+								maxdate="#{tqBacking.kraj}" >
+							
+								<p:ajax event="dateSelect" />
+								<p:ajax event="valueChange" />
+							</p:calendar>
+							
+							<p:calendar id="cal-datumDo"
+								value="#{tqBacking.kraj}"
+								converter="localDateConverter"
+								disabled="#{tqBacking.disabledFields}"
+								mindate="#{tqBacking.pocetak}" >
+							
+								<p:ajax event="dateSelect" />
+								<p:ajax event="valueChange" />
+							</p:calendar>
+								
+							<p:inputText id="int-trajanje"
+								value="#{tqBacking.trajanje}"
+								required="true"
+								disabled="#{tqBacking.disabledFields}"
+								rendered="#{tqBacking.renderedTrajanje}">
+								
+								<p:keyFilter mask="num" />
+								<f:validateLongRange minimum="1" maximum="180" />
+								
+								<p:ajax event="valueChange" />
+							</p:inputText>
+							
+							<p:selectBooleanCheckbox id="cb-anonimno" 
+								value="#{tqBacking.anonymous}"
+								disabled="#{tqBacking.disabledFields}"
+								rendered="#{tqBacking.renderedAnonimno}">
+								<p:ajax />
+							</p:selectBooleanCheckbox>
+						</p:panelGrid>
 						
-						<p:inputText id="int-naziv"
-							value="#{tqBacking.naziv}"
-							required="true" >
-							
-							<p:ajax event="valueChange" />
-						</p:inputText>
-							
-						<p:inputTextarea id="ta-opis"
-							value="#{tqBacking.opis}"
-							rows="1"
-							cols="30"
-							required="true" >
-							<p:ajax event="valueChange" />
-						</p:inputTextarea>
-							
-						<p:calendar id="cal-datumOd"
-							value="#{tqBacking.pocetak}"
-							converter="localDateConverter"
-							maxdate="#{tqBacking.kraj}" >
+						<ui:insert id="dyna-form-content" name="dynaFormContent">Content</ui:insert>
 						
-							<p:ajax event="dateSelect" />
-							<p:ajax event="valueChange" />
-						</p:calendar>
-						
-						<p:calendar id="cal-datumDo"
-							value="#{tqBacking.kraj}"
-							converter="localDateConverter"
-							mindate="#{tqBacking.pocetak}" >
-						
-							<p:ajax event="dateSelect" />
-							<p:ajax event="valueChange" />
-						</p:calendar>
-							
-						<p:inputText id="int-trajanje"
-							value="#{tqBacking.trajanje}"
-							required="true"
-							rendered="#{tqBacking.renderedTrajanje}">
-							
-							<p:keyFilter mask="num" />
-							<f:validateLongRange minimum="1" maximum="180" />
-							
-							<p:ajax event="valueChange" />
-						</p:inputText>
-						
-						<p:selectBooleanCheckbox id="cb-anonimno" 
-							value="#{tqBacking.anonymous}"
-							rendered="#{tqBacking.renderedAnonimno}">
-							<p:ajax />
-						</p:selectBooleanCheckbox>
-					</p:panelGrid>
-					
-					<ui:insert id="dyna-form-content" name="dynaFormContent">Content</ui:insert>
-					
-		            <p:commandButton id="btn-submit" 
-		            	value="Submit" 
-		           		action="#{tqBacking.submitForm}" />
-		            <p:commandButton id="btn-reset" 
-		            	type="reset" 
-		            	value="Reset" 
-		            	process="tq-form" 
-		            	update="tq-form" 
-		            	style="margin-left: 5px;"/>
-				</h:form>
-			</h:panelGroup>		
+			            <p:commandButton id="btn-submit" 
+			            	value="Submit" 
+			           		action="#{tqBacking.submitAction}"
+			           		rendered="#{tqBacking.renderedSubmitReset}" />
+			           	<p:commandButton id="btn-save"
+			           		value="Save"
+			           		action="#{tqBacking.saveAction}"
+			           		rendered="#{tqBacking.renderedSave}" />
+			            <p:commandButton id="btn-reset" 
+			            	value="Reset" 
+			            	process="tq-form" 
+			            	update="tq-form"
+			            	action="#{tqBacking.resetAction}"
+			            	rendered="#{tqBacking.renderedSubmitReset}" 
+			            	style="margin-left: 5px;"/>
+					</o:form>
+				</h:panelGroup>		
+			</p:panel>
 		</ui:define>
 			
 	</ui:composition>

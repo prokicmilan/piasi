@@ -6,6 +6,12 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:pe="http://primefaces.org/ui/extensions">
 
+    <f:metadata>
+     	<f:viewParam name="tqId" value="#{questionaireCreationBacking.tq}" converter="questionaireConverter" />
+     	<f:viewParam name="edit" value="#{questionaireCreationBacking.edit}" />
+     	<f:viewAction action="#{questionaireCreationBacking.initialize}" />
+    </f:metadata>
+
 	<ui:composition template="/templates/qt/qtCreationTemplate.xhtml">
 		<ui:param name="tqBacking" value="#{questionaireCreationBacking}" />
 		<ui:define name="dynaFormContent">
@@ -15,12 +21,12 @@
 				<pe:dynaFormControl type="question">
 					<p:outputLabel for="ta-tekstPitanja" value="#{labels['label.qt.tekstPitanja']}" />
 					<p:inputTextarea id="ta-tekstPitanja" 
-						value="#{data.value}" 
+						value="#{data.question}" 
 						required="true"
 						rows="1"
 						cols="20"
 						styleClass="tq-input">
-						<p:ajax event="valueChange" />
+						<p:ajax event="valueChange" listener="#{tqBacking.test}" />
 					</p:inputTextarea>
 					
 					<p:outputLabel for="som-inputType" value="#{labels['label.qt.tipPitanja']}" />
