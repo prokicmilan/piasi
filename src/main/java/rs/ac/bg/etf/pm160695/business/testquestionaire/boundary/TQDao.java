@@ -1,4 +1,4 @@
-package rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.boundary;
+package rs.ac.bg.etf.pm160695.business.testquestionaire.boundary;
 
 import java.time.LocalDate;
 import java.util.LinkedList;

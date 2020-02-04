@@ -14,7 +14,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSKorisnik;
-import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.boundary.TQDao;
+import rs.ac.bg.etf.pm160695.business.testquestionaire.boundary.TQDao;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.test.entity.Test;
 import rs.ac.bg.etf.pm160695.infrastructure.validation.CommonErrors;
 
