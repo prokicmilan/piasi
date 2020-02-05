@@ -19,7 +19,11 @@ public class Questionaire extends TestQuestionaire {
 
 	private Boolean anonymous;
 	
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "questionaire")
+	@OneToMany(
+			fetch = FetchType.EAGER, 
+			cascade = CascadeType.ALL, 
+			orphanRemoval = true,
+			mappedBy = "questionaire")
 	private Set<QuestionaireQuestion> questionaireQuestions;
 
 	public Boolean getAnonymous() {

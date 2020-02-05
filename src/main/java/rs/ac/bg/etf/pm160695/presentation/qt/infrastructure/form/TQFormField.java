@@ -38,10 +38,6 @@ public class TQFormField extends FormField {
 		this.inputType = inputType;
 	}
 
-	public void setInputType(int inputType) {
-		this.inputType = InputType.parse(inputType);
-	}
-
 	public String getAnswers() {
 		return answers;
 	}

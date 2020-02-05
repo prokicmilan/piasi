@@ -10,8 +10,6 @@ import javax.inject.Named;
 
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.boundary.QuestionaireDao;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.entity.Questionaire;
@@ -21,7 +19,7 @@ import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.QuestionaireQue
 
 @Named
 @ViewScoped
-public class QuestionaireCreationBacking extends TQCreationDetailsBacking {
+public class QuestionaireCreationDetailsBacking extends TQCreationDetailsBacking {
 
 	private static final long serialVersionUID = -8164550945331565775L;
 
@@ -74,9 +72,14 @@ public class QuestionaireCreationBacking extends TQCreationDetailsBacking {
 	}
 	
 	@Override
-	protected List<? extends FormField> readQuestionData(ObjectMapper objectMapper) throws JsonProcessingException {
-//		return objectMapper.readValue(tq.getQuestionsData(), new TypeReference<List<QuestionaireQuestionFormField>>() {});
-		return null;
+	protected List<? extends FormField> readQuestionData() {
+		return ((Questionaire) tq).getQuestionaireQuestions().stream().map(questionaireQuestion -> {
+			QuestionaireQuestionFormField qqff = new QuestionaireQuestionFormField();
+			qqff.setInputType(questionaireQuestion.getInputType());
+			qqff.setQuestion(questionaireQuestion.getQuestion());
+			qqff.setAnswers(questionaireQuestion.getAnswers());
+			return qqff;
+		}).collect(Collectors.toList());
 	}
 	
 	@Override

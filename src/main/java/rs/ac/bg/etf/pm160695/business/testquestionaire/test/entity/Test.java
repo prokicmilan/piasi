@@ -22,7 +22,11 @@ public class Test extends TestQuestionaire {
 	@NotNull
 	private Integer trajanje;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "test")
+	@OneToMany(
+			fetch = FetchType.EAGER, 
+			cascade = CascadeType.ALL, 
+			orphanRemoval = true, 
+			mappedBy = "test")
 	private Set<TestQuestion> testQuestions = new HashSet<>();
 	
 	public Integer getTrajanje() {

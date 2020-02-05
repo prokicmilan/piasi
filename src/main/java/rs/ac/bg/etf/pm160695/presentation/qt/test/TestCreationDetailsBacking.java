@@ -10,9 +10,6 @@ import javax.inject.Named;
 
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import rs.ac.bg.etf.pm160695.business.testquestionaire.test.boundary.TestDao;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.test.entity.Test;
 import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.backing.TQCreationDetailsBacking;
@@ -21,7 +18,7 @@ import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.TestQuestionFor
 
 @Named
 @ViewScoped
-public class TestCreationBacking extends TQCreationDetailsBacking {
+public class TestCreationDetailsBacking extends TQCreationDetailsBacking {
 
 	private static final long serialVersionUID = -1922383613850915029L;
 
@@ -70,9 +67,17 @@ public class TestCreationBacking extends TQCreationDetailsBacking {
 	}
 	
 	@Override
-	protected List<? extends FormField> readQuestionData(ObjectMapper objectMapper) throws JsonProcessingException {
-		return null;
-//		return objectMapper.readValue(tq.getQuestionsData(), new TypeReference<List<TestQuestionFormField>>() {});
+	protected List<? extends FormField> readQuestionData() {
+		return ((Test) tq).getTestQuestions().stream().map(testQuestion -> {
+			TestQuestionFormField tqff = new TestQuestionFormField();
+			tqff.setInputType(testQuestion.getInputType());
+			tqff.setQuestion(testQuestion.getQuestion());
+			tqff.setCorrectAnswer(testQuestion.getCorrectAnswer());
+			tqff.setAnswers(testQuestion.getAnswers());
+			
+			return tqff;
+		}).collect(Collectors.toList());
+		
 	}
 	
 	@Override

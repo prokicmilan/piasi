@@ -7,13 +7,13 @@
       xmlns:pe="http://primefaces.org/ui/extensions">
 
     <f:metadata>
-     	<f:viewParam name="tqId" value="#{testCreationBacking.tq}" converter="testConverter" />
-     	<f:viewParam name="edit" value="#{testCreationBacking.edit}" />
-     	<f:viewAction action="#{testCreationBacking.initialize}" />
+     	<f:viewParam name="tqId" value="#{testCreationDetailsBacking.tq}" converter="testConverter" />
+     	<f:viewParam name="edit" value="#{testCreationDetailsBacking.edit}" />
+     	<f:viewAction action="#{testCreationDetailsBacking.initialize}" />
     </f:metadata>
 
 	<ui:composition template="/templates/qt/qtCreationTemplate.xhtml">
-		<ui:param name="tqBacking" value="#{testCreationBacking}" />
+		<ui:param name="tqBacking" value="#{testCreationDetailsBacking}" />
 		<ui:define name="dynaFormContent">
 			<pe:dynaForm id="dynaForm" value="#{tqBacking.formModel}" 
 				var="data">

@@ -7,9 +7,6 @@ import java.util.List;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.TestQuestionaire;
 import rs.ac.bg.etf.pm160695.infrastructure.messaging.Messages;
 import rs.ac.bg.etf.pm160695.infrastructure.presentation.BaseBackingBean;
@@ -46,7 +43,7 @@ public abstract class TQCreationDetailsBacking extends BaseBackingBean {
 	
 	protected abstract List<? extends TQFormField> getQuestions();
 	
-	protected abstract List<? extends FormField> readQuestionData(ObjectMapper objectMapper) throws JsonProcessingException;
+	protected abstract List<? extends FormField> readQuestionData();
 	
 	protected void init() {
 		formModel = new DynaFormModel();
@@ -59,18 +56,13 @@ public abstract class TQCreationDetailsBacking extends BaseBackingBean {
 			pocetak = tq.getDatumOd();
 			kraj = tq.getDatumDo();
 			
-			ObjectMapper objectMapper = new ObjectMapper();
-			try {
-				List<FormField> ffList = new LinkedList<>(formFieldList);
-				
-				for (FormField formField : ffList) {
-					removeQuestion(formField);
-				}
-				
-				formFieldList.addAll(readQuestionData(objectMapper));
-			} catch (JsonProcessingException e) {
-				e.printStackTrace();
+			List<FormField> ffList = new LinkedList<>(formFieldList);
+			
+			for (FormField formField : ffList) {
+				removeQuestion(formField);
 			}
+				
+			formFieldList.addAll(readQuestionData());
 			populateModel();
 		}
 	}
@@ -146,6 +138,7 @@ public abstract class TQCreationDetailsBacking extends BaseBackingBean {
 	}
 	
 	protected void populateModel() {
+		reindexList();
 		for (FormField formField : formFieldList) {
 			numberOfQuestions++;
 			DynaFormRow row = formModel.createRegularRow();
