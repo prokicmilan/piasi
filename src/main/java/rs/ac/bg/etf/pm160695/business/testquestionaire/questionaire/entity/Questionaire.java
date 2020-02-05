@@ -1,6 +1,12 @@
 package rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.entity;
 
+import java.util.Objects;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.TestQuestionaire;
@@ -12,6 +18,9 @@ public class Questionaire extends TestQuestionaire {
 	private static final long serialVersionUID = 4057844454667571690L;
 
 	private Boolean anonymous;
+	
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	private Set<QuestionaireQuestion> questionaireQuestions;
 
 	public Boolean getAnonymous() {
 		return anonymous;
@@ -21,29 +30,36 @@ public class Questionaire extends TestQuestionaire {
 		this.anonymous = anonymous;
 	}
 
+	public Set<QuestionaireQuestion> getQuestionaireQuestions() {
+		return questionaireQuestions;
+	}
+
+	public void setQuestionaireQuestions(Set<QuestionaireQuestion> questionaireQuestions) {
+		this.questionaireQuestions = questionaireQuestions;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + ((anonymous == null) ? 0 : anonymous.hashCode());
+		result = prime * result + Objects.hash(anonymous, questionaireQuestions);
 		return result;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (!super.equals(obj))
+		}
+		if (!super.equals(obj)) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (!(obj instanceof Questionaire)) {
 			return false;
+		}
 		Questionaire other = (Questionaire) obj;
-		if (anonymous == null) {
-			if (other.anonymous != null)
-				return false;
-		} else if (!anonymous.equals(other.anonymous))
-			return false;
-		return true;
+		return Objects.equals(anonymous, other.anonymous)
+				&& Objects.equals(questionaireQuestions, other.questionaireQuestions);
 	}
 
 }

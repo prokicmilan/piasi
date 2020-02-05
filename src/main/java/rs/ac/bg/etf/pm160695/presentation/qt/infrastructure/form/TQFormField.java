@@ -1,7 +1,8 @@
-package rs.ac.bg.etf.pm160695.business.testquestionaire.entity;
+package rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -9,7 +10,7 @@ public class TQFormField extends FormField {
 
 	@JsonIgnore
 	private final List<InputType> inputTypeList = List.of(InputType.values());
-
+	
 	private InputType inputType;
 
 	private String answers;

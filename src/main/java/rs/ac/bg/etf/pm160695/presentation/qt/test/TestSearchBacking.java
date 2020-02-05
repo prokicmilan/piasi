@@ -5,7 +5,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import rs.ac.bg.etf.pm160695.business.testquestionaire.test.boundary.TestDao;
-import rs.ac.bg.etf.pm160695.presentation.qt.TQSearchBacking;
+import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.backing.TQSearchBacking;
 
 @Named
 @ViewScoped

@@ -6,6 +6,8 @@ import java.util.List;
 public class TestSolveData {
 
 	private String answer;
+	
+	private String[] answers;
 
 	private List<String> options = new LinkedList<>();
 	
@@ -15,6 +17,14 @@ public class TestSolveData {
 
 	public void setAnswer(String answer) {
 		this.answer = answer;
+	}
+
+	public String[] getAnswers() {
+		return answers;
+	}
+
+	public void setAnswers(String[] answers) {
+		this.answers = answers;
 	}
 
 	public List<String> getOptions() {

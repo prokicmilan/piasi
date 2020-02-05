@@ -1,4 +1,4 @@
-package rs.ac.bg.etf.pm160695.business.testquestionaire.entity;
+package rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 

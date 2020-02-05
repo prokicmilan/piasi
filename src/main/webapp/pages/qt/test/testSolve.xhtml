@@ -4,51 +4,60 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:pe="http://primefaces.org/ui/extensions">
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:o="http://omnifaces.org/ui">
 
     <f:metadata>
      	<f:viewParam name="tqId" value="#{testSolveBacking.test}" converter="testConverter" />
      	<f:viewAction action="#{testSolveBacking.initialize}" />
     </f:metadata>
     
-	<h:body>
-		<p:panel>
-			<pe:dynaForm id="dynaForm" 
-				value="#{testSolveBacking.formModel}" 
-				var="data">
-				<p:outputLabel value="#{data.question}" />
-				<pe:dynaFormControl type="number">
-					<p:inputNumber />
-				</pe:dynaFormControl>
-				
-				<pe:dynaFormControl type="text">
-					<p:inputText />
-				</pe:dynaFormControl>
-				
-				<pe:dynaFormControl type="text-area">
-					<p:inputTextarea />
-				</pe:dynaFormControl>
-				
-				<pe:dynaFormControl type="radio">
-					<p:selectOneRadio>
-						<f:selectItems value="#{data.options}" 
-							var="a" 
-							itemLabel="#{a}" 
-							itemValue="#{a}"/>
-					</p:selectOneRadio>
-				</pe:dynaFormControl>
-				
-				<pe:dynaFormControl type="checkbox">
-					<p:selectManyCheckbox>
-						<f:selectItems value="#{data.options}" 
-							var="a" 
-							itemLabel="#{a}" 
-							itemValue="#{a}"/>
-					</p:selectManyCheckbox>
-				</pe:dynaFormControl>
-				
-			</pe:dynaForm>
-		</p:panel>
-	</h:body>    
-
+	<ui:composition template="/templates/masterPageTemplate.xhtml">
+	
+		<ui:define name="page-content">
+			<p:panel id="p-testSolve">
+				<o:form id="solve-form" includeViewParams="true">
+					<pe:dynaForm id="dynaForm" 
+						value="#{testSolveBacking.formModel}" 
+						var="data">
+						<p:outputLabel value="#{data.question}" />
+						<pe:dynaFormControl type="number">
+							<p:inputNumber value="#{data.answer}" />
+						</pe:dynaFormControl>
+						
+						<pe:dynaFormControl type="text">
+							<p:inputText  value="#{data.answer}"/>
+						</pe:dynaFormControl>
+						
+						<pe:dynaFormControl type="text-area">
+							<p:inputTextarea value="#{data.answer}" />
+						</pe:dynaFormControl>
+						
+						<pe:dynaFormControl type="radio">
+							<p:selectOneRadio value="#{data.answer}">
+								<f:selectItems value="#{data.options}" 
+									var="a" 
+									itemLabel="#{a}" 
+									itemValue="#{a}"/>
+							</p:selectOneRadio>
+						</pe:dynaFormControl>
+						
+						<pe:dynaFormControl type="checkbox" >
+							<p:selectManyCheckbox value="#{data.answers}" >
+								<f:selectItems value="#{data.options}" 
+									var="a" 
+									itemLabel="#{a}" 
+									itemValue="#{a}"/>
+							</p:selectManyCheckbox>
+						</pe:dynaFormControl>
+						
+					</pe:dynaForm>
+					<p:commandButton id="btn-endTest"
+						value="#{labelsButton['label.button.zavrsi']}"
+						action="#{testSolveBacking.endTestAction}"
+						 />
+				</o:form>
+			</p:panel>
+		</ui:define>
+	</ui:composition>
 </html>

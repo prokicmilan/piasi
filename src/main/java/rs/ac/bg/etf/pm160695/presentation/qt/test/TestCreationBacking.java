@@ -14,11 +14,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.FormField;
-import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.TestQuestionFormField;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.test.boundary.TestDao;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.test.entity.Test;
-import rs.ac.bg.etf.pm160695.presentation.qt.TQCreationBacking;
+import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.backing.TQCreationBacking;
+import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.FormField;
+import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.TestQuestionFormField;
 
 @Named
 @ViewScoped
@@ -28,7 +28,7 @@ public class TestCreationBacking extends TQCreationBacking {
 
 	@Inject
 	private TestDao testDao;
-
+	
 	private Integer trajanje;
 
 	@PostConstruct
@@ -36,7 +36,7 @@ public class TestCreationBacking extends TQCreationBacking {
 		super.init();
 		addNewQuestionRow();
 	}
-
+	
 	@Override
 	public void submitAction() {
 		if (isValidFormData()) {

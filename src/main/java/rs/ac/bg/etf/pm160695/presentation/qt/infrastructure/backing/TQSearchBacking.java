@@ -1,4 +1,4 @@
-package rs.ac.bg.etf.pm160695.presentation.qt;
+package rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.backing;
 
 import java.time.LocalDate;
 import java.util.LinkedList;

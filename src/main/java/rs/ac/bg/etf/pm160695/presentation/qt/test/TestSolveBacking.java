@@ -1,8 +1,10 @@
 package rs.ac.bg.etf.pm160695.presentation.qt.test;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -16,11 +18,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.InputType;
-import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.TestQuestionFormField;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.test.entity.Test;
 import rs.ac.bg.etf.pm160695.infrastructure.presentation.BaseBackingBean;
 import rs.ac.bg.etf.pm160695.presentation.qt.TestSolveData;
+import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.InputType;
+import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.TestQuestionFormField;
 
 @Named
 @ViewScoped
@@ -44,6 +46,8 @@ public class TestSolveBacking extends BaseBackingBean {
 				List<String> answers = new LinkedList<>();
 				if (InputType.RADIO.equals(question.getInputType()) || InputType.CHECKBOX.equals(question.getInputType())) {
 					answers.addAll(Arrays.asList(question.getAnswers().split(",")));
+					answers.add(question.getCorrectAnswer());
+					Collections.shuffle(answers);
 				}
 				
 				TestSolveData data = new TestSolveData();
@@ -55,6 +59,13 @@ public class TestSolveBacking extends BaseBackingBean {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void endTestAction() {
+		logger.info("endTestAction()");
+		
+		List<TestSolveData> answers = formModel.getControls().stream().map(DynaFormControl::getData).map(d -> (TestSolveData) d).collect(Collectors.toList());
+		
 	}
 
 	public Test getTest() {

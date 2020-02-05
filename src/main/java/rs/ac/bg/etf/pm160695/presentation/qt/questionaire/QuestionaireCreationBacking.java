@@ -14,11 +14,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.FormField;
-import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.QuestionaireQuestionFormField;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.boundary.QuestionaireDao;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.entity.Questionaire;
-import rs.ac.bg.etf.pm160695.presentation.qt.TQCreationBacking;
+import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.backing.TQCreationBacking;
+import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.FormField;
+import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.QuestionaireQuestionFormField;
 
 @Named
 @ViewScoped

@@ -17,10 +17,10 @@ import javax.validation.constraints.NotNull;
 
 import rs.ac.bg.etf.pm160695.business.korisnickisistem.entity.KSKorisnik;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.boundary.TQDao;
-import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.TQFormField;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.entity.Questionaire;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.entity.Questionaire_;
 import rs.ac.bg.etf.pm160695.infrastructure.validation.CommonErrors;
+import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.TQFormField;
 
 @Stateless
 public class QuestionaireDao extends TQDao<Questionaire> {

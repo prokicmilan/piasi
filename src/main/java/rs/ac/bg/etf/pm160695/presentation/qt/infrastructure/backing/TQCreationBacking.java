@@ -1,8 +1,12 @@
-package rs.ac.bg.etf.pm160695.presentation.qt;
+package rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.backing;
 
 import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.faces.push.Push;
+import javax.faces.push.PushContext;
+import javax.inject.Inject;
 
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
@@ -10,12 +14,12 @@ import org.primefaces.extensions.model.dynaform.DynaFormRow;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.FormField;
-import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.InputType;
-import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.TQFormField;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.TestQuestionaire;
 import rs.ac.bg.etf.pm160695.infrastructure.messaging.Messages;
 import rs.ac.bg.etf.pm160695.infrastructure.presentation.BaseBackingBean;
+import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.FormField;
+import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.InputType;
+import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.TQFormField;
 
 public abstract class TQCreationBacking extends BaseBackingBean {
 
@@ -34,7 +38,6 @@ public abstract class TQCreationBacking extends BaseBackingBean {
 	
 	protected TestQuestionaire tq;
 	protected Boolean edit;
-
 	
 	public abstract void saveAction();
 	
