@@ -1,5 +1,6 @@
 package rs.ac.bg.etf.pm160695.business.testquestionaire.test.entity;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -21,8 +22,8 @@ public class Test extends TestQuestionaire {
 	@NotNull
 	private Integer trajanje;
 
-	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	private Set<TestQuestion> testQuestions;
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "test")
+	private Set<TestQuestion> testQuestions = new HashSet<>();
 	
 	public Integer getTrajanje() {
 		return trajanje;

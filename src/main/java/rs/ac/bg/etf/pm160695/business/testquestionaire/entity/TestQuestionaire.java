@@ -28,10 +28,6 @@ public class TestQuestionaire extends StatusBaseEntity {
 	@Column(name = "datum_do")
 	private LocalDate datumDo;
 
-	@NotNull
-	@Column(name = "questions_data")
-	private String questionsData;
-
 	public String getNaziv() {
 		return naziv;
 	}
@@ -64,14 +60,6 @@ public class TestQuestionaire extends StatusBaseEntity {
 		this.datumDo = datumDo;
 	}
 
-	public String getQuestionsData() {
-		return questionsData;
-	}
-
-	public void setQuestionsData(String questionsData) {
-		this.questionsData = questionsData;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -80,7 +68,6 @@ public class TestQuestionaire extends StatusBaseEntity {
 		result = prime * result + ((datumOd == null) ? 0 : datumOd.hashCode());
 		result = prime * result + ((naziv == null) ? 0 : naziv.hashCode());
 		result = prime * result + ((opis == null) ? 0 : opis.hashCode());
-		result = prime * result + ((questionsData == null) ? 0 : questionsData.hashCode());
 		return result;
 	}
 
@@ -112,11 +99,6 @@ public class TestQuestionaire extends StatusBaseEntity {
 			if (other.opis != null)
 				return false;
 		} else if (!opis.equals(other.opis))
-			return false;
-		if (questionsData == null) {
-			if (other.questionsData != null)
-				return false;
-		} else if (!questionsData.equals(other.questionsData))
 			return false;
 		return true;
 	}

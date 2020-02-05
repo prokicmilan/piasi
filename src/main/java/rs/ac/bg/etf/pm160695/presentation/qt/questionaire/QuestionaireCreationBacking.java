@@ -11,18 +11,17 @@ import javax.inject.Named;
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.boundary.QuestionaireDao;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.entity.Questionaire;
-import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.backing.TQCreationBacking;
+import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.backing.TQCreationDetailsBacking;
 import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.FormField;
 import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.QuestionaireQuestionFormField;
 
 @Named
 @ViewScoped
-public class QuestionaireCreationBacking extends TQCreationBacking {
+public class QuestionaireCreationBacking extends TQCreationDetailsBacking {
 
 	private static final long serialVersionUID = -8164550945331565775L;
 
@@ -45,22 +44,13 @@ public class QuestionaireCreationBacking extends TQCreationBacking {
 	@Override
 	public void saveAction() {
 		if (isValidFormData()) {
-			ObjectMapper objectMapper = new ObjectMapper();
-			List<QuestionaireQuestionFormField> questions = getQuestions();
+			tq.setNaziv(naziv);
+			tq.setOpis(opis);
+			tq.setDatumOd(pocetak);
+			tq.setDatumDo(kraj);
+			((Questionaire) tq).setAnonymous(anonymous);
 			
-			try {
-				tq.setNaziv(naziv);
-				tq.setOpis(opis);
-				tq.setDatumOd(pocetak);
-				tq.setDatumDo(kraj);
-				((Questionaire) tq).setAnonymous(anonymous);
-				tq.setQuestionsData(objectMapper.writeValueAsString(questions));
-				tq.setKsKorisnik(currentUserBean.getUlogovaniKorisnik());
-				
-				questionaireDao.save((Questionaire)tq);
-			} catch (JsonProcessingException e) {
-				e.printStackTrace();
-			}
+			questionaireDao.save((Questionaire)tq, getQuestions(), currentUserBean.getUlogovaniKorisnik());
 		}
 	}
 	
@@ -74,7 +64,7 @@ public class QuestionaireCreationBacking extends TQCreationBacking {
 	
 	@Override
 	protected void save() {
-		questionaireDao.saveQuestionaire(naziv, opis, pocetak, kraj, anonymous, questionsJsonData, currentUserBean.getUlogovaniKorisnik());
+		questionaireDao.saveQuestionaire(naziv, opis, pocetak, kraj, anonymous, getQuestions(), currentUserBean.getUlogovaniKorisnik());
 	}
 	
 	@Override
@@ -85,7 +75,8 @@ public class QuestionaireCreationBacking extends TQCreationBacking {
 	
 	@Override
 	protected List<? extends FormField> readQuestionData(ObjectMapper objectMapper) throws JsonProcessingException {
-		return objectMapper.readValue(tq.getQuestionsData(), new TypeReference<List<QuestionaireQuestionFormField>>() {});
+//		return objectMapper.readValue(tq.getQuestionsData(), new TypeReference<List<QuestionaireQuestionFormField>>() {});
+		return null;
 	}
 	
 	@Override

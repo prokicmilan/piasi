@@ -5,7 +5,7 @@
 -- Dumped from database version 12.1
 -- Dumped by pg_dump version 12.1
 
--- Started on 2020-02-05 21:48:11
+-- Started on 2020-02-06 00:04:56
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -123,8 +123,7 @@ CREATE TABLE public.questionaire (
     insert_timestamp timestamp without time zone NOT NULL,
     last_update_timestamp timestamp without time zone NOT NULL,
     record_status smallint NOT NULL,
-    version smallint NOT NULL,
-    questions_data character varying NOT NULL
+    version smallint NOT NULL
 );
 
 
@@ -153,14 +152,13 @@ ALTER TABLE public.questionaire ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY
 CREATE TABLE public.questionaire_question (
     id bigint NOT NULL,
     question character varying NOT NULL,
-    answers character varying NOT NULL,
-    correct_answer character varying NOT NULL,
+    answers character varying,
     ks_korisnik_id bigint NOT NULL,
     insert_timestamp timestamp without time zone NOT NULL,
     last_update_timestamp timestamp without time zone NOT NULL,
     record_status smallint NOT NULL,
     version smallint NOT NULL,
-    questions_data character varying NOT NULL
+    input_type integer
 );
 
 
@@ -244,8 +242,7 @@ CREATE TABLE public.test (
     insert_timestamp timestamp without time zone NOT NULL,
     last_update_timestamp timestamp without time zone NOT NULL,
     record_status smallint NOT NULL,
-    version smallint NOT NULL,
-    questions_data character varying NOT NULL
+    version smallint NOT NULL
 );
 
 
@@ -274,14 +271,14 @@ ALTER TABLE public.test ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 CREATE TABLE public.test_question (
     id bigint NOT NULL,
     question character varying NOT NULL,
-    answers character varying NOT NULL,
+    answers character varying,
     correct_answer character varying NOT NULL,
     ks_korisnik_id bigint NOT NULL,
     insert_timestamp timestamp without time zone NOT NULL,
     last_update_timestamp timestamp without time zone NOT NULL,
     record_status smallint NOT NULL,
     version smallint NOT NULL,
-    questions_data character varying NOT NULL
+    input_type integer
 );
 
 
@@ -396,8 +393,9 @@ COPY public.ks_uloga (id, oznaka, naziv, uloga_tip) FROM stdin;
 -- Data for Name: questionaire; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.questionaire (id, naziv, opis, datum_od, datum_do, anonymous, ks_korisnik_id, insert_timestamp, last_update_timestamp, record_status, version, questions_data) FROM stdin;
-2	anketaizm	prva anketa	2020-02-01	2020-02-05	f	11	2020-02-04 21:30:33.214565	2020-02-04 21:47:29.904562	1	3	[{"question":"pitanje1j","index":0,"inputType":1,"answers":null},{"question":"pitanje2","index":1,"inputType":3,"answers":null},{"question":"pitanje3","index":2,"inputType":4,"answers":"odgovor1, odgovor2, odgovo3, odgovor4"}]
+COPY public.questionaire (id, naziv, opis, datum_od, datum_do, anonymous, ks_korisnik_id, insert_timestamp, last_update_timestamp, record_status, version) FROM stdin;
+2	anketaizm	prva anketa	2020-02-01	2020-02-05	f	11	2020-02-04 21:30:33.214565	2020-02-04 21:47:29.904562	1	3
+6	naziv	opis	2020-02-01	2020-02-05	t	11	2020-02-06 00:04:17.880496	2020-02-06 00:04:17.880496	1	0
 \.
 
 
@@ -407,7 +405,9 @@ COPY public.questionaire (id, naziv, opis, datum_od, datum_do, anonymous, ks_kor
 -- Data for Name: questionaire_question; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.questionaire_question (id, question, answers, correct_answer, ks_korisnik_id, insert_timestamp, last_update_timestamp, record_status, version, questions_data) FROM stdin;
+COPY public.questionaire_question (id, question, answers, ks_korisnik_id, insert_timestamp, last_update_timestamp, record_status, version, input_type) FROM stdin;
+2	pitanje1	odg1, odg2, odg3	11	2020-02-06 00:04:17.885503	2020-02-06 00:04:17.885503	1	0	3
+3	pitanje2	\N	11	2020-02-06 00:04:17.893513	2020-02-06 00:04:17.893513	1	0	1
 \.
 
 
@@ -418,6 +418,8 @@ COPY public.questionaire_question (id, question, answers, correct_answer, ks_kor
 --
 
 COPY public.questionaire_questionaire_question (questionaire_id, questionaire_question_id) FROM stdin;
+6	2
+6	3
 \.
 
 
@@ -437,8 +439,8 @@ COPY public.questionaire_solution (id, korisnik_id, questionaire_id, ks_korisnik
 -- Data for Name: test; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.test (id, naziv, opis, datum_od, datum_do, trajanje, ks_korisnik_id, insert_timestamp, last_update_timestamp, record_status, version, questions_data) FROM stdin;
-6	prvi	prvi test	2020-02-01	2020-02-05	120	11	2020-02-04 19:19:42.065537	2020-02-04 19:19:42.065537	1	0	[{"question":"prvo pitanje","index":0,"inputType":2,"answers":null,"correctAnswer":"tacan odgovor"},{"question":"drugo pitanje","index":1,"inputType":4,"answers":"netacan1, netacan2, netacan3, netacan4","correctAnswer":"tacan"},{"question":"trece pitanje","index":2,"inputType":5,"answers":"nt1, nt2, nt3, nt4, nt5","correctAnswer":"tacan5"}]
+COPY public.test (id, naziv, opis, datum_od, datum_do, trajanje, ks_korisnik_id, insert_timestamp, last_update_timestamp, record_status, version) FROM stdin;
+24	naziv	opis	2020-02-01	2020-02-05	125	11	2020-02-05 23:58:58.886601	2020-02-05 23:58:58.886601	1	0
 \.
 
 
@@ -448,7 +450,9 @@ COPY public.test (id, naziv, opis, datum_od, datum_do, trajanje, ks_korisnik_id,
 -- Data for Name: test_question; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.test_question (id, question, answers, correct_answer, ks_korisnik_id, insert_timestamp, last_update_timestamp, record_status, version, questions_data) FROM stdin;
+COPY public.test_question (id, question, answers, correct_answer, ks_korisnik_id, insert_timestamp, last_update_timestamp, record_status, version, input_type) FROM stdin;
+12	pitanje1	\N	tacan odgovor	11	2020-02-05 23:58:58.897599	2020-02-05 23:58:58.897599	1	0	1
+13	pitanje2	netacan1, netacan2	tacan	11	2020-02-05 23:58:58.903601	2020-02-05 23:58:58.903601	1	0	3
 \.
 
 
@@ -469,6 +473,8 @@ COPY public.test_solution (id, korisnik_id, test_id, ks_korisnik_id, record_stat
 --
 
 COPY public.test_test_question (test_id, test_question_id) FROM stdin;
+24	12
+24	13
 \.
 
 
@@ -496,7 +502,7 @@ SELECT pg_catalog.setval('public.ks_uloga_id_seq', 4, true);
 -- Name: questionaire_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.questionaire_id_seq', 2, true);
+SELECT pg_catalog.setval('public.questionaire_id_seq', 6, true);
 
 
 --
@@ -505,7 +511,7 @@ SELECT pg_catalog.setval('public.questionaire_id_seq', 2, true);
 -- Name: questionaire_question_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.questionaire_question_id_seq', 1, false);
+SELECT pg_catalog.setval('public.questionaire_question_id_seq', 3, true);
 
 
 --
@@ -523,7 +529,7 @@ SELECT pg_catalog.setval('public.questionaire_solution_id_seq', 1, false);
 -- Name: test_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.test_id_seq', 6, true);
+SELECT pg_catalog.setval('public.test_id_seq', 24, true);
 
 
 --
@@ -532,7 +538,7 @@ SELECT pg_catalog.setval('public.test_id_seq', 6, true);
 -- Name: test_question_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.test_question_id_seq', 1, false);
+SELECT pg_catalog.setval('public.test_question_id_seq', 13, true);
 
 
 --
@@ -796,7 +802,7 @@ ALTER TABLE ONLY public.test_solution
     ADD CONSTRAINT test_solution_test_id_fkey FOREIGN KEY (test_id) REFERENCES public.test(id);
 
 
--- Completed on 2020-02-05 21:48:12
+-- Completed on 2020-02-06 00:04:56
 
 --
 -- PostgreSQL database dump complete

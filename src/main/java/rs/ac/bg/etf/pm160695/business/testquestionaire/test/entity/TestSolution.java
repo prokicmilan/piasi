@@ -5,7 +5,6 @@ import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -18,7 +17,6 @@ public class TestSolution extends TQSolution {
 	private static final long serialVersionUID = 4000894669038498044L;
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "test_id")
 	private Test test;
 
 	public Test getTest() {

@@ -4,7 +4,9 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
@@ -21,8 +23,11 @@ public class TestQuestion extends Question {
 	@Column(name = "correct_answer")
 	private String correctAnswer;
 	
-	@ManyToOne
-	@JoinColumn(name = "test_id")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "test_test_question",
+			joinColumns = @JoinColumn(name = "test_question_id"),
+			inverseJoinColumns = @JoinColumn(name = "test_id"))
 	private Test test;
 
 	public String getCorrectAnswer() {
@@ -45,7 +50,7 @@ public class TestQuestion extends Question {
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(correctAnswer, test);
+		result = prime * result + Objects.hash(correctAnswer);
 		return result;
 	}
 
@@ -61,7 +66,7 @@ public class TestQuestion extends Question {
 			return false;
 		}
 		TestQuestion other = (TestQuestion) obj;
-		return Objects.equals(correctAnswer, other.correctAnswer) && Objects.equals(test, other.test);
+		return Objects.equals(correctAnswer, other.correctAnswer);
 	}
 
 }

@@ -4,10 +4,6 @@ import java.time.LocalDate;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.faces.push.Push;
-import javax.faces.push.PushContext;
-import javax.inject.Inject;
-
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
 
@@ -21,7 +17,7 @@ import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.FormField;
 import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.InputType;
 import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.TQFormField;
 
-public abstract class TQCreationBacking extends BaseBackingBean {
+public abstract class TQCreationDetailsBacking extends BaseBackingBean {
 
 	private static final long serialVersionUID = 1785152636931133728L;
 
@@ -34,7 +30,6 @@ public abstract class TQCreationBacking extends BaseBackingBean {
 	protected String opis;
 	protected LocalDate pocetak;
 	protected LocalDate kraj;
-	protected String questionsJsonData;
 	
 	protected TestQuestionaire tq;
 	protected Boolean edit;
@@ -82,14 +77,6 @@ public abstract class TQCreationBacking extends BaseBackingBean {
 	
 	public void submitAction() {
 		if (isValidFormData()) {
-			List<? extends TQFormField> questions = getQuestions();
-			ObjectMapper objectMapper = new ObjectMapper();
-			try {
-				questionsJsonData = objectMapper.writeValueAsString(questions);
-			} catch (JsonProcessingException e) {
-				e.printStackTrace();
-			}
-			
 			save();
 		}
 	}

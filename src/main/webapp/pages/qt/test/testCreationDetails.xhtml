@@ -15,7 +15,6 @@
 	<ui:composition template="/templates/qt/qtCreationTemplate.xhtml">
 		<ui:param name="tqBacking" value="#{testCreationBacking}" />
 		<ui:define name="dynaFormContent">
-			<p:commandButton value="Socket test" action="#{tqBacking.test}" />
 			<pe:dynaForm id="dynaForm" value="#{tqBacking.formModel}" 
 				var="data">
 				<pe:dynaFormControl type="question">
