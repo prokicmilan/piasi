@@ -5,7 +5,7 @@
 -- Dumped from database version 12.1
 -- Dumped by pg_dump version 12.1
 
--- Started on 2020-02-06 01:53:43
+-- Started on 2020-02-06 15:24:47
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -23,7 +23,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 202 (class 1259 OID 16512)
+-- TOC entry 202 (class 1259 OID 16394)
 -- Name: ks_korisnik; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -50,7 +50,7 @@ CREATE TABLE public.ks_korisnik (
 ALTER TABLE public.ks_korisnik OWNER TO postgres;
 
 --
--- TOC entry 203 (class 1259 OID 16518)
+-- TOC entry 203 (class 1259 OID 16400)
 -- Name: ks_korisnik_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -65,7 +65,7 @@ ALTER TABLE public.ks_korisnik ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY 
 
 
 --
--- TOC entry 204 (class 1259 OID 16520)
+-- TOC entry 204 (class 1259 OID 16402)
 -- Name: ks_korisnik_ks_uloga; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -78,7 +78,7 @@ CREATE TABLE public.ks_korisnik_ks_uloga (
 ALTER TABLE public.ks_korisnik_ks_uloga OWNER TO postgres;
 
 --
--- TOC entry 205 (class 1259 OID 16523)
+-- TOC entry 205 (class 1259 OID 16405)
 -- Name: ks_uloga; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -93,7 +93,7 @@ CREATE TABLE public.ks_uloga (
 ALTER TABLE public.ks_uloga OWNER TO postgres;
 
 --
--- TOC entry 206 (class 1259 OID 16529)
+-- TOC entry 206 (class 1259 OID 16411)
 -- Name: ks_uloga_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -108,7 +108,7 @@ ALTER TABLE public.ks_uloga ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- TOC entry 210 (class 1259 OID 16583)
+-- TOC entry 207 (class 1259 OID 16413)
 -- Name: questionaire; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -130,7 +130,7 @@ CREATE TABLE public.questionaire (
 ALTER TABLE public.questionaire OWNER TO postgres;
 
 --
--- TOC entry 209 (class 1259 OID 16581)
+-- TOC entry 208 (class 1259 OID 16419)
 -- Name: questionaire_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -145,7 +145,7 @@ ALTER TABLE public.questionaire ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY
 
 
 --
--- TOC entry 218 (class 1259 OID 16657)
+-- TOC entry 209 (class 1259 OID 16421)
 -- Name: questionaire_question; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -165,7 +165,7 @@ CREATE TABLE public.questionaire_question (
 ALTER TABLE public.questionaire_question OWNER TO postgres;
 
 --
--- TOC entry 217 (class 1259 OID 16655)
+-- TOC entry 210 (class 1259 OID 16427)
 -- Name: questionaire_question_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -180,7 +180,7 @@ ALTER TABLE public.questionaire_question ALTER COLUMN id ADD GENERATED ALWAYS AS
 
 
 --
--- TOC entry 220 (class 1259 OID 16675)
+-- TOC entry 211 (class 1259 OID 16429)
 -- Name: questionaire_questionaire_question; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -193,7 +193,7 @@ CREATE TABLE public.questionaire_questionaire_question (
 ALTER TABLE public.questionaire_questionaire_question OWNER TO postgres;
 
 --
--- TOC entry 214 (class 1259 OID 16620)
+-- TOC entry 212 (class 1259 OID 16432)
 -- Name: questionaire_solution; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -212,7 +212,7 @@ CREATE TABLE public.questionaire_solution (
 ALTER TABLE public.questionaire_solution OWNER TO postgres;
 
 --
--- TOC entry 213 (class 1259 OID 16618)
+-- TOC entry 213 (class 1259 OID 16435)
 -- Name: questionaire_solution_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -227,7 +227,7 @@ ALTER TABLE public.questionaire_solution ALTER COLUMN id ADD GENERATED ALWAYS AS
 
 
 --
--- TOC entry 207 (class 1259 OID 16531)
+-- TOC entry 214 (class 1259 OID 16437)
 -- Name: test; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -249,13 +249,13 @@ CREATE TABLE public.test (
 ALTER TABLE public.test OWNER TO postgres;
 
 --
--- TOC entry 222 (class 1259 OID 16683)
+-- TOC entry 215 (class 1259 OID 16443)
 -- Name: test_answer; Type: TABLE; Schema: public; Owner: postgres
 --
 
 CREATE TABLE public.test_answer (
     id bigint NOT NULL,
-    answer character varying NOT NULL,
+    answer character varying,
     question_id bigint NOT NULL,
     ks_korisnik_id bigint NOT NULL,
     insert_timestamp timestamp without time zone NOT NULL,
@@ -268,7 +268,7 @@ CREATE TABLE public.test_answer (
 ALTER TABLE public.test_answer OWNER TO postgres;
 
 --
--- TOC entry 221 (class 1259 OID 16681)
+-- TOC entry 216 (class 1259 OID 16449)
 -- Name: test_answer_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -283,7 +283,7 @@ ALTER TABLE public.test_answer ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY 
 
 
 --
--- TOC entry 208 (class 1259 OID 16537)
+-- TOC entry 217 (class 1259 OID 16451)
 -- Name: test_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -298,7 +298,7 @@ ALTER TABLE public.test ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (
 
 
 --
--- TOC entry 216 (class 1259 OID 16642)
+-- TOC entry 218 (class 1259 OID 16453)
 -- Name: test_question; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -319,7 +319,7 @@ CREATE TABLE public.test_question (
 ALTER TABLE public.test_question OWNER TO postgres;
 
 --
--- TOC entry 215 (class 1259 OID 16640)
+-- TOC entry 219 (class 1259 OID 16459)
 -- Name: test_question_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -334,7 +334,7 @@ ALTER TABLE public.test_question ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTIT
 
 
 --
--- TOC entry 212 (class 1259 OID 16598)
+-- TOC entry 220 (class 1259 OID 16461)
 -- Name: test_solution; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -353,7 +353,7 @@ CREATE TABLE public.test_solution (
 ALTER TABLE public.test_solution OWNER TO postgres;
 
 --
--- TOC entry 211 (class 1259 OID 16596)
+-- TOC entry 221 (class 1259 OID 16464)
 -- Name: test_solution_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -368,7 +368,7 @@ ALTER TABLE public.test_solution ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTIT
 
 
 --
--- TOC entry 223 (class 1259 OID 16701)
+-- TOC entry 222 (class 1259 OID 16466)
 -- Name: test_solution_test_answer; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -381,7 +381,7 @@ CREATE TABLE public.test_solution_test_answer (
 ALTER TABLE public.test_solution_test_answer OWNER TO postgres;
 
 --
--- TOC entry 219 (class 1259 OID 16670)
+-- TOC entry 223 (class 1259 OID 16469)
 -- Name: test_test_question; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -394,20 +394,20 @@ CREATE TABLE public.test_test_question (
 ALTER TABLE public.test_test_question OWNER TO postgres;
 
 --
--- TOC entry 2931 (class 0 OID 16512)
+-- TOC entry 2931 (class 0 OID 16394)
 -- Dependencies: 202
 -- Data for Name: ks_korisnik; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.ks_korisnik (id, username, password, ime, prezime, email, datum_rodjenja, mesto_rodjenja, telefon, ks_korisnik_id, insert_timestamp, last_update_timestamp, record_status, version, salt, aktivan) FROM stdin;
 11	superadmin	46g/t9StJPm9WoHmBJX43novHxmclqR1U6nbWBT7VPHx/m3s/0QY6dW1isD7hylfyo3vyOWU+CsDDrBk6ygKpg==	Super	Admin	superadmin@test.com	2020-01-01	Superadminovo	+38112345678	11	2020-01-25 18:38:46.544401	2020-01-26 21:25:06.680761	1	1	tsaPm9J4pWkfn/Xbvwr50qZ26pegSpxRxrgG0YF/aqo=	t
-16	test	wsL8d6bskx5+vPrsoQWbyzXfGLuwhoYC6dYjAOJas545cZMKCRQ/gycF1EAgzOl1lMZKXVwX84VGUDSxLEDcIw==	Test	Test	test@test.com	2020-01-01	Testovo	+38112345678	\N	2020-02-02 14:48:55.727459	2020-02-02 14:48:55.727459	1	0	NaPLHSuyZ5jz10NF/o2MY1/xW4cyaG7W95EWUzYO+lI=	t
-17	test1	9lYRp4Q5b98yuDYCbXG87sHFDXaTYK1q6P2wuEdo7mweINXwJ9oA2cbevAWsnU6lSnErKuPoNqY/xQxPexVS6g==	Test	Test	test1@test.com	2020-01-01	Testovo	+381123456789	\N	2020-02-02 22:50:24.047259	2020-02-02 22:50:24.047259	1	0	Za3HMWXAyN9ddwZN80JxZt8oeTHqoSYYEM7QMwJ8WuM=	t
+27	ispitanik	l8m3KVlsY+DDMkh4/N8TkVy3qMxMG6iJGrtT8iAbcltP5GiEb5KWRxJXE+EDsl0GDygbPgSgiO9oNzDVtXwrBQ==	Ispitanik	Ispitanik	ispitanik@test.com	2020-01-01	Ispitanikovo	+381123456789	11	2020-02-06 12:01:39.180296	2020-02-06 12:01:57.038277	1	1	qy36DRiFyLAzseUlZyGH2cLLKg1d0NSNJUOEcaFo7pM=	t
+26	autor	IfqO5qR7eBVGfc7OM0MH04A9D13ybqSPiFJgTVNcsYWsV4MKRSgzUtDJYvG9hLQG6p25ERiCtuRr6FzyvAxvXQ==	Autor	Autor	autor@test.com	2020-01-01	Autorovo	+381123456789	26	2020-02-06 11:59:18.169887	2020-02-06 13:49:33.213865	1	5	15kQ13znfKaKjSZxg3ZqWUSX4lHN4ZQbk3F9WEGh+CU=	t
 \.
 
 
 --
--- TOC entry 2933 (class 0 OID 16520)
+-- TOC entry 2933 (class 0 OID 16402)
 -- Dependencies: 204
 -- Data for Name: ks_korisnik_ks_uloga; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -415,13 +415,15 @@ COPY public.ks_korisnik (id, username, password, ime, prezime, email, datum_rodj
 COPY public.ks_korisnik_ks_uloga (korisnik_id, uloga_id) FROM stdin;
 11	4
 11	1
-16	4
-17	4
+26	2
+26	4
+27	3
+27	4
 \.
 
 
 --
--- TOC entry 2934 (class 0 OID 16523)
+-- TOC entry 2934 (class 0 OID 16405)
 -- Dependencies: 205
 -- Data for Name: ks_uloga; Type: TABLE DATA; Schema: public; Owner: postgres
 --
@@ -435,8 +437,8 @@ COPY public.ks_uloga (id, oznaka, naziv, uloga_tip) FROM stdin;
 
 
 --
--- TOC entry 2939 (class 0 OID 16583)
--- Dependencies: 210
+-- TOC entry 2936 (class 0 OID 16413)
+-- Dependencies: 207
 -- Data for Name: questionaire; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -447,8 +449,8 @@ COPY public.questionaire (id, naziv, opis, datum_od, datum_do, anonymous, ks_kor
 
 
 --
--- TOC entry 2947 (class 0 OID 16657)
--- Dependencies: 218
+-- TOC entry 2938 (class 0 OID 16421)
+-- Dependencies: 209
 -- Data for Name: questionaire_question; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -459,8 +461,8 @@ COPY public.questionaire_question (id, question, answers, ks_korisnik_id, insert
 
 
 --
--- TOC entry 2949 (class 0 OID 16675)
--- Dependencies: 220
+-- TOC entry 2940 (class 0 OID 16429)
+-- Dependencies: 211
 -- Data for Name: questionaire_questionaire_question; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -471,8 +473,8 @@ COPY public.questionaire_questionaire_question (questionaire_id, questionaire_qu
 
 
 --
--- TOC entry 2943 (class 0 OID 16620)
--- Dependencies: 214
+-- TOC entry 2941 (class 0 OID 16432)
+-- Dependencies: 212
 -- Data for Name: questionaire_solution; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -481,8 +483,8 @@ COPY public.questionaire_solution (id, korisnik_id, questionaire_id, ks_korisnik
 
 
 --
--- TOC entry 2936 (class 0 OID 16531)
--- Dependencies: 207
+-- TOC entry 2943 (class 0 OID 16437)
+-- Dependencies: 214
 -- Data for Name: test; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -492,8 +494,8 @@ COPY public.test (id, naziv, opis, datum_od, datum_do, trajanje, ks_korisnik_id,
 
 
 --
--- TOC entry 2951 (class 0 OID 16683)
--- Dependencies: 222
+-- TOC entry 2944 (class 0 OID 16443)
+-- Dependencies: 215
 -- Data for Name: test_answer; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -502,12 +504,35 @@ COPY public.test_answer (id, answer, question_id, ks_korisnik_id, insert_timesta
 5	tacan1	34	11	2020-02-06 01:53:18.306084	2020-02-06 01:53:18.306084	1	0
 6	odgovor14	32	11	2020-02-06 01:53:18.309083	2020-02-06 01:53:18.309083	1	0
 7	odgovor15	31	11	2020-02-06 01:53:18.313083	2020-02-06 01:53:18.313083	1	0
+9	\N	33	27	2020-02-06 14:47:22.976607	2020-02-06 14:47:22.976607	1	0
+10	\N	31	27	2020-02-06 15:11:11.382488	2020-02-06 15:11:11.382488	1	0
+11	\N	33	27	2020-02-06 15:12:05.070523	2020-02-06 15:12:05.070523	1	0
+12	\N	32	27	2020-02-06 15:15:26.317965	2020-02-06 15:15:26.317965	1	0
+13	\N	34	27	2020-02-06 15:15:26.317965	2020-02-06 15:15:26.317965	1	0
+14	\N	33	27	2020-02-06 15:15:26.317965	2020-02-06 15:15:26.317965	1	0
+15	\N	31	27	2020-02-06 15:15:26.317965	2020-02-06 15:15:26.317965	1	0
+16	\N	31	27	2020-02-06 15:19:04.006803	2020-02-06 15:19:04.006803	1	0
+17	\N	32	27	2020-02-06 15:19:04.047556	2020-02-06 15:19:04.047556	1	0
+18	\N	34	27	2020-02-06 15:19:04.056779	2020-02-06 15:19:04.056779	1	0
+19	\N	33	27	2020-02-06 15:19:04.056779	2020-02-06 15:19:04.056779	1	0
+21	\N	33	27	2020-02-06 15:20:49.085972	2020-02-06 15:20:49.085972	1	0
+22	\N	31	27	2020-02-06 15:20:49.085972	2020-02-06 15:20:49.085972	1	0
+23	\N	32	27	2020-02-06 15:20:49.085972	2020-02-06 15:20:49.085972	1	0
+24	\N	34	27	2020-02-06 15:20:49.085972	2020-02-06 15:20:49.085972	1	0
+25	tacan1	34	27	2020-02-06 15:20:56.313765	2020-02-06 15:20:56.313765	1	0
+26	aslfjkl	32	27	2020-02-06 15:20:56.313765	2020-02-06 15:20:56.313765	1	0
+27	kljasflkjsa	33	27	2020-02-06 15:20:56.313765	2020-02-06 15:20:56.313765	1	0
+28	lksajflkj	31	27	2020-02-06 15:20:56.313765	2020-02-06 15:20:56.313765	1	0
+29	\N	31	27	2020-02-06 15:22:04.295944	2020-02-06 15:22:04.295944	1	0
+30	\N	32	27	2020-02-06 15:22:04.295944	2020-02-06 15:22:04.295944	1	0
+31	\N	34	27	2020-02-06 15:22:04.295944	2020-02-06 15:22:04.295944	1	0
+32	\N	33	27	2020-02-06 15:22:04.295944	2020-02-06 15:22:04.295944	1	0
 \.
 
 
 --
--- TOC entry 2945 (class 0 OID 16642)
--- Dependencies: 216
+-- TOC entry 2947 (class 0 OID 16453)
+-- Dependencies: 218
 -- Data for Name: test_question; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -520,20 +545,28 @@ COPY public.test_question (id, question, answers, correct_answer, ks_korisnik_id
 
 
 --
--- TOC entry 2941 (class 0 OID 16598)
--- Dependencies: 212
+-- TOC entry 2949 (class 0 OID 16461)
+-- Dependencies: 220
 -- Data for Name: test_solution; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
 COPY public.test_solution (id, korisnik_id, test_id, ks_korisnik_id, record_status, insert_timestamp, last_update_timestamp, version) FROM stdin;
 2	11	24	11	1	2020-02-06 01:02:16.073823	2020-02-06 01:02:16.073823	0
 7	11	24	11	1	2020-02-06 01:53:18.275088	2020-02-06 01:53:18.275088	0
+9	27	24	27	1	2020-02-06 14:47:22.974065	2020-02-06 14:47:22.974065	0
+10	27	24	27	1	2020-02-06 15:11:11.368486	2020-02-06 15:11:11.368486	0
+11	27	24	27	1	2020-02-06 15:12:05.066522	2020-02-06 15:12:05.066522	0
+12	27	24	27	1	2020-02-06 15:15:26.31394	2020-02-06 15:15:26.31394	0
+13	27	24	27	1	2020-02-06 15:19:03.886739	2020-02-06 15:19:03.886739	0
+15	27	24	27	1	2020-02-06 15:20:49.081676	2020-02-06 15:20:49.081676	0
+16	27	24	27	1	2020-02-06 15:20:56.311742	2020-02-06 15:20:56.311742	0
+17	27	24	27	1	2020-02-06 15:22:04.291954	2020-02-06 15:22:04.291954	0
 \.
 
 
 --
--- TOC entry 2952 (class 0 OID 16701)
--- Dependencies: 223
+-- TOC entry 2951 (class 0 OID 16466)
+-- Dependencies: 222
 -- Data for Name: test_solution_test_answer; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -542,12 +575,35 @@ COPY public.test_solution_test_answer (test_solution_id, test_answer_id) FROM st
 7	5
 7	6
 7	7
+9	9
+10	10
+11	11
+12	12
+12	13
+12	14
+12	15
+13	16
+13	17
+13	18
+13	19
+15	21
+15	22
+15	23
+15	24
+16	25
+16	26
+16	27
+16	28
+17	29
+17	30
+17	31
+17	32
 \.
 
 
 --
--- TOC entry 2948 (class 0 OID 16670)
--- Dependencies: 219
+-- TOC entry 2952 (class 0 OID 16469)
+-- Dependencies: 223
 -- Data for Name: test_test_question; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -565,7 +621,7 @@ COPY public.test_test_question (test_id, test_question_id) FROM stdin;
 -- Name: ks_korisnik_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.ks_korisnik_id_seq', 17, true);
+SELECT pg_catalog.setval('public.ks_korisnik_id_seq', 27, true);
 
 
 --
@@ -579,7 +635,7 @@ SELECT pg_catalog.setval('public.ks_uloga_id_seq', 4, true);
 
 --
 -- TOC entry 2960 (class 0 OID 0)
--- Dependencies: 209
+-- Dependencies: 208
 -- Name: questionaire_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -588,7 +644,7 @@ SELECT pg_catalog.setval('public.questionaire_id_seq', 6, true);
 
 --
 -- TOC entry 2961 (class 0 OID 0)
--- Dependencies: 217
+-- Dependencies: 210
 -- Name: questionaire_question_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -606,16 +662,16 @@ SELECT pg_catalog.setval('public.questionaire_solution_id_seq', 1, false);
 
 --
 -- TOC entry 2963 (class 0 OID 0)
--- Dependencies: 221
+-- Dependencies: 216
 -- Name: test_answer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.test_answer_id_seq', 7, true);
+SELECT pg_catalog.setval('public.test_answer_id_seq', 32, true);
 
 
 --
 -- TOC entry 2964 (class 0 OID 0)
--- Dependencies: 208
+-- Dependencies: 217
 -- Name: test_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -624,7 +680,7 @@ SELECT pg_catalog.setval('public.test_id_seq', 24, true);
 
 --
 -- TOC entry 2965 (class 0 OID 0)
--- Dependencies: 215
+-- Dependencies: 219
 -- Name: test_question_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -633,15 +689,15 @@ SELECT pg_catalog.setval('public.test_question_id_seq', 34, true);
 
 --
 -- TOC entry 2966 (class 0 OID 0)
--- Dependencies: 211
+-- Dependencies: 221
 -- Name: test_solution_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.test_solution_id_seq', 7, true);
+SELECT pg_catalog.setval('public.test_solution_id_seq', 17, true);
 
 
 --
--- TOC entry 2767 (class 2606 OID 16540)
+-- TOC entry 2767 (class 2606 OID 16473)
 -- Name: ks_uloga ck_oznaka_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -650,7 +706,7 @@ ALTER TABLE ONLY public.ks_uloga
 
 
 --
--- TOC entry 2759 (class 2606 OID 16542)
+-- TOC entry 2759 (class 2606 OID 16475)
 -- Name: ks_korisnik ck_username_unique; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -659,7 +715,7 @@ ALTER TABLE ONLY public.ks_korisnik
 
 
 --
--- TOC entry 2769 (class 2606 OID 16544)
+-- TOC entry 2769 (class 2606 OID 16477)
 -- Name: ks_uloga ks_uloga_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -668,7 +724,7 @@ ALTER TABLE ONLY public.ks_uloga
 
 
 --
--- TOC entry 2763 (class 2606 OID 16546)
+-- TOC entry 2763 (class 2606 OID 16479)
 -- Name: ks_korisnik pk_ks_korisnik; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -677,7 +733,7 @@ ALTER TABLE ONLY public.ks_korisnik
 
 
 --
--- TOC entry 2765 (class 2606 OID 16548)
+-- TOC entry 2765 (class 2606 OID 16481)
 -- Name: ks_korisnik_ks_uloga pk_ks_korisnik_ks_uloga; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -686,7 +742,7 @@ ALTER TABLE ONLY public.ks_korisnik_ks_uloga
 
 
 --
--- TOC entry 2773 (class 2606 OID 16590)
+-- TOC entry 2771 (class 2606 OID 16483)
 -- Name: questionaire questionaire_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -695,7 +751,7 @@ ALTER TABLE ONLY public.questionaire
 
 
 --
--- TOC entry 2781 (class 2606 OID 16664)
+-- TOC entry 2773 (class 2606 OID 16485)
 -- Name: questionaire_question questionaire_question_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -704,7 +760,7 @@ ALTER TABLE ONLY public.questionaire_question
 
 
 --
--- TOC entry 2785 (class 2606 OID 16679)
+-- TOC entry 2775 (class 2606 OID 16487)
 -- Name: questionaire_questionaire_question questionaire_questionaire_question_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -713,7 +769,7 @@ ALTER TABLE ONLY public.questionaire_questionaire_question
 
 
 --
--- TOC entry 2777 (class 2606 OID 16624)
+-- TOC entry 2777 (class 2606 OID 16489)
 -- Name: questionaire_solution questionaire_solution_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -722,7 +778,7 @@ ALTER TABLE ONLY public.questionaire_solution
 
 
 --
--- TOC entry 2787 (class 2606 OID 16690)
+-- TOC entry 2781 (class 2606 OID 16491)
 -- Name: test_answer test_answer_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -731,7 +787,7 @@ ALTER TABLE ONLY public.test_answer
 
 
 --
--- TOC entry 2771 (class 2606 OID 16550)
+-- TOC entry 2779 (class 2606 OID 16493)
 -- Name: test test_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -740,7 +796,7 @@ ALTER TABLE ONLY public.test
 
 
 --
--- TOC entry 2779 (class 2606 OID 16649)
+-- TOC entry 2783 (class 2606 OID 16495)
 -- Name: test_question test_question_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -749,7 +805,7 @@ ALTER TABLE ONLY public.test_question
 
 
 --
--- TOC entry 2775 (class 2606 OID 16602)
+-- TOC entry 2785 (class 2606 OID 16497)
 -- Name: test_solution test_solution_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -758,7 +814,7 @@ ALTER TABLE ONLY public.test_solution
 
 
 --
--- TOC entry 2789 (class 2606 OID 16705)
+-- TOC entry 2787 (class 2606 OID 16499)
 -- Name: test_solution_test_answer test_solution_test_answer_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -767,7 +823,7 @@ ALTER TABLE ONLY public.test_solution_test_answer
 
 
 --
--- TOC entry 2783 (class 2606 OID 16674)
+-- TOC entry 2789 (class 2606 OID 16501)
 -- Name: test_test_question test_test_question_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -776,7 +832,7 @@ ALTER TABLE ONLY public.test_test_question
 
 
 --
--- TOC entry 2760 (class 1259 OID 16551)
+-- TOC entry 2760 (class 1259 OID 16502)
 -- Name: ix_ks_korisnik_id; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -786,7 +842,7 @@ ALTER TABLE public.ks_korisnik CLUSTER ON ix_ks_korisnik_id;
 
 
 --
--- TOC entry 2761 (class 1259 OID 16552)
+-- TOC entry 2761 (class 1259 OID 16503)
 -- Name: ix_ks_korisnik_username; Type: INDEX; Schema: public; Owner: postgres
 --
 
@@ -794,7 +850,7 @@ CREATE INDEX ix_ks_korisnik_username ON public.ks_korisnik USING btree (username
 
 
 --
--- TOC entry 2790 (class 2606 OID 16553)
+-- TOC entry 2790 (class 2606 OID 16504)
 -- Name: ks_korisnik ks_korisnik_ks_korisnik_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -803,7 +859,7 @@ ALTER TABLE ONLY public.ks_korisnik
 
 
 --
--- TOC entry 2791 (class 2606 OID 16558)
+-- TOC entry 2791 (class 2606 OID 16509)
 -- Name: ks_korisnik_ks_uloga ks_korisnik_ks_uloga_korisnik_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -812,7 +868,7 @@ ALTER TABLE ONLY public.ks_korisnik_ks_uloga
 
 
 --
--- TOC entry 2792 (class 2606 OID 16563)
+-- TOC entry 2792 (class 2606 OID 16514)
 -- Name: ks_korisnik_ks_uloga ks_korisnik_ks_uloga_uloga_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -821,7 +877,7 @@ ALTER TABLE ONLY public.ks_korisnik_ks_uloga
 
 
 --
--- TOC entry 2802 (class 2606 OID 16665)
+-- TOC entry 2794 (class 2606 OID 16519)
 -- Name: questionaire_question questionaire_question_ks_korisnik_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -830,7 +886,7 @@ ALTER TABLE ONLY public.questionaire_question
 
 
 --
--- TOC entry 2798 (class 2606 OID 16625)
+-- TOC entry 2795 (class 2606 OID 16524)
 -- Name: questionaire_solution questionaire_solution_korisnik_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -839,7 +895,7 @@ ALTER TABLE ONLY public.questionaire_solution
 
 
 --
--- TOC entry 2799 (class 2606 OID 16630)
+-- TOC entry 2796 (class 2606 OID 16529)
 -- Name: questionaire_solution questionaire_solution_ks_korisnik_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -848,7 +904,7 @@ ALTER TABLE ONLY public.questionaire_solution
 
 
 --
--- TOC entry 2800 (class 2606 OID 16635)
+-- TOC entry 2797 (class 2606 OID 16534)
 -- Name: questionaire_solution questionaire_solution_test_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -857,7 +913,7 @@ ALTER TABLE ONLY public.questionaire_solution
 
 
 --
--- TOC entry 2794 (class 2606 OID 16591)
+-- TOC entry 2793 (class 2606 OID 16539)
 -- Name: questionaire questioniare_ks_korisnik_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -866,7 +922,7 @@ ALTER TABLE ONLY public.questionaire
 
 
 --
--- TOC entry 2804 (class 2606 OID 16696)
+-- TOC entry 2799 (class 2606 OID 16544)
 -- Name: test_answer test_answer_ks_korisnik_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -875,7 +931,7 @@ ALTER TABLE ONLY public.test_answer
 
 
 --
--- TOC entry 2803 (class 2606 OID 16691)
+-- TOC entry 2800 (class 2606 OID 16549)
 -- Name: test_answer test_answer_test_question_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -884,7 +940,7 @@ ALTER TABLE ONLY public.test_answer
 
 
 --
--- TOC entry 2793 (class 2606 OID 16568)
+-- TOC entry 2798 (class 2606 OID 16554)
 -- Name: test test_ks_korisnik_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -893,7 +949,7 @@ ALTER TABLE ONLY public.test
 
 
 --
--- TOC entry 2801 (class 2606 OID 16650)
+-- TOC entry 2801 (class 2606 OID 16559)
 -- Name: test_question test_question_ks_korisnik_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -902,7 +958,7 @@ ALTER TABLE ONLY public.test_question
 
 
 --
--- TOC entry 2795 (class 2606 OID 16603)
+-- TOC entry 2802 (class 2606 OID 16564)
 -- Name: test_solution test_solution_korisnik_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -911,7 +967,7 @@ ALTER TABLE ONLY public.test_solution
 
 
 --
--- TOC entry 2797 (class 2606 OID 16613)
+-- TOC entry 2803 (class 2606 OID 16569)
 -- Name: test_solution test_solution_ks_korisnik_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -920,7 +976,7 @@ ALTER TABLE ONLY public.test_solution
 
 
 --
--- TOC entry 2796 (class 2606 OID 16608)
+-- TOC entry 2804 (class 2606 OID 16574)
 -- Name: test_solution test_solution_test_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -928,7 +984,7 @@ ALTER TABLE ONLY public.test_solution
     ADD CONSTRAINT test_solution_test_id_fkey FOREIGN KEY (test_id) REFERENCES public.test(id);
 
 
--- Completed on 2020-02-06 01:53:43
+-- Completed on 2020-02-06 15:24:47
 
 --
 -- PostgreSQL database dump complete
