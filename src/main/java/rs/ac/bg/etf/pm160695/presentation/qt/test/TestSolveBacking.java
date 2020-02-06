@@ -63,35 +63,20 @@ public class TestSolveBacking extends BaseBackingBean {
 		}
 	}
 	
-	public void endTestAction() {
-		logger.info("endTestAction()");
-		
+	public String endTestAction() {
 		List<TestAnswerData> answers = formModel.getControls().stream().map(DynaFormControl::getData).map(d -> (TestAnswerData) d).collect(Collectors.toList());
-//		Set<TestAnswer> testAnswers = answers.stream().map(a -> {
-//				TestAnswer ta = new TestAnswer();
-//				ta.setQuestion(a.getQuestion());
-//				if (a.getAnswers() != null && a.getAnswers().length > 0) {
-//					ta.setAnswer(String.join(", ", a.getAnswers()));
-//				}
-//				else {
-//					ta.setAnswer(a.getAnswer());
-//				}
-//				return ta;
-//			}).collect(Collectors.toSet());
-		
-		Set<TestAnswer> testAnswers = new LinkedHashSet<>();
-		for (TestAnswerData a : answers) {
-			TestAnswer ta = new TestAnswer();
-			ta.setQuestion(a.getQuestion());
-			ta.setKsKorisnik(currentUserBean.getUlogovaniKorisnik());
-			if (a.getAnswers() != null && a.getAnswers().length > 0) {
-				ta.setAnswer(String.join(", ", a.getAnswers()));
-			}
-			else {
-				ta.setAnswer(a.getAnswer());
-			}
-			testAnswers.add(ta);
-		}
+		Set<TestAnswer> testAnswers = answers.stream().map(a -> {
+				TestAnswer ta = new TestAnswer();
+				ta.setQuestion(a.getQuestion());
+				ta.setKsKorisnik(currentUserBean.getUlogovaniKorisnik());
+				if (a.getAnswers() != null && a.getAnswers().length > 0) {
+					ta.setAnswer(String.join(", ", a.getAnswers()));
+				}
+				else {
+					ta.setAnswer(a.getAnswer());
+				}
+				return ta;
+			}).collect(Collectors.toSet());
 		
 		TestSolution ts = new TestSolution();
 		ts.setTest(test);
@@ -100,6 +85,7 @@ public class TestSolveBacking extends BaseBackingBean {
 		
 		testSolutionDao.saveSolution(ts, currentUserBean.getUlogovaniKorisnik());
 		
+		return "testPretraga";
 	}
 
 	public Test getTest() {

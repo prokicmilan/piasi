@@ -37,6 +37,7 @@ public abstract class TQCreationDetailsBacking extends BaseBackingBean {
 	
 	public abstract boolean isRenderedTrajanje();
 	
+	
 	protected abstract void save();
 	
 	protected abstract FormField createFormField();
@@ -44,6 +45,8 @@ public abstract class TQCreationDetailsBacking extends BaseBackingBean {
 	protected abstract List<? extends TQFormField> getQuestions();
 	
 	protected abstract List<? extends FormField> readQuestionData();
+	
+	public abstract String getSolveOutcome();
 	
 	protected void init() {
 		formModel = new DynaFormModel();

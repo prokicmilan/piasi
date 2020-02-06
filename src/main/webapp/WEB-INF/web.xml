@@ -90,6 +90,7 @@
   		<web-resource-name>AdminArea</web-resource-name>
   		<url-pattern>/pages/administracija/*</url-pattern>
   		<url-pattern>/pages/razvoj/*</url-pattern>
+  		<url-pattern>/pages/korisnickisistem/pretraga/*</url-pattern>
   		<http-method>GET</http-method>
   		<http-method>POST</http-method>
   	</web-resource-collection>

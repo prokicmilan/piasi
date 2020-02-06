@@ -77,6 +77,11 @@ public class TestCreationDetailsBacking extends TQCreationDetailsBacking {
 		return formModel.getControls().stream().map(DynaFormControl::getData)
 				.map(d -> (TestQuestionFormField) d).collect(Collectors.toList());
 	}
+	
+	@Override
+	protected FormField createFormField() {
+		return new TestQuestionFormField(numberOfQuestions++);
+	}
 
 	@Override
 	protected boolean isValidFormData() {
@@ -96,8 +101,8 @@ public class TestCreationDetailsBacking extends TQCreationDetailsBacking {
 	}
 
 	@Override
-	protected FormField createFormField() {
-		return new TestQuestionFormField(numberOfQuestions++);
+	public String getSolveOutcome() {
+		return "testSolve";
 	}
 	
 	public Integer getTrajanje() {

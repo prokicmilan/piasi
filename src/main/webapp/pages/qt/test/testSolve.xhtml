@@ -8,7 +8,7 @@
       xmlns:o="http://omnifaces.org/ui">
 
     <f:metadata>
-     	<f:viewParam name="tqId" value="#{testSolveBacking.test}" converter="testConverter" />
+     	<f:viewParam name="testId" value="#{testSolveBacking.test}" converter="testConverter" />
      	<f:viewAction action="#{testSolveBacking.initialize}" />
     </f:metadata>
     
@@ -53,7 +53,7 @@
 						
 					</pe:dynaForm>
 					<p:commandButton id="btn-endTest"
-						value="#{labelsButton['label.button.zavrsi']}"
+						value="#{labelsButton['button.zavrsi']}"
 						action="#{testSolveBacking.endTestAction}"
 						 />
 				</o:form>

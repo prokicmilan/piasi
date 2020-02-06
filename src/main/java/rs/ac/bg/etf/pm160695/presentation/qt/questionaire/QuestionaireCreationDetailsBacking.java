@@ -34,11 +34,6 @@ public class QuestionaireCreationDetailsBacking extends TQCreationDetailsBacking
 		super.init();
 		addNewQuestionRow();
 	}
-	
-	public void test() {
-		logger.info("value changed");
-		logger.info("tq is " + tq == null ? "null" : "not null");
-	}
 
 	@Override
 	public void saveAction() {
@@ -78,6 +73,11 @@ public class QuestionaireCreationDetailsBacking extends TQCreationDetailsBacking
 	}
 	
 	@Override
+	protected FormField createFormField() {
+		return new QuestionaireQuestionFormField(numberOfQuestions++);
+	}
+	
+	@Override
 	public boolean isRenderedTrajanje() {
 		return false;
 	}
@@ -86,10 +86,10 @@ public class QuestionaireCreationDetailsBacking extends TQCreationDetailsBacking
 	public boolean isRenderedAnonimno() {
 		return true;
 	}
-
+	
 	@Override
-	protected FormField createFormField() {
-		return new QuestionaireQuestionFormField(numberOfQuestions++);
+	public String getSolveOutcome() {
+		return "questionaireSolve";
 	}
 
 	public Boolean getAnonymous() {

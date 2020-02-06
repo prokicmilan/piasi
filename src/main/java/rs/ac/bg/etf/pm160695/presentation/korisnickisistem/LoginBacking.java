@@ -2,13 +2,11 @@ package rs.ac.bg.etf.pm160695.presentation.korisnickisistem;
 
 import java.io.IOException;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.event.Event;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
@@ -23,8 +21,6 @@ import rs.ac.bg.etf.pm160695.infrastructure.security.CurrentUserLogout;
 public class LoginBacking extends BaseBackingBean {
 
 	private static final long serialVersionUID = 4603656371326301973L;
-
-	private String FORWARD_REQUEST_URI;
 
 	// Injections
 
@@ -44,12 +40,6 @@ public class LoginBacking extends BaseBackingBean {
 	@NotNull
 	private String password;
 
-	@PostConstruct
-	public void init() {
-		FORWARD_REQUEST_URI = (String) FacesContext.getCurrentInstance().getExternalContext().getRequestMap()
-				.get(RequestDispatcher.FORWARD_REQUEST_URI);
-	}
-
 	// Actions
 
 	public void loginAction() {
@@ -61,8 +51,9 @@ public class LoginBacking extends BaseBackingBean {
 			if (request.getUserPrincipal().getName().equals(username)) {
 				// korisnik pokusava da se loguje sa istim username-om
 				try {
-					FacesContext.getCurrentInstance().getExternalContext()
-							.redirect(FORWARD_REQUEST_URI != null ? FORWARD_REQUEST_URI : request.getContextPath());
+//					FacesContext.getCurrentInstance().getExternalContext()
+//							.redirect(FORWARD_REQUEST_URI != null ? FORWARD_REQUEST_URI : request.getContextPath());
+					FacesContext.getCurrentInstance().getExternalContext().redirect(request.getContextPath());
 				} catch (IOException e) {
 					logger.severe("Redirect vec ulogovanog korisnika nije uspeo!");
 				}
@@ -83,8 +74,9 @@ public class LoginBacking extends BaseBackingBean {
 			request.login(username, password);
 			userLoginEvent.fire(new CurrentUserChangedEvent(username));
 
-			FacesContext.getCurrentInstance().getExternalContext()
-					.redirect(FORWARD_REQUEST_URI != null ? FORWARD_REQUEST_URI : request.getContextPath());
+//			FacesContext.getCurrentInstance().getExternalContext()
+//					.redirect(FORWARD_REQUEST_URI != null ? FORWARD_REQUEST_URI : request.getContextPath());
+			FacesContext.getCurrentInstance().getExternalContext().redirect(request.getContextPath());
 		} catch (ServletException e) {
 			// login exception
 			String message = e.getMessage();
