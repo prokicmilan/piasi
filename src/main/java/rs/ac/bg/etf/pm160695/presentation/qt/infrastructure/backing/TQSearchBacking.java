@@ -31,6 +31,8 @@ public abstract class TQSearchBacking extends BaseBackingBean {
 
 	public abstract String getDetaljiOutcome();
 	
+	public abstract String getRezultatiOutcome();
+	
 	public void onRowSelect() {
 		logger.info("onRowSelect() --> selected = " + selected.getNaziv());
 	}

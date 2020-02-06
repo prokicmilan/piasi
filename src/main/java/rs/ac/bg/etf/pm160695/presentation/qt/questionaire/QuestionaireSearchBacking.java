@@ -47,6 +47,11 @@ public class QuestionaireSearchBacking extends TQSearchBacking {
 		return "questionaireDetalji";
 	}
 	
+	@Override
+	public String getRezultatiOutcome() {
+		return "questionaireRezultati";
+	}
+	
 	public Boolean getAnonymous() {
 		return anonymous;
 	}
@@ -54,6 +59,5 @@ public class QuestionaireSearchBacking extends TQSearchBacking {
 	public void setAnonymous(Boolean anonymous) {
 		this.anonymous = anonymous;
 	}
-
 
 }

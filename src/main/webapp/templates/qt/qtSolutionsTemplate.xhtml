@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:o="http://omnifaces.org/ui">
+
+	<ui:composition template="/templates/masterPageTemplate.xhtml">
+		<ui:define name="page-content">
+			<p:panel id="panel-solutions">
+				<h:form id="akcije-form">
+					<p:toolbar id="tbr-akcije">
+						<f:facet name="left">
+							<p:button id="btn-detalji"
+								value="#{labelsButton['button.detalji']}"
+								icon="fa fa-list fa-fw"
+								disabled="#{tqBacking.selected eq null}">
+								<f:param name="tsId" value="#{tqBacking.selected.id}" />
+							</p:button>
+						</f:facet>
+					</p:toolbar>
+				</h:form>
+				<h:form id="result-form">
+					<p:dataTable id="dt-solutions"
+						value="#{tqBacking.solutions}" 
+						var="s"
+						rowKey="#{s.hashCode()}"
+						selectionMode="single"
+						selection="#{tqBacking.selected}"
+						
+						rows="20"
+						paginator="true"
+						paginatorPosition="bottom"
+						currentPageReportTemplate="{currentPage} #{labels['label.od']} {totalPages}"
+						
+						paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+						paginatorAlwaysVisible="false"
+						
+						sortOrder="descending"
+						
+						emptyMessage="#{labels['label.emptyMessage']}" >
+						
+						<p:ajax event="rowSelect" update=":akcije-form:tbr-akcije" />
+						<p:ajax event="rowUnselect" update=":akcije-form:tbr-akcije" />
+						
+						<p:column headerText="#{labelsColumn['column.korisnik']}">
+							<h:outputText value="#{s.korisnik.ime} #{s.korisnik.prezime}" />
+						</p:column>
+						
+						<p:column headerText="#{labelsColumn['column.datumVremePopunjavanja']}" styleClass="column-256-centered">
+							<h:outputText value="#{s.insertTimestamp}" converter="localDateTimeConverter" />
+						</p:column>
+						
+					</p:dataTable>
+				
+				</h:form>
+			</p:panel>
+		</ui:define>
+	</ui:composition>
+	
+</html>

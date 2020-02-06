@@ -112,6 +112,11 @@ body {
 	width: 196px;
 }
 
+.column-256-centered {
+	width: 256px;
+	text-align: center;
+}
+
 /* KOLONE - END */
 
 #panel-pretraga-filteri {

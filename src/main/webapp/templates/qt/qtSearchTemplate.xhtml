@@ -79,6 +79,12 @@
 										<f:param name="tqId" value="#{tqBacking.selected.id}" />
 										<f:param name="edit" value="false" />
 									</p:button>
+									<p:button id="btn-rezultati"
+										value="#{labelsButton['button.rezultati']}"
+										icon="fa fa-list fa-fw"
+										outcome="#{tqBacking.rezultatiOutcome}">
+										<f:param name="tqId" value="#{tqBacking.selected.id}" />
+									</p:button>
 								</f:facet>
 							</p:toolbar>
 						</h:form>

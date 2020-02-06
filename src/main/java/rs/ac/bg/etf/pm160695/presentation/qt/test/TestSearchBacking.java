@@ -38,4 +38,9 @@ public class TestSearchBacking extends TQSearchBacking {
 		return "testDetalji";
 	}
 	
+	@Override
+	public String getRezultatiOutcome() {
+		return "testRezultati";
+	}
+	
 }

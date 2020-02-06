@@ -63,6 +63,14 @@
 			<from-outcome>questionaireSolve</from-outcome>
 			<to-view-id>/pages/qt/questionaire/questionaireSolve.xhtml</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>testRezultati</from-outcome>
+			<to-view-id>/pages/qt/test/testSolutions.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>questionaireRezultati</from-outcome>
+			<to-view-id>/pages/qt/questionaire/questionaireSolutions.xhtml</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 	
 	<application>

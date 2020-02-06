@@ -1,4 +1,4 @@
-package rs.ac.bg.etf.pm160695.presentation.qt.test;
+package rs.ac.bg.etf.pm160695.presentation.qt.questionaire;
 
 import java.util.Arrays;
 import java.util.Collections;
