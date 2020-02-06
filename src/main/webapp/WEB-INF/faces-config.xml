@@ -25,6 +25,10 @@
 			<to-view-id>/pages/korisnickisistem/pretraga/korisnikProfil.xhtml</to-view-id>
 		</navigation-case>
 		<navigation-case>
+			<from-outcome>promena-lozinke</from-outcome>
+			<to-view-id>/pages/korisnickisistem/promenaLozinke.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
 			<from-outcome>testPretraga</from-outcome>
 			<to-view-id>/pages/qt/test/testSearch.xhtml</to-view-id>
 			<redirect />

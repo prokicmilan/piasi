@@ -66,6 +66,7 @@
 										value="#{labelsButton['button.izmeni']}"
 										icon="fa fa-edit fa-fw"
 										disabled="#{tqBacking.selected eq null}"
+										rendered="#{request.isUserInRole('autor') or request.isUserInRole('admin')}"
 										outcome="#{tqBacking.detaljiOutcome}" >
 										<f:param name="tqId" value="#{tqBacking.selected.id}" />
 										<f:param name="edit" value="true" />

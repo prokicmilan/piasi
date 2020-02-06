@@ -38,6 +38,12 @@
 							<f:param name="userId" value="#{ulogovaniKorisnik.id}" />
 							<f:param name="edit" value="true" />
 						</p:menuitem>
+						<p:menuitem id="mi-promenaLozinke"
+							value="#{labelsButton['menuitem.promenaLozinke']}"
+							icon="fa fa-key fa-fw"
+							outcome="promena-lozinke">
+							<f:param name="userId" value="#{ulogovaniKorisnik.id}" />
+						</p:menuitem>
 						<p:menuitem id="mi-odjava"
 							value="#{labelsButton['menuitem.odjava']}"
 							icon="fa fa-sign-out fa-fw"

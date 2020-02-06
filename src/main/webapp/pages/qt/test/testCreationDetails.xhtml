@@ -16,6 +16,7 @@
 		<ui:param name="tqBacking" value="#{testCreationDetailsBacking}" />
 		<ui:define name="dynaFormContent">
 			<pe:dynaForm id="dynaForm" value="#{tqBacking.formModel}" 
+				rendered="#{request.isUserInRole('autor') or request.isUserInRole('admin')}"
 				var="data">
 				<pe:dynaFormControl type="question">
 					<p:outputLabel for="ta-tekstPitanja" value="#{labels['label.qt.tekstPitanja']}" />

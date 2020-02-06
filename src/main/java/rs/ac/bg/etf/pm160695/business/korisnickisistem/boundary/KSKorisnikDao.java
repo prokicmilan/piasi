@@ -62,6 +62,7 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 			korisnik.setSalt(securityProvider.generateSalt());
 			korisnik.setPassword(securityProvider.generateSaltedPassword(password, korisnik.getSalt()));
 			korisnik.addUloge(ksUlogaDao.findOsnovne());
+			korisnik.addUloga(type);
 			persistOrMerge(korisnik);
 		}
 
@@ -143,6 +144,20 @@ public class KSKorisnikDao extends BaseEntityDao<KSKorisnik> {
 			evictEntityFromCache(korisnik);
 		}
 
+		return errors;
+	}
+	
+	public CommonErrors saveNewPassword(KSKorisnik korisnik, String oldPassword, String newPassword) {
+		CommonErrors errors = new CommonErrors();
+		
+		if (!securityProvider.validatePassword(oldPassword, korisnik.getPassword(), korisnik.getSalt())) {
+			errors.add("Stara lozinka nije validna");
+		}
+		if (errors.isEmpty()) {
+			korisnik.setPassword(newPassword);
+			saveUser(korisnik, korisnik);
+		}
+		
 		return errors;
 	}
 

@@ -110,6 +110,7 @@
   	<role-name>ispitanik</role-name>
   </security-role>
   <welcome-file-list>
-    <welcome-file>/pages/korisnickisistem/pretraga/korisniciPretraga.xhtml</welcome-file>
+    <welcome-file>/pages/qt/test/testSearch.xhtml</welcome-file>
+    <welcome-file>/pages/qt/questionaire/questionaireSearch.xhtml</welcome-file>
   </welcome-file-list>
 </web-app>

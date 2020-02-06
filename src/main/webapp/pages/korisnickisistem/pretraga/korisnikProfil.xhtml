@@ -31,20 +31,26 @@
 							disabled="true"
 							styleClass="input-field"/>
 						
-						<p:outputLabel for="password" value="#{labels['label.input.password']}" />
+						<p:outputLabel for="password" 
+							rendered="#{korisnikProfilBacking.korisnik ne ulogovaniKorisnik}"
+							value="#{labels['label.input.password']}" />
 						<p:password id="password" 
 							value="#{korisnikProfilBacking.korisnik.password}" 
 							match="password-confirm" 
 							redisplay="true"
 							label="#{labels['label.input.password']}"
+							rendered="#{korisnikProfilBacking.korisnik ne ulogovaniKorisnik}"
 							disabled="#{!korisnikProfilBacking.edit}"
 							styleClass="input-field" />
 						
-						<p:outputLabel for="password-confirm" value="#{labels['label.input.confirmPassword']}" />
+						<p:outputLabel for="password-confirm" 
+							rendered="#{korisnikProfilBacking.korisnik ne ulogovaniKorisnik}"
+							value="#{labels['label.input.confirmPassword']}" />
 						<p:password id="password-confirm" 
 							value="#{korisnikProfilBacking.korisnik.password}" 
 							redisplay="true"
 							label="#{labels['label.input.confirmPassword']}"
+							rendered="#{korisnikProfilBacking.korisnik ne ulogovaniKorisnik}"
 							disabled="#{!korisnikProfilBacking.edit}"
 							styleClass="input-field" />
 						
