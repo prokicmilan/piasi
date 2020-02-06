@@ -98,7 +98,6 @@
 								paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 								paginatorAlwaysVisible="false"
 								
-								sortBy="#{tq.datumOd}"
 								sortOrder="descending"
 								
 								emptyMessage="#{labels['label.emptyMessage']}" >
@@ -106,7 +105,7 @@
 								<p:ajax event="rowSelect" update=":akcije-form:tbr-akcije" />
 								<p:ajax event="rowUnselect" update=":akcije-form:tbr-akcije" />
 								
-								<p:column headerText="#{labelsColumn['column.naziv']}" styleClass="column-127" >
+								<p:column headerText="#{labelsColumn['column.naziv']}" styleClass="column-127" sortBy="#{tq.naziv}" >
 									<h:outputText value="#{tq.naziv}" />
 								</p:column>
 								
@@ -114,13 +113,13 @@
 									<h:outputText value="#{tq.opis}" />
 								</p:column>
 								
-								<p:column headerText="#{labelsColumn['column.datumOd']}">
+								<p:column headerText="#{labelsColumn['column.datumOd']}" sortBy="#{tq.datumOd}">
 									<h:outputText value="#{tq.datumOd}" >
 										<f:converter converterId="localDateConverter" />
 									</h:outputText>
 								</p:column>
 								
-								<p:column headerText="#{labelsColumn['column.datumDo']}" styleClass="column-196" >
+								<p:column headerText="#{labelsColumn['column.datumDo']}" sortBy="#{tq.datumDo}" >
 									<h:outputText value="#{tq.datumDo}" >
 										<f:converter converterId="localDateConverter" />
 									</h:outputText>

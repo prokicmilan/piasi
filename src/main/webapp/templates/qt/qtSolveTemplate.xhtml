@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions"
+      xmlns:o="http://omnifaces.org/ui">
+      
+	<ui:composition template="/templates/masterPageTemplate.xhtml">
+		<ui:define name="page-content">
+			<p:panel id="p-tqSolve">
+				<o:form id="solve-form" includeViewParams="true">
+					<pe:dynaForm id="dynaForm" 
+						value="#{tqBacking.formModel}" 
+						var="data">
+						<p:outputLabel value="#{data.question}" />
+						<pe:dynaFormControl type="number">
+							<p:inputNumber value="#{data.answer}" />
+						</pe:dynaFormControl>
+						
+						<pe:dynaFormControl type="text">
+							<p:inputText  value="#{data.answer}"/>
+						</pe:dynaFormControl>
+						
+						<pe:dynaFormControl type="text-area">
+							<p:inputTextarea value="#{data.answer}" />
+						</pe:dynaFormControl>
+						
+						<pe:dynaFormControl type="radio">
+							<p:selectOneRadio value="#{data.answer}">
+								<f:selectItems value="#{data.options}" 
+									var="a" 
+									itemLabel="#{a}" 
+									itemValue="#{a}"/>
+							</p:selectOneRadio>
+						</pe:dynaFormControl>
+						
+						<pe:dynaFormControl type="checkbox" >
+							<p:selectManyCheckbox value="#{data.answers}" >
+								<f:selectItems value="#{data.options}" 
+									var="a" 
+									itemLabel="#{a}" 
+									itemValue="#{a}"/>
+							</p:selectManyCheckbox>
+						</pe:dynaFormControl>
+						
+					</pe:dynaForm>
+					<p:commandButton id="btn-submitAnswers"
+						value="#{labelsButton['button.zavrsi']}"
+						action="#{tqBacking.submitAnswersAction}" />
+				</o:form>
+			</p:panel>
+		</ui:define>
+	</ui:composition>
+      
+</html>

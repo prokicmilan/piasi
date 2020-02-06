@@ -30,6 +30,7 @@ public class QuestionDataReader {
 			qqff.setInputType(questionaireQuestion.getInputType());
 			qqff.setQuestion(questionaireQuestion.getQuestion());
 			qqff.setAnswers(questionaireQuestion.getAnswers());
+			qqff.setQuestionaireQuestion(questionaireQuestion);
 			return qqff;
 		}).collect(Collectors.toList());
 	}

@@ -96,7 +96,7 @@
 			           		value="#{labelsButton['button.zapocniPopunjavanje']}"
 			           		rendered="#{request.isUserInRole('ispitanik')}"
 			           		outcome="#{tqBacking.solveOutcome}" >
-		           			<f:param name="testId" value="#{tqBacking.tq.id}" />
+		           			<f:param name="tqId" value="#{tqBacking.tq.id}" />
 			           	</p:button>
 			            <p:commandButton id="btn-reset" 
 			            	value="Reset" 

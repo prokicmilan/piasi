@@ -1,7 +1,11 @@
 package rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form;
 
+import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.entity.QuestionaireQuestion;
+
 public class QuestionaireQuestionFormField extends TQFormField {
 
+	private QuestionaireQuestion questionaireQuestion;
+	
 	public QuestionaireQuestionFormField() {}
 	
 	public QuestionaireQuestionFormField(Integer index) {
@@ -10,6 +14,14 @@ public class QuestionaireQuestionFormField extends TQFormField {
 
 	public QuestionaireQuestionFormField(String value, Integer index, InputType inputType, String answers) {
 		super(value, index, inputType, answers);
+	}
+
+	public QuestionaireQuestion getQuestionaireQuestion() {
+		return questionaireQuestion;
+	}
+
+	public void setQuestionaireQuestion(QuestionaireQuestion questionaireQuestion) {
+		this.questionaireQuestion = questionaireQuestion;
 	}
 
 	@Override

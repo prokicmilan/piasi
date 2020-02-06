@@ -1,19 +1,16 @@
-package rs.ac.bg.etf.pm160695.presentation.qt;
+package rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.data;
 
-import java.util.LinkedList;
 import java.util.List;
 
-import rs.ac.bg.etf.pm160695.business.testquestionaire.test.entity.TestQuestion;
+import java.util.LinkedList;
 
-public class TestAnswerData {
+public abstract class TQAnswerData {
 
 	private String answer;
 	
 	private String[] answers;
-
-	private List<String> options = new LinkedList<>();
 	
-	private TestQuestion question;
+	private List<String> options = new LinkedList<>();
 	
 	public String getAnswer() {
 		return answer;
@@ -37,14 +34,6 @@ public class TestAnswerData {
 
 	public void setOptions(List<String> options) {
 		this.options = options;
-	}
-
-	public TestQuestion getQuestion() {
-		return question;
-	}
-
-	public void setQuestion(TestQuestion question) {
-		this.question = question;
 	}
 	
 }

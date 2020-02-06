@@ -8,11 +8,11 @@
       xmlns:o="http://omnifaces.org/ui">
 
     <f:metadata>
-     	<f:viewParam name="tqId" value="#{testSolveBacking.tq}" converter="testConverter" />
-     	<f:viewAction action="#{testSolveBacking.initialize}" />
+     	<f:viewParam name="tqId" value="#{questionaireSolveBacking.tq}" converter="questionaireConverter" />
+     	<f:viewAction action="#{questionaireSolveBacking.initialize}" />
     </f:metadata>
     
 	<ui:composition template="/templates/qt/qtSolveTemplate.xhtml">
-		<ui:param name="tqBacking" value="#{testSolveBacking}" />
+		<ui:param name="tqBacking" value="#{questionaireSolveBacking}" />
 	</ui:composition>
 </html>
