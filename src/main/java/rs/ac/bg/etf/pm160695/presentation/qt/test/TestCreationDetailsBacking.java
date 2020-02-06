@@ -35,13 +35,6 @@ public class TestCreationDetailsBacking extends TQCreationDetailsBacking {
 	}
 	
 	@Override
-	public void submitAction() {
-		if (isValidFormData()) {
-			testDao.saveTest(naziv, opis, pocetak, kraj, trajanje, getQuestions(), currentUserBean.getUlogovaniKorisnik());
-		}
-	}
-	
-	@Override
 	public void saveAction() {
 		if (isValidFormData()) {
 			tq.setNaziv(naziv);
@@ -103,6 +96,11 @@ public class TestCreationDetailsBacking extends TQCreationDetailsBacking {
 	@Override
 	public String getSolveOutcome() {
 		return "testSolve";
+	}
+	
+	@Override
+	protected String getSubmitOutcome() {
+		return "testPretraga";
 	}
 	
 	public Integer getTrajanje() {

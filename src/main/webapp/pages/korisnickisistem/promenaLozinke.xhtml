@@ -14,25 +14,25 @@
       
       	<ui:composition template="/templates/masterPageTemplate.xhtml">
       		<ui:define name="page-content">
-      			<p:panel id="p-passwordChange">
-      				<h:panelGroup id="passwordChange-group">
-      					<o:form id="passwordchange-form" includeViewParams="true">
-							<p:panelGrid id="pg-password-change" columns="2" styleClass="ui-noborder">
-								<p:outputLabel for="oldPassword" value="#{labels['label.input.oldPassword']}" />
-								<p:password id="oldPassword" value="#{passwordChangeBacking.oldPassword}" required="true" />
-								
-								<p:outputLabel for="newPassword" value="#{labels['label.input.newPassword']}" />
-								<p:password id="newPassword" value="#{passwordChangeBacking.newPassword}" match="newPasswordConfirm" required="true" />
-								
-								<p:outputLabel for="newPasswordConfirm" value="#{labels['label.input.confirmPassword']}" />
-								<p:password id="newPasswordConfirm" required="true" />
-							</p:panelGrid>
+      			<p:panel id="panel-passwordChange" styleClass="passwordChangePanel">
+   					<o:form id="passwordchange-form" includeViewParams="true">
+						<p:panelGrid id="pg-password-change" 
+							columns="2" 
+							styleClass="ui-noborder pg-korisnikProfil">
+							<p:outputLabel for="oldPassword" value="#{labels['label.input.oldPassword']}" />
+							<p:password id="oldPassword" value="#{passwordChangeBacking.oldPassword}" required="true" />
 							
-							<p:commandButton id="button-sacuvaj"
-								value="#{labelsButton['button.sacuvaj']}"
-								action="#{passwordChangeBacking.saveNewPassword}" />
-      					</o:form>
-      				</h:panelGroup>
+							<p:outputLabel for="newPassword" value="#{labels['label.input.newPassword']}" />
+							<p:password id="newPassword" value="#{passwordChangeBacking.newPassword}" match="newPasswordConfirm" required="true" />
+							
+							<p:outputLabel for="newPasswordConfirm" value="#{labels['label.input.confirmPassword']}" />
+							<p:password id="newPasswordConfirm" required="true" />
+						</p:panelGrid>
+						
+						<p:commandButton action="#{passwordChangeBacking.saveNewPassword}"
+							value="#{labelsButton['button.sacuvaj']}"
+							style="width: 100%;" />
+   					</o:form>
       			</p:panel>
       		</ui:define>
       	</ui:composition>

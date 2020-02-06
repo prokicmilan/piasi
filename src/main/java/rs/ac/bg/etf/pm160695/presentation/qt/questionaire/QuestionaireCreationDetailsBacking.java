@@ -91,6 +91,11 @@ public class QuestionaireCreationDetailsBacking extends TQCreationDetailsBacking
 	public String getSolveOutcome() {
 		return "questionaireSolve";
 	}
+	
+	@Override
+	public String getSubmitOutcome() {
+		return "anketaPretraga";
+	}
 
 	public Boolean getAnonymous() {
 		return anonymous;

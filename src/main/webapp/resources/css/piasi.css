@@ -96,6 +96,12 @@ body {
 	width: 100%;
 }
 
+.passwordChangePanel {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
 /* KOLONE - START */
 
 .column-127 {
@@ -129,6 +135,10 @@ body {
 }
 
 #panel-korisnik-profil_content {
+	padding: 0px;
+}
+
+#panel-passwordChange_content {
 	padding: 0px;
 }
 
