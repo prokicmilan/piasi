@@ -84,6 +84,18 @@ body {
 	padding-right: 4px;
 }
 
+.noAccess {
+	max-width: 250px;
+	display: flex;
+	margin: auto;
+	flex-wrap: wrap;
+	justify-content: center;
+}
+
+.noAccess .ui-button {
+	width: 100%;
+}
+
 /* KOLONE - START */
 
 .column-127 {

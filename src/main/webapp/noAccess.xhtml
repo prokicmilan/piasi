@@ -2,10 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"> 
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"> 
 
-<h:head></h:head> 
-<body> 
-	no access!
-</body> 
+	<ui:composition template="/templates/masterPageTemplate.xhtml">
+		<ui:define name="page-content">
+			<p:panel id="p-noAccess">
+				<h:panelGroup id="pg-noAccess" styleClass="noAccess">
+					<p:outputLabel id="oL-nematePravaPristupa" value="Nemate pravo pristupa stranici" escape="false"/>
+					<p:button value="#{labelsButton['button.nazad']}"
+						icon="ui-icon-circle-arrow-w"
+						onclick="window.history.back();"
+					 />
+				</h:panelGroup>
+			</p:panel>
+		</ui:define>
+	</ui:composition>
+
 </html>
