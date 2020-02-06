@@ -5,7 +5,7 @@
 -- Dumped from database version 12.1
 -- Dumped by pg_dump version 12.1
 
--- Started on 2020-02-06 15:24:47
+-- Started on 2020-02-06 16:16:44
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -445,6 +445,7 @@ COPY public.ks_uloga (id, oznaka, naziv, uloga_tip) FROM stdin;
 COPY public.questionaire (id, naziv, opis, datum_od, datum_do, anonymous, ks_korisnik_id, insert_timestamp, last_update_timestamp, record_status, version) FROM stdin;
 2	anketaizm	prva anketa	2020-02-01	2020-02-05	f	11	2020-02-04 21:30:33.214565	2020-02-04 21:47:29.904562	1	3
 6	naziv	opis	2020-02-03	2020-02-05	t	11	2020-02-06 00:04:17.880496	2020-02-06 00:35:41.555917	1	1
+7	nova anketa	ovo je najnovija anketa	2020-10-05	2020-10-10	t	26	2020-02-06 16:15:09.061005	2020-02-06 16:15:09.061005	1	0
 \.
 
 
@@ -457,6 +458,8 @@ COPY public.questionaire (id, naziv, opis, datum_od, datum_do, anonymous, ks_kor
 COPY public.questionaire_question (id, question, answers, ks_korisnik_id, insert_timestamp, last_update_timestamp, record_status, version, input_type) FROM stdin;
 6	pitanje2	\N	11	2020-02-06 00:35:41.538919	2020-02-06 00:35:41.538919	1	0	2
 7	pitanje1	odg1, odg2, odg3	11	2020-02-06 00:35:41.549922	2020-02-06 00:35:41.549922	1	0	3
+8	pitanje1	\N	26	2020-02-06 16:15:09.070054	2020-02-06 16:15:09.070054	1	0	1
+9	pitanje2	odg1, odg2, odg3	26	2020-02-06 16:15:09.070054	2020-02-06 16:15:09.070054	1	0	4
 \.
 
 
@@ -469,6 +472,8 @@ COPY public.questionaire_question (id, question, answers, ks_korisnik_id, insert
 COPY public.questionaire_questionaire_question (questionaire_id, questionaire_question_id) FROM stdin;
 6	6
 6	7
+7	8
+7	9
 \.
 
 
@@ -490,6 +495,7 @@ COPY public.questionaire_solution (id, korisnik_id, questionaire_id, ks_korisnik
 
 COPY public.test (id, naziv, opis, datum_od, datum_do, trajanje, ks_korisnik_id, insert_timestamp, last_update_timestamp, record_status, version) FROM stdin;
 24	izmenjen naziv	opis	2020-02-01	2020-02-05	125	11	2020-02-05 23:58:58.886601	2020-02-06 00:34:44.459977	1	1
+25	najnoviji test	ovo je najnoviji test	2020-02-01	2020-02-05	150	26	2020-02-06 16:08:28.172951	2020-02-06 16:08:28.172951	1	0
 \.
 
 
@@ -541,6 +547,8 @@ COPY public.test_question (id, question, answers, correct_answer, ks_korisnik_id
 32	pitanje14	\N	tacan odgovor	11	2020-02-06 00:34:44.436974	2020-02-06 00:34:44.436974	1	0	1
 33	pitanje11	\N	tacan odgovor	11	2020-02-06 00:34:44.443975	2020-02-06 00:34:44.443975	1	0	1
 34	pitanje22	netacan1, netacan2	tacan1	11	2020-02-06 00:34:44.448976	2020-02-06 00:34:44.448976	1	0	3
+35	pitanje1	\N	ovo je tacan odgovor	26	2020-02-06 16:08:28.186475	2020-02-06 16:08:28.186475	1	0	2
+36	pitanje2	nt1, nt2, nt3	t	26	2020-02-06 16:08:28.19254	2020-02-06 16:08:28.19254	1	0	4
 \.
 
 
@@ -612,6 +620,8 @@ COPY public.test_test_question (test_id, test_question_id) FROM stdin;
 24	32
 24	33
 24	34
+25	35
+25	36
 \.
 
 
@@ -639,7 +649,7 @@ SELECT pg_catalog.setval('public.ks_uloga_id_seq', 4, true);
 -- Name: questionaire_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.questionaire_id_seq', 6, true);
+SELECT pg_catalog.setval('public.questionaire_id_seq', 7, true);
 
 
 --
@@ -648,7 +658,7 @@ SELECT pg_catalog.setval('public.questionaire_id_seq', 6, true);
 -- Name: questionaire_question_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.questionaire_question_id_seq', 7, true);
+SELECT pg_catalog.setval('public.questionaire_question_id_seq', 9, true);
 
 
 --
@@ -675,7 +685,7 @@ SELECT pg_catalog.setval('public.test_answer_id_seq', 32, true);
 -- Name: test_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.test_id_seq', 24, true);
+SELECT pg_catalog.setval('public.test_id_seq', 25, true);
 
 
 --
@@ -684,7 +694,7 @@ SELECT pg_catalog.setval('public.test_id_seq', 24, true);
 -- Name: test_question_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.test_question_id_seq', 34, true);
+SELECT pg_catalog.setval('public.test_question_id_seq', 36, true);
 
 
 --
@@ -984,7 +994,7 @@ ALTER TABLE ONLY public.test_solution
     ADD CONSTRAINT test_solution_test_id_fkey FOREIGN KEY (test_id) REFERENCES public.test(id);
 
 
--- Completed on 2020-02-06 15:24:47
+-- Completed on 2020-02-06 16:16:44
 
 --
 -- PostgreSQL database dump complete

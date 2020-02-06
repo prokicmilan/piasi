@@ -65,7 +65,7 @@
 									<p:button id="btn-izmeni"
 										value="#{labelsButton['button.izmeni']}"
 										icon="fa fa-edit fa-fw"
-										disabled="#{tqBacking.selected eq null}"
+										disabled="#{tqBacking.selected eq null or tqBacking.selected.ksKorisnik ne ulogovaniKorisnik}"
 										rendered="#{request.isUserInRole('autor') or request.isUserInRole('admin')}"
 										outcome="#{tqBacking.detaljiOutcome}" >
 										<f:param name="tqId" value="#{tqBacking.selected.id}" />
