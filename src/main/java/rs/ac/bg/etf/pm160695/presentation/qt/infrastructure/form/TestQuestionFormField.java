@@ -2,9 +2,13 @@ package rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form;
 
 import java.util.Objects;
 
+import rs.ac.bg.etf.pm160695.business.testquestionaire.test.entity.TestQuestion;
+
 public class TestQuestionFormField extends TQFormField {
 
 	private String correctAnswer;
+	
+	private TestQuestion testQuestion;
 	
 	public TestQuestionFormField() {}
 
@@ -24,6 +28,14 @@ public class TestQuestionFormField extends TQFormField {
 
 	public void setCorrectAnswer(String correctAnswer) {
 		this.correctAnswer = correctAnswer;
+	}
+
+	public TestQuestion getTestQuestion() {
+		return testQuestion;
+	}
+
+	public void setTestQuestion(TestQuestion testQuestion) {
+		this.testQuestion = testQuestion;
 	}
 
 	@Override

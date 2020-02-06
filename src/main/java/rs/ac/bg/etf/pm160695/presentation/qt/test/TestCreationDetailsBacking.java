@@ -15,6 +15,7 @@ import rs.ac.bg.etf.pm160695.business.testquestionaire.test.entity.Test;
 import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.backing.TQCreationDetailsBacking;
 import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.FormField;
 import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.TestQuestionFormField;
+import rs.ac.bg.etf.pm160695.presentation.qt.utility.QuestionDataReader;
 
 @Named
 @ViewScoped
@@ -68,16 +69,7 @@ public class TestCreationDetailsBacking extends TQCreationDetailsBacking {
 	
 	@Override
 	protected List<? extends FormField> readQuestionData() {
-		return ((Test) tq).getTestQuestions().stream().map(testQuestion -> {
-			TestQuestionFormField tqff = new TestQuestionFormField();
-			tqff.setInputType(testQuestion.getInputType());
-			tqff.setQuestion(testQuestion.getQuestion());
-			tqff.setCorrectAnswer(testQuestion.getCorrectAnswer());
-			tqff.setAnswers(testQuestion.getAnswers());
-			
-			return tqff;
-		}).collect(Collectors.toList());
-		
+		return QuestionDataReader.readTestQuestionFormFields(((Test) tq).getTestQuestions());
 	}
 	
 	@Override

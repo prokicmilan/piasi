@@ -2,7 +2,6 @@ package rs.ac.bg.etf.pm160695.business.testquestionaire.entity;
 
 import java.util.Objects;
 
-import javax.persistence.CascadeType;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -16,11 +15,9 @@ public class TQSolution extends StatusBaseEntity {
 
 	private static final long serialVersionUID = -6614332837108187263L;
 
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "korisnik_id")
 	private KSKorisnik korisnik;
-
-	private String answersData;
 
 	public KSKorisnik getKorisnik() {
 		return korisnik;
@@ -30,19 +27,11 @@ public class TQSolution extends StatusBaseEntity {
 		this.korisnik = korisnik;
 	}
 
-	public String getAnswersData() {
-		return answersData;
-	}
-
-	public void setAnswersData(String answersData) {
-		this.answersData = answersData;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = super.hashCode();
-		result = prime * result + Objects.hash(answersData, korisnik);
+		result = prime * result + Objects.hash(korisnik);
 		return result;
 	}
 
@@ -58,6 +47,6 @@ public class TQSolution extends StatusBaseEntity {
 			return false;
 		}
 		TQSolution other = (TQSolution) obj;
-		return Objects.equals(answersData, other.answersData) && Objects.equals(korisnik, other.korisnik);
+		return Objects.equals(korisnik, other.korisnik);
 	}
 }

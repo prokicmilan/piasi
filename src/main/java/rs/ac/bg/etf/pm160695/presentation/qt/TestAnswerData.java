@@ -3,13 +3,17 @@ package rs.ac.bg.etf.pm160695.presentation.qt;
 import java.util.LinkedList;
 import java.util.List;
 
-public class TestSolveData {
+import rs.ac.bg.etf.pm160695.business.testquestionaire.test.entity.TestQuestion;
+
+public class TestAnswerData {
 
 	private String answer;
 	
 	private String[] answers;
 
 	private List<String> options = new LinkedList<>();
+	
+	private TestQuestion question;
 	
 	public String getAnswer() {
 		return answer;
@@ -33,6 +37,14 @@ public class TestSolveData {
 
 	public void setOptions(List<String> options) {
 		this.options = options;
+	}
+
+	public TestQuestion getQuestion() {
+		return question;
+	}
+
+	public void setQuestion(TestQuestion question) {
+		this.question = question;
 	}
 	
 }
