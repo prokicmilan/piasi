@@ -17,9 +17,6 @@
       			<p:panel id="p-passwordChange">
       				<h:panelGroup id="passwordChange-group">
       					<o:form id="passwordchange-form" includeViewParams="true">
-							<p:messages id="msgs" >
-								<p:autoUpdate />
-							</p:messages>
 							<p:panelGrid id="pg-password-change" columns="2" styleClass="ui-noborder">
 								<p:outputLabel for="oldPassword" value="#{labels['label.input.oldPassword']}" />
 								<p:password id="oldPassword" value="#{passwordChangeBacking.oldPassword}" required="true" />

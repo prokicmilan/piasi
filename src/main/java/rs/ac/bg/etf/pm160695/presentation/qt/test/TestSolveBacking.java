@@ -2,7 +2,6 @@ package rs.ac.bg.etf.pm160695.presentation.qt.test;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
