@@ -46,6 +46,21 @@ public class TestSolutionDao extends BaseEntityDao<TestSolution> {
 		return em.createQuery(criteriaQuery).getResultList();
 	}
 	
+	public TestSolution getTestSolutionForTestByUser(Test t, KSKorisnik user) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<TestSolution> criteriaQuery = cb.createQuery(getEntityClass());
+		Root<TestSolution> root = criteriaQuery.from(getEntityClass());
+
+		List<Predicate> predicates = new LinkedList<>();
+		
+		predicates.add(cb.equal(root.get(TestSolution_.test), t));
+		predicates.add(cb.equal(root.get(TQSolution_.korisnik), user));
+		
+		criteriaQuery.select(root).where(predicates.toArray(new Predicate[] {}));
+		
+		return em.createQuery(criteriaQuery).getResultList().get(0);
+	}
+	
 	public boolean testAlreadySolvedByUser(Test t, KSKorisnik user) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Long> criteriaQuery = cb.createQuery(Long.class);

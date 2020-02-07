@@ -12,10 +12,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 import rs.ac.bg.etf.pm160695.business.testquestionaire.entity.TQSolution;
-import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.boundary.QuestionaireSolutionDao;
-import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.entity.QuestionaireSolution;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.test.boundary.TestSolutionDao;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.test.entity.TestSolution;
 import rs.ac.bg.etf.pm160695.infrastructure.security.CurrentUserBean;

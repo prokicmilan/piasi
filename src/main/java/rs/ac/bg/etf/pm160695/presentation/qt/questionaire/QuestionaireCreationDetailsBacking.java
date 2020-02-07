@@ -14,6 +14,7 @@ import org.primefaces.extensions.model.dynaform.DynaFormControl;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.boundary.QuestionaireDao;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.boundary.QuestionaireSolutionDao;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.entity.Questionaire;
+import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.entity.QuestionaireSolution;
 import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.backing.TQCreationDetailsBacking;
 import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.FormField;
 import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.QuestionaireQuestionFormField;
@@ -50,6 +51,12 @@ public class QuestionaireCreationDetailsBacking extends TQCreationDetailsBacking
 			
 			questionaireDao.save((Questionaire)tq, getQuestions(), currentUserBean.getUlogovaniKorisnik());
 		}
+	}
+	
+	@Override
+	public String rezultatiAction() {
+		QuestionaireSolution qs = questionaireSolutionDao.getQuestionaireSolutionForTestByUser((Questionaire) tq, currentUserBean.getUlogovaniKorisnik());
+		return "/pages/qt/questionaire/questionaireSolutionDetails.xhtml?tsId=" + qs.getId() + "&faces-redirect=true&includeViewParams=true";
 	}
 	
 	@Override

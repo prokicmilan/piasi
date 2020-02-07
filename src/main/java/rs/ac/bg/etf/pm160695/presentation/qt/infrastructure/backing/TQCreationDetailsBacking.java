@@ -36,6 +36,8 @@ public abstract class TQCreationDetailsBacking extends BaseBackingBean {
 	
 	public abstract void saveAction();
 	
+	public abstract String rezultatiAction();
+	
 	public abstract boolean isRenderedAnonimno();
 	
 	public abstract boolean isRenderedTrajanje();
@@ -170,6 +172,10 @@ public abstract class TQCreationDetailsBacking extends BaseBackingBean {
 	
 	public boolean isRenderedSubmitReset() {
 		return edit == null;
+	}
+	
+	public boolean isRenderedRezultati() {
+		return vecPopunjen;
 	}
 	
 	public boolean isDisabledFields() {

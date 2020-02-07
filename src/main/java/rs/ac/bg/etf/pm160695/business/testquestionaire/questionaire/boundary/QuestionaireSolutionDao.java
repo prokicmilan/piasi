@@ -46,6 +46,21 @@ public class QuestionaireSolutionDao extends BaseEntityDao<QuestionaireSolution>
 		return em.createQuery(criteriaQuery).getResultList();
 	}
 	
+	public QuestionaireSolution getQuestionaireSolutionForTestByUser(Questionaire q, KSKorisnik user) {
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		CriteriaQuery<QuestionaireSolution> criteriaQuery = cb.createQuery(getEntityClass());
+		Root<QuestionaireSolution> root = criteriaQuery.from(getEntityClass());
+
+		List<Predicate> predicates = new LinkedList<>();
+		
+		predicates.add(cb.equal(root.get(QuestionaireSolution_.questionaire), q));
+		predicates.add(cb.equal(root.get(TQSolution_.korisnik), user));
+		
+		criteriaQuery.select(root).where(predicates.toArray(new Predicate[] {}));
+		
+		return em.createQuery(criteriaQuery).getResultList().get(0);
+	}
+	
 	public boolean questionaireAlreadySolvedByUser(Questionaire q, KSKorisnik user) {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		CriteriaQuery<Long> criteriaQuery = cb.createQuery(Long.class);
