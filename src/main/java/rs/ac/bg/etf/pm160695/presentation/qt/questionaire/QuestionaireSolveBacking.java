@@ -80,7 +80,7 @@ public class QuestionaireSolveBacking extends TQSolveBacking {
 		questionaireSolutionDao.saveSolution(qs, currentUserBean.getUlogovaniKorisnik());
 		
 		// TODO: idemo na stranicu na kojoj prikazujemo rezultate
-		return "questionairePretraga";
+		return "questionaireRezultatiDetalji?faces-redirect=true&includeViewParams=true";
 	}
 
 }

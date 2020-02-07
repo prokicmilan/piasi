@@ -26,9 +26,9 @@ public class TestSolutionDao extends BaseEntityDao<TestSolution> {
 		super(TestSolution.class);
 	}
 	
-	public void saveSolution(TestSolution ts, KSKorisnik ulogovaniKorisnik) {
+	public TestSolution saveSolution(TestSolution ts, KSKorisnik ulogovaniKorisnik) {
 		ts.setKsKorisnik(ulogovaniKorisnik);
-		persistOrMerge(ts);
+		return persistOrMerge(ts);
 	}
 	
 	public List<TestSolution> getTestSolutionsForTest(Test t) {

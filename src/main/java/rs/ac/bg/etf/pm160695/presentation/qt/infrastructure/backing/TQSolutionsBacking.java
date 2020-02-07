@@ -15,6 +15,8 @@ public abstract class TQSolutionsBacking extends BaseBackingBean {
 	protected List<? extends TQSolution> solutions;
 	
 	protected TQSolution selected;
+	
+	public abstract String getDetaljiOutcome();
 
 	public TestQuestionaire getTq() {
 		return tq;

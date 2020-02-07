@@ -71,6 +71,15 @@
 			<from-outcome>questionaireRezultati</from-outcome>
 			<to-view-id>/pages/qt/questionaire/questionaireSolutions.xhtml</to-view-id>
 		</navigation-case>
+		<navigation-case>
+			<from-outcome>testRezultatiDetalji</from-outcome>
+			<to-view-id>/pages/qt/test/testSolutionDetails.xhtml</to-view-id>
+			<redirect include-view-params="true" />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>questionaireRezultatiDetalji</from-outcome>
+			<to-view-id>/pages/qt/questionaire/questionaireSolutionDetails.xhtml</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 	
 	<application>

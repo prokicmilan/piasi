@@ -20,7 +20,7 @@ import rs.ac.bg.etf.pm160695.infrastructure.security.CurrentUserBean;
 		"/pages/korisnickisistem/korisnikProfil.xhtml", 
 		"/pages/korisnickisistem/promenaLozinke.xhtml"		
 })
-public class UserIdFilter implements Filter  {
+public class KorisnickiSistemUserIdFilter implements Filter  {
 
 	@Inject
 	private CurrentUserBean currentUserBean;
@@ -32,20 +32,20 @@ public class UserIdFilter implements Filter  {
 		HttpServletRequest request = (HttpServletRequest) req;
 		HttpServletResponse response = (HttpServletResponse) res;
 
-		String userId = request.getParameter("userId");
-		if (userId != null) {
-			KSKorisnik ulogovaniKorisnik = currentUserBean.getUlogovaniKorisnik();
-			if (ulogovaniKorisnik != null) {
-				try {
-					if (!request.isUserInRole("admin") && 
-						!ulogovaniKorisnik.getId().equals(Long.parseLong(userId))) {
-						response.sendError(403);
+		if (!request.isUserInRole("admin")) {
+			String userId = request.getParameter("userId");
+			if (userId != null && !userId.isBlank()) {
+				KSKorisnik ulogovaniKorisnik = currentUserBean.getUlogovaniKorisnik();
+				if (ulogovaniKorisnik != null) {
+					try {
+						if (!ulogovaniKorisnik.getId().equals(Long.parseLong(userId))) {
+							response.sendError(403);
+						}
+					} catch (NumberFormatException e) {
 					}
-				} catch (NumberFormatException e) {
 				}
 			}
 		}
-		
 		chain.doFilter(request, response);
 		
 	}

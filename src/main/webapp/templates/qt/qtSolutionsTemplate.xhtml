@@ -16,7 +16,8 @@
 							<p:button id="btn-detalji"
 								value="#{labelsButton['button.detalji']}"
 								icon="fa fa-list fa-fw"
-								disabled="#{tqBacking.selected eq null}">
+								disabled="#{tqBacking.selected eq null}"
+								outcome="#{tqBacking.detaljiOutcome}">
 								<f:param name="tsId" value="#{tqBacking.selected.id}" />
 							</p:button>
 						</f:facet>

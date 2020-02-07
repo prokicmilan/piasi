@@ -53,7 +53,6 @@ public class SecurityProvider {
 
 			return Base64.getEncoder().encodeToString(password.getDigest());
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
 		}
@@ -80,7 +79,6 @@ public class SecurityProvider {
 
 			return passwordFactory.verify(restoredPassword, clearPassword.toCharArray());
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException | InvalidKeyException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
 		}

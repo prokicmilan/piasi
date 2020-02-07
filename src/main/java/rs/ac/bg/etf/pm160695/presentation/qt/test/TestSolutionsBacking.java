@@ -20,5 +20,10 @@ public class TestSolutionsBacking extends TQSolutionsBacking {
 	public void initialize() {
 		solutions = testSolutionDao.getTestSolutionsForTest((Test) tq);
 	}
+	
+	@Override
+	public String getDetaljiOutcome() {
+		return "testRezultatiDetalji";
+	}
 
 }

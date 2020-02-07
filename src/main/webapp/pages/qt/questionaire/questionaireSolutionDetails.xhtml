@@ -1,0 +1,43 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<f:metadata>
+		<f:viewParam name="tsId" value="#{questionaireSolutionDetailsBacking.solution}" converter="quesitonaireSolutionConverter" />
+	</f:metadata>
+
+	<ui:composition template="/templates/masterPageTemplate.xhtml">
+		<ui:define name="page-content">
+			<p:panel id="panel-answers">
+				<p:dataTable id="dt-answers"
+					value="#{questionaireSolutionDetailsBacking.solution.answers}" 
+					var="a"
+					rowKey="#{a.hashCode()}"
+					
+					rows="20"
+					paginator="true"
+					paginatorPosition="bottom"
+					currentPageReportTemplate="{currentPage} #{labels['label.od']} {totalPages}"
+					
+					paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+					paginatorAlwaysVisible="false"
+					
+					sortOrder="descending"
+					
+					emptyMessage="#{labels['label.emptyMessage']}" >
+					
+					<p:column headerText="#{labelsColumn['column.pitanje']}" >
+						<h:outputText value="#{a.question.question}" />
+					</p:column>
+					
+					<p:column headerText="#{labelsColumn['column.odgovorKorisnika']}" >
+						<h:outputText value="#{a.answer}" />
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</ui:define>
+	</ui:composition>
+</html>
