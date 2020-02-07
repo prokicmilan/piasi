@@ -14,5 +14,12 @@
     
 	<ui:composition template="/templates/qt/qtSolveTemplate.xhtml">
 		<ui:param name="tqBacking" value="#{testSolveBacking}" />
+		<ui:define name="tq-solve">
+			<h:outputLabel value="#{labels['test.preostaloVreme']}" />
+			<pe:timer timeout="#{tqBacking.tq.trajanje}"
+				singleRun="true"
+				listener="#{tqBacking.onTimeout}"
+			/>
+		</ui:define>
 	</ui:composition>
 </html>

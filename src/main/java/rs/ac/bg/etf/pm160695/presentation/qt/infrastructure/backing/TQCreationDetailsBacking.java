@@ -74,7 +74,9 @@ public abstract class TQCreationDetailsBacking extends BaseBackingBean {
 			formFieldList.addAll(readQuestionData());
 			populateModel();
 		}
-		tqAktivan = tq.getDatumOd().isBefore(LocalDate.now()) && tq.getDatumDo().isAfter(LocalDate.now());
+		if (tq != null) {
+			tqAktivan = tq.getDatumOd().isBefore(LocalDate.now()) && tq.getDatumDo().isAfter(LocalDate.now());
+		}
 	}
 	
 	public String submitAction() {

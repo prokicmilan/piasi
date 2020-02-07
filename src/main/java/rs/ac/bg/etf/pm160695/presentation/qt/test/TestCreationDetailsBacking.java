@@ -65,12 +65,14 @@ public class TestCreationDetailsBacking extends TQCreationDetailsBacking {
 		if (edit != null) {
 			trajanje = ((Test) tq).getTrajanje();
 		}
-		vecPopunjen = testSolutionDao.testAlreadySolvedByUser((Test) tq, currentUserBean.getUlogovaniKorisnik());
-		if (vecPopunjen) {
-			messageDispatcher.info("info.test.popunjen");
-		}
-		if (!tqAktivan) {
-			messageDispatcher.info("info.test.nijeAktivan");
+		if (tq != null) {
+			vecPopunjen = testSolutionDao.testAlreadySolvedByUser((Test) tq, currentUserBean.getUlogovaniKorisnik());
+			if (vecPopunjen) {
+				messageDispatcher.info("info.test.popunjen");
+			}
+			if (!tqAktivan) {
+				messageDispatcher.info("info.test.nijeAktivan");
+			}
 		}
 	}
 	

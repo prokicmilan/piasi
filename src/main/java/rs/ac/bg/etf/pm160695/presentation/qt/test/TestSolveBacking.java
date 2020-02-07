@@ -1,5 +1,6 @@
 package rs.ac.bg.etf.pm160695.presentation.qt.test;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -7,10 +8,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.faces.view.ViewScoped;
+import javax.annotation.PreDestroy;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.omnifaces.cdi.ViewScoped;
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
 import org.primefaces.extensions.model.dynaform.DynaFormLabel;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
@@ -33,6 +36,16 @@ public class TestSolveBacking extends TQSolveBacking {
 	
 	@Inject
 	private TestSolutionDao testSolutionDao;
+	
+	private Boolean submitted = Boolean.FALSE;
+	
+	@PreDestroy
+	protected void preDestroy() {
+		logger.info("preDestroy");
+		if (Boolean.FALSE.equals(submitted)) {
+			submitAnswersAction();
+		}
+	}
 	
 	@Override
 	public void populateModel() {
@@ -80,7 +93,15 @@ public class TestSolveBacking extends TQSolveBacking {
 		
 		ts = testSolutionDao.saveSolution(ts, currentUserBean.getUlogovaniKorisnik());
 		
+		submitted = Boolean.TRUE;
+		
 		return "/pages/qt/test/testSolutionDetails.xhtml?tsId=" + ts.getId() + "&faces-redirect=true&includeViewParams=true";
+	}
+	
+	public void onTimeout() throws IOException {
+		String redirectUrl = submitAnswersAction();
+		FacesContext.getCurrentInstance().getExternalContext().redirect("/piasi" + redirectUrl.substring(0, redirectUrl.indexOf('&')));
+		FacesContext.getCurrentInstance().responseComplete();
 	}
 
 }

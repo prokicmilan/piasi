@@ -11,6 +11,7 @@
 		<ui:define name="page-content">
 			<p:panel id="p-tqSolve">
 				<o:form id="solve-form" includeViewParams="true">
+					<ui:insert name="tq-solve"></ui:insert>
 					<pe:dynaForm id="dynaForm" 
 						value="#{tqBacking.formModel}" 
 						var="data">
