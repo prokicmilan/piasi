@@ -95,6 +95,7 @@
 			           	<p:button id="btn-zapocniResavanje"
 			           		value="#{labelsButton['button.zapocniPopunjavanje']}"
 			           		rendered="#{request.isUserInRole('ispitanik')}"
+			           		disabled="#{tqBacking.disabledZapocniResavanje}"
 			           		outcome="#{tqBacking.solveOutcome}" >
 		           			<f:param name="tqId" value="#{tqBacking.tq.id}" />
 			           	</p:button>

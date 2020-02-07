@@ -28,10 +28,14 @@ public abstract class TQCreationDetailsBacking extends BaseBackingBean {
 	protected LocalDate pocetak;
 	protected LocalDate kraj;
 	
+	protected boolean vecPopunjen;
+	
 	protected TestQuestionaire tq;
 	protected Boolean edit;
 	
 	public abstract void saveAction();
+	
+	public abstract boolean isDisabledZapocniResavanje();
 	
 	public abstract boolean isRenderedAnonimno();
 	

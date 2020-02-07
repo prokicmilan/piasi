@@ -11,6 +11,7 @@ import javax.inject.Named;
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
 
 import rs.ac.bg.etf.pm160695.business.testquestionaire.test.boundary.TestDao;
+import rs.ac.bg.etf.pm160695.business.testquestionaire.test.boundary.TestSolutionDao;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.test.entity.Test;
 import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.backing.TQCreationDetailsBacking;
 import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.FormField;
@@ -25,6 +26,9 @@ public class TestCreationDetailsBacking extends TQCreationDetailsBacking {
 
 	@Inject
 	private TestDao testDao;
+	
+	@Inject
+	private TestSolutionDao testSolutionDao;
 	
 	private Integer trajanje;
 
@@ -53,6 +57,10 @@ public class TestCreationDetailsBacking extends TQCreationDetailsBacking {
 		if (edit != null) {
 			trajanje = ((Test) tq).getTrajanje();
 		}
+		vecPopunjen = testSolutionDao.testAlreadySolvedByUser((Test) tq, currentUserBean.getUlogovaniKorisnik());
+		if (vecPopunjen) {
+			messageDispatcher.info("info.test.popunjen");
+		}
 	}
 	
 	@Override
@@ -78,9 +86,12 @@ public class TestCreationDetailsBacking extends TQCreationDetailsBacking {
 
 	@Override
 	protected boolean isValidFormData() {
-		boolean formValid = super.isValidFormData();
-
-		return formValid;
+		return super.isValidFormData();
+	}
+	
+	@Override
+	public boolean isDisabledZapocniResavanje() {
+		return vecPopunjen;
 	}
 	
 	@Override

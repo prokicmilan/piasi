@@ -12,6 +12,7 @@ import org.primefaces.extensions.model.dynaform.DynaFormControl;
 
 
 import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.boundary.QuestionaireDao;
+import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.boundary.QuestionaireSolutionDao;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.entity.Questionaire;
 import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.backing.TQCreationDetailsBacking;
 import rs.ac.bg.etf.pm160695.presentation.qt.infrastructure.form.FormField;
@@ -26,6 +27,9 @@ public class QuestionaireCreationDetailsBacking extends TQCreationDetailsBacking
 
 	@Inject
 	private QuestionaireDao questionaireDao;
+	
+	@Inject
+	private QuestionaireSolutionDao questionaireSolutionDao;
 
 	private Boolean anonymous = Boolean.FALSE;
 
@@ -54,6 +58,10 @@ public class QuestionaireCreationDetailsBacking extends TQCreationDetailsBacking
 		if (edit != null) {
 			anonymous = ((Questionaire) tq).getAnonymous();
 		}
+		vecPopunjen = questionaireSolutionDao.questionaireAlreadySolvedByUser((Questionaire) tq, currentUserBean.getUlogovaniKorisnik());
+		if (vecPopunjen) {
+			messageDispatcher.info("info.anketa.popunjena");
+		}
 	}
 	
 	@Override
@@ -75,6 +83,11 @@ public class QuestionaireCreationDetailsBacking extends TQCreationDetailsBacking
 	@Override
 	protected FormField createFormField() {
 		return new QuestionaireQuestionFormField(numberOfQuestions++);
+	}
+
+	@Override
+	public boolean isDisabledZapocniResavanje() {
+		return vecPopunjen;
 	}
 	
 	@Override
