@@ -65,7 +65,7 @@
 									<p:button id="btn-izmeni"
 										value="#{labelsButton['button.izmeni']}"
 										icon="fa fa-edit fa-fw"
-										disabled="#{tqBacking.selected eq null or tqBacking.selected.ksKorisnik ne ulogovaniKorisnik}"
+										disabled="#{tqBacking.selected eq null or (!request.isUserInRole('admin') and tqBacking.selected.ksKorisnik ne ulogovaniKorisnik)}"
 										rendered="#{request.isUserInRole('autor') or request.isUserInRole('admin')}"
 										outcome="#{tqBacking.detaljiOutcome}" >
 										<f:param name="tqId" value="#{tqBacking.selected.id}" />
@@ -82,6 +82,8 @@
 									<p:button id="btn-rezultati"
 										value="#{labelsButton['button.rezultati']}"
 										icon="fa fa-list fa-fw"
+										rendered="#{request.isUserInRole('admin') or request.isUserInRole('autor')}"
+										disabled="#{tqBacking.selected eq null or (!request.isUserInRole('admin') and tqBacking.selected.ksKorisnik ne ulogovaniKorisnik)}"
 										outcome="#{tqBacking.rezultatiOutcome}">
 										<f:param name="tqId" value="#{tqBacking.selected.id}" />
 									</p:button>
