@@ -62,6 +62,9 @@ public class QuestionaireCreationDetailsBacking extends TQCreationDetailsBacking
 		if (vecPopunjen) {
 			messageDispatcher.info("info.anketa.popunjena");
 		}
+		if (!tqAktivan) {
+			messageDispatcher.info("info.anketa.nijeAktivna");
+		}
 	}
 	
 	@Override
@@ -83,11 +86,6 @@ public class QuestionaireCreationDetailsBacking extends TQCreationDetailsBacking
 	@Override
 	protected FormField createFormField() {
 		return new QuestionaireQuestionFormField(numberOfQuestions++);
-	}
-
-	@Override
-	public boolean isDisabledZapocniResavanje() {
-		return vecPopunjen;
 	}
 	
 	@Override

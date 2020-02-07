@@ -61,6 +61,9 @@ public class TestCreationDetailsBacking extends TQCreationDetailsBacking {
 		if (vecPopunjen) {
 			messageDispatcher.info("info.test.popunjen");
 		}
+		if (!tqAktivan) {
+			messageDispatcher.info("info.test.nijeAktivan");
+		}
 	}
 	
 	@Override
@@ -87,11 +90,6 @@ public class TestCreationDetailsBacking extends TQCreationDetailsBacking {
 	@Override
 	protected boolean isValidFormData() {
 		return super.isValidFormData();
-	}
-	
-	@Override
-	public boolean isDisabledZapocniResavanje() {
-		return vecPopunjen;
 	}
 	
 	@Override

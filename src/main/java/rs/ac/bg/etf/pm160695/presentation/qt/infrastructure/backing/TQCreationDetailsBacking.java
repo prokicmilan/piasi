@@ -29,13 +29,12 @@ public abstract class TQCreationDetailsBacking extends BaseBackingBean {
 	protected LocalDate kraj;
 	
 	protected boolean vecPopunjen;
+	protected boolean tqAktivan;
 	
 	protected TestQuestionaire tq;
 	protected Boolean edit;
 	
 	public abstract void saveAction();
-	
-	public abstract boolean isDisabledZapocniResavanje();
 	
 	public abstract boolean isRenderedAnonimno();
 	
@@ -73,6 +72,7 @@ public abstract class TQCreationDetailsBacking extends BaseBackingBean {
 			formFieldList.addAll(readQuestionData());
 			populateModel();
 		}
+		tqAktivan = tq.getDatumOd().isBefore(LocalDate.now()) && tq.getDatumDo().isAfter(LocalDate.now());
 	}
 	
 	public String submitAction() {
@@ -154,6 +154,10 @@ public abstract class TQCreationDetailsBacking extends BaseBackingBean {
 			DynaFormRow row = formModel.createRegularRow();
 			row.addControl(formField, "question");
 		}
+	}
+	
+	public boolean isDisabledZapocniResavanje() {
+		return vecPopunjen || !tqAktivan;
 	}
 
 	public boolean isRenderedPonudjeniOdgovori(TQFormField formField) {
