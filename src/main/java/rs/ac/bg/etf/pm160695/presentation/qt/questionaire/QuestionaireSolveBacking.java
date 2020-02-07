@@ -77,10 +77,9 @@ public class QuestionaireSolveBacking extends TQSolveBacking {
 		qs.setKorisnik(currentUserBean.getUlogovaniKorisnik());
 		qs.setAnswers(questionaireAnswers);
 		
-		questionaireSolutionDao.saveSolution(qs, currentUserBean.getUlogovaniKorisnik());
+		qs = questionaireSolutionDao.saveSolution(qs, currentUserBean.getUlogovaniKorisnik());
 		
-		// TODO: idemo na stranicu na kojoj prikazujemo rezultate
-		return "questionaireRezultatiDetalji?faces-redirect=true&includeViewParams=true";
+		return "/pages/qt/questionaire/questionaireSolutionDetails.xhtml?tsId=" + qs.getId() + "&faces-redirect=true&includeViewParams=true";
 	}
 
 }

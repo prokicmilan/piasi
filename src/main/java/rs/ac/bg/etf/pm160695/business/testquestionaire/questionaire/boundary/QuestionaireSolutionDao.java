@@ -26,9 +26,9 @@ public class QuestionaireSolutionDao extends BaseEntityDao<QuestionaireSolution>
 		super(QuestionaireSolution.class);
 	}
 	
-	public void saveSolution(QuestionaireSolution qs, KSKorisnik ulogovaniKorisnik) {
+	public QuestionaireSolution saveSolution(QuestionaireSolution qs, KSKorisnik ulogovaniKorisnik) {
 		qs.setKsKorisnik(ulogovaniKorisnik);
-		persistOrMerge(qs);
+		return persistOrMerge(qs);
 	}
 	
 	public List<QuestionaireSolution> getQuestionaireSolutionsForQuestionaire(Questionaire q) {

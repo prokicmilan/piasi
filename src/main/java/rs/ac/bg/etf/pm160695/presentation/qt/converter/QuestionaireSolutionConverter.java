@@ -11,7 +11,7 @@ import javax.inject.Inject;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.boundary.QuestionaireSolutionDao;
 import rs.ac.bg.etf.pm160695.business.testquestionaire.questionaire.entity.QuestionaireSolution;
 
-@FacesConverter(value = "questionaireSolutionConverter")
+@FacesConverter(value = "quesitonaireSolutionConverter")
 public class QuestionaireSolutionConverter implements Converter<QuestionaireSolution> {
 
 	@Inject

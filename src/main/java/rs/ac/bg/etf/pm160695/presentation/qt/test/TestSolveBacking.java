@@ -4,17 +4,12 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.faces.annotation.RequestMap;
-import javax.faces.annotation.ViewMap;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.extensions.model.dynaform.DynaFormControl;
 import org.primefaces.extensions.model.dynaform.DynaFormLabel;
@@ -38,8 +33,6 @@ public class TestSolveBacking extends TQSolveBacking {
 	
 	@Inject
 	private TestSolutionDao testSolutionDao;
-	
-	
 	
 	@Override
 	public void populateModel() {
@@ -86,9 +79,8 @@ public class TestSolveBacking extends TQSolveBacking {
 		ts.setAnswers(testAnswers);
 		
 		ts = testSolutionDao.saveSolution(ts, currentUserBean.getUlogovaniKorisnik());
-		logger.info("tsId = " + ts.getId());
 		
-		return "testRezultatiDetalji";
+		return "/pages/qt/test/testSolutionDetails.xhtml?tsId=" + ts.getId() + "&faces-redirect=true&includeViewParams=true";
 	}
 
 }
